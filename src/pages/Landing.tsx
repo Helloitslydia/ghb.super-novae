@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+
 import { ClipboardCheck, Download, MessageSquareText, ArrowRight, Menu, X } from 'lucide-react';
 import { LoginModal } from '../components/LoginModal';
+import { EligibilityModal } from '../components/EligibilityModal';
 
 const features = [
   {
@@ -34,7 +35,7 @@ const programInfo = {
 function Landing() {
   const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const navigate = useNavigate();
+  const [isEligibilityModalOpen, setIsEligibilityModalOpen] = React.useState(false);
   const videoUrl = "//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746742604286x870259835249476100/20250509_0009_Modern%20Farmland%20Harmony_remix_01jtrz3hf8e9krdsy57armr27d.mp4";
 
   return (
@@ -57,6 +58,7 @@ function Landing() {
       
       <div className="relative z-10 min-h-screen bg-black bg-opacity-50 flex flex-col">
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+      <EligibilityModal isOpen={isEligibilityModalOpen} onClose={() => setIsEligibilityModalOpen(false)} />
       <nav className="container mx-auto px-6 py-4 relative">
         <div className="relative">
           <div className="flex justify-between items-center">
@@ -77,12 +79,12 @@ function Landing() {
               >
                 Connexion
               </button>
-              <a
-                href="https://www.super-novae.org/"
+              <button
+                onClick={() => setIsEligibilityModalOpen(true)}
                 className="bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
-              >              
-                Déposer votre dossier              
-              </a>
+              >
+                Déposer votre dossier
+              </button>
             </div>
             
             {/* Mobile Menu Button */}
@@ -107,13 +109,15 @@ function Landing() {
                 >
                   Connexion
                 </button>
-                <a
-                  href="https://www.super-novae.org/"
+                <button
+                  onClick={() => {
+                    setIsEligibilityModalOpen(true);
+                    setIsMobileMenuOpen(false);
+                  }}
                   className="bg-[#2D6A4F] text-white py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg text-center"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >              
-                  Déposer votre dossier              
-                </a>
+                >
+                  Déposer votre dossier
+                </button>
               </div>
             </div>
           )}
@@ -130,13 +134,13 @@ function Landing() {
     <span className="block">Vous souhaitez vous équiper de bassines de récupération d'eau de pluie pour renforcer la résilience de votre activité face au changement climatique ?</span>
   </p>
   <div className="flex justify-start space-x-4 mt-16">
-            <a
-              href="https://www.super-novae.org/"
+            <button
+              onClick={() => setIsEligibilityModalOpen(true)}
               className="flex items-center bg-[#2D6A4F] text-white px-8 py-4 rounded-lg hover:bg-[#1B4332] transition-colors shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
             >
               Déposer votre dossier maintenant
               <ArrowRight className="ml-2 w-5 h-5" />
-            </a>
+            </button>
           </div>
         </div>
 
