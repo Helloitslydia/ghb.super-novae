@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Globe2, Mail, Lock, User } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 function SignUp() {
@@ -39,17 +39,21 @@ function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#2D6A4F] to-[#1B4332] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link to="/" className="flex justify-center items-center space-x-2">
-          <Globe2 className="w-8 h-8 text-blue-600" />
-          <span className="text-2xl font-bold">OkMeeting</span>
+          <img
+            src="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746787922004x941654894198586100/Capture%20d%E2%80%99e%CC%81cran%202025-05-09%20a%CC%80%2012.51.44.png"
+            alt="Logo GBH"
+            className="h-8 w-auto"
+          />
+          <span className="text-2xl font-bold text-white">by GBH</span>
         </Link>
-        <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl font-bold text-white">
           Créez votre compte
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Et commencez à transformer vos réunions dès aujourd'hui
+        <p className="mt-2 text-center text-sm text-gray-200">
+          Déposez votre dossier et suivez son avancement en ligne
         </p>
       </div>
 
@@ -130,7 +134,7 @@ function SignUp() {
               )}
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#2D6A4F] hover:bg-[#1B4332] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2D6A4F] disabled:opacity-50"
                 disabled={loading}
               >
                 {loading ? 'Création en cours...' : 'Créer mon compte'}
@@ -151,7 +155,7 @@ function SignUp() {
             <div className="mt-6">
               <Link
                 to="/login"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[#2D6A4F] bg-white hover:bg-gray-50"
               >
                 Se connecter
               </Link>
