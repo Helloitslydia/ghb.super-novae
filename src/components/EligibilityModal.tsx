@@ -1,5 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface EligibilityModalProps {
   isOpen: boolean;
@@ -7,6 +8,7 @@ interface EligibilityModalProps {
 }
 
 export function EligibilityModal({ isOpen, onClose }: EligibilityModalProps) {
+  const navigate = useNavigate();
   if (!isOpen) return null;
 
   return (
@@ -28,10 +30,13 @@ export function EligibilityModal({ isOpen, onClose }: EligibilityModalProps) {
         </ul>
 
         <button
-          onClick={onClose}
+          onClick={() => {
+            onClose();
+            navigate('/signup');
+          }}
           className="mt-6 w-full bg-[#2D6A4F] text-white py-2 px-4 rounded-md hover:bg-[#1B4332] transition-colors"
         >
-          Fermer
+          Créer un compte
         </button>
       </div>
     </div>
