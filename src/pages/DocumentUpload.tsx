@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -33,6 +33,19 @@ function DocumentUpload() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+  useEffect(() => {
+    const ensureBuckets = async () => {
+      for (const doc of documents) {
+        try {
+          await supabase.storage.createBucket(doc.key, { public: false });
+        } catch (_) {
+          // Ignore errors (bucket may already exist or creation not allowed)
+        }
+      }
+    };
+    ensureBuckets();
+  }, []);
+
   const handleSave = async () => {
     if (!user) return;
     setLoading(true);
@@ -43,9 +56,9 @@ function DocumentUpload() {
       for (const doc of documents) {
         const file = files[doc.key];
         if (file) {
-          const filePath = `${user.id}/${doc.key}-${Date.now()}-${file.name}`;
+          const filePath = `${user.id}/${Date.now()}-${file.name}`;
           const { error: uploadError } = await supabase.storage
-            .from('documents')
+            .from(doc.key)
             .upload(filePath, file);
           if (uploadError) throw uploadError;
 
@@ -80,8 +93,10 @@ function DocumentUpload() {
       for (const doc of documents) {
         const file = files[doc.key];
         if (file) {
-          const filePath = `${user.id}/${doc.key}-${Date.now()}-${file.name}`;
-          const { error } = await supabase.storage.from('documents').upload(filePath, file);
+          const filePath = `${user.id}/${Date.now()}-${file.name}`;
+          const { error } = await supabase.storage
+            .from(doc.key)
+            .upload(filePath, file);
           if (error) throw error;
         }
       }
