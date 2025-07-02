@@ -55,16 +55,16 @@ function DocumentUpload() {
       }
       setSuccess(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur lors du téléversement');
+      setError(err instanceof Error ? err.message : 'Erreur lors du dépôt');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-[#2D6A4F] to-[#1B4332] py-12 px-4">
       <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow">
-        <h1 className="text-2xl font-bold mb-6">Transmettez vos documents</h1>
+        <h1 className="text-2xl font-bold mb-6 text-[#2D6A4F]">Déposez vos documents</h1>
         <form className="space-y-4" onSubmit={handleSubmit}>
           {documents.map((doc) => (
             <div key={doc.key} className="flex flex-col">
@@ -80,13 +80,13 @@ function DocumentUpload() {
             </div>
           ))}
           {error && <p className="text-red-600">{error}</p>}
-          {success && <p className="text-green-600">Documents téléversés avec succès</p>}
+          {success && <p className="text-green-600">Documents déposés avec succès</p>}
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
+            className="mt-4 px-4 py-2 bg-[#2D6A4F] text-white rounded hover:bg-[#1B4332] disabled:opacity-50"
           >
-            {loading ? 'Envoi en cours...' : 'Envoyer'}
+            {loading ? 'Envoi en cours...' : 'Déposer'}
           </button>
         </form>
       </div>
