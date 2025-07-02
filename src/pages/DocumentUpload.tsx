@@ -33,6 +33,38 @@ function DocumentUpload() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+  const handleSave = async () => {
+    if (!user) return;
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+
+    try {
+      for (const doc of documents) {
+        const file = files[doc.key];
+        if (file) {
+          const filePath = `${user.id}/${doc.key}-${Date.now()}-${file.name}`;
+          const { error: uploadError } = await supabase.storage
+            .from('documents')
+            .upload(filePath, file);
+          if (uploadError) throw uploadError;
+
+          const { error: insertError } = await supabase
+            .from('user_documents')
+            .insert({ user_id: user.id, doc_key: doc.key, file_path: filePath });
+          if (insertError) throw insertError;
+        }
+      }
+      setSuccess(true);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : 'Erreur lors de la sauvegarde'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleChange = (key: string, fileList: FileList | null) => {
     setFiles((prev) => ({ ...prev, [key]: fileList ? fileList[0] : null }));
   };
@@ -80,14 +112,26 @@ function DocumentUpload() {
             </div>
           ))}
           {error && <p className="text-red-600">{error}</p>}
-          {success && <p className="text-green-600">Documents déposés avec succès</p>}
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-4 px-4 py-2 bg-[#2D6A4F] text-white rounded hover:bg-[#1B4332] disabled:opacity-50"
-          >
-            {loading ? 'Envoi en cours...' : 'Déposer'}
-          </button>
+          {success && (
+            <p className="text-green-600">Documents déposés avec succès</p>
+          )}
+          <div className="flex space-x-4">
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={loading}
+              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+            >
+              {loading ? 'Sauvegarde...' : 'Sauvegarder'}
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-4 px-4 py-2 bg-[#2D6A4F] text-white rounded hover:bg-[#1B4332] disabled:opacity-50"
+            >
+              {loading ? 'Envoi en cours...' : 'Déposer'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
