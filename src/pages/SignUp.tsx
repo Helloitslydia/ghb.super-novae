@@ -29,8 +29,8 @@ function SignUp() {
 
       if (signUpError) throw signUpError;
 
-      // Rediriger directement vers le tableau de bord
-      navigate('/dashboard');
+      // Rediriger vers la page d'envoi des documents
+      navigate('/upload-docs');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue lors de l\'inscription');
     } finally {
