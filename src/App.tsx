@@ -27,6 +27,14 @@ function App() {
             }
           />
           <Route
+            path="/documentupload"
+            element={
+              <ProtectedRoute>
+                <DocumentUpload />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/dashboard"
             element={
               <ProtectedRoute>

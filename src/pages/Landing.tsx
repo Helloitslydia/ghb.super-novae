@@ -3,6 +3,8 @@ import React from 'react';
 import { ClipboardCheck, Download, MessageSquareText, ArrowRight, Menu, X } from 'lucide-react';
 import { LoginModal } from '../components/LoginModal';
 import { EligibilityModal } from '../components/EligibilityModal';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const features = [
   {
@@ -36,6 +38,7 @@ function Landing() {
   const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isEligibilityModalOpen, setIsEligibilityModalOpen] = React.useState(false);
+  const { user } = useAuth();
   const videoUrl = "//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746742604286x870259835249476100/20250509_0009_Modern%20Farmland%20Harmony_remix_01jtrz3hf8e9krdsy57armr27d.mp4";
 
   return (
@@ -73,12 +76,21 @@ function Landing() {
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-4">
-              <button
-                onClick={() => setIsLoginModalOpen(true)}
-                className="px-4 py-2 text-white hover:text-gray-200 rounded-lg transition-colors cursor-pointer"
-              >
-                Connexion
-              </button>
+              {user ? (
+                <Link
+                  to="/documentupload"
+                  className="px-4 py-2 text-white hover:text-gray-200 rounded-lg transition-colors"
+                >
+                  Dashboard
+                </Link>
+              ) : (
+                <button
+                  onClick={() => setIsLoginModalOpen(true)}
+                  className="px-4 py-2 text-white hover:text-gray-200 rounded-lg transition-colors cursor-pointer"
+                >
+                  Connexion
+                </button>
+              )}
               <button
                 onClick={() => setIsEligibilityModalOpen(true)}
                 className="bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
@@ -100,15 +112,25 @@ function Landing() {
           {isMobileMenuOpen && (
             <div className="absolute top-full left-0 right-0 bg-black bg-opacity-90 mt-2 py-4 rounded-lg md:hidden">
               <div className="flex flex-col space-y-3 px-4">
-                <button
-                  onClick={() => {
-                    setIsLoginModalOpen(true);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="text-white hover:text-gray-200 py-2 text-center"
-                >
-                  Connexion
-                </button>
+                {user ? (
+                  <Link
+                    to="/documentupload"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-white hover:text-gray-200 py-2 text-center"
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setIsLoginModalOpen(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="text-white hover:text-gray-200 py-2 text-center"
+                  >
+                    Connexion
+                  </button>
+                )}
                 <button
                   onClick={() => {
                     setIsEligibilityModalOpen(true);
