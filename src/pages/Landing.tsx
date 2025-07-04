@@ -63,6 +63,9 @@ function Landing() {
       </video>
       
       <div className="relative z-10 min-h-screen bg-black bg-opacity-50 flex flex-col">
+      <div className="bg-red-600 text-white text-center text-sm py-2">
+        L’appel à proposition sera ouvert le jeudi 10 juillet
+      </div>
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
       <EligibilityModal isOpen={isEligibilityModalOpen} onClose={() => setIsEligibilityModalOpen(false)} />
       <CriteriaModal isOpen={isCriteriaModalOpen} onClose={() => setIsCriteriaModalOpen(false)} />
