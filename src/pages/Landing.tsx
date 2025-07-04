@@ -173,6 +173,7 @@ function Landing() {
         </div>
 
         <div className="mt-20">
+          <h2 className="text-3xl font-bold text-white mb-6">Les étapes</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <div key={index} className="bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-white border-opacity-20">
