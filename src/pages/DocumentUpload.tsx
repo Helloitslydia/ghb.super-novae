@@ -84,6 +84,7 @@ interface FormDataState {
   depense_pose: string;
   depense_raccordement: string;
   depense_pompage: string;
+  status: string;
   attestation: boolean;
 }
 
@@ -137,6 +138,7 @@ const initialFormData: FormDataState = {
   depense_pose: '',
   depense_raccordement: '',
   depense_pompage: '',
+  status: 'Brouillon',
   attestation: false,
 };
 
@@ -285,6 +287,11 @@ function DocumentUpload() {
     setError(null);
     try {
       await handleSave();
+      await supabase
+        .from('project_applications')
+        .update({ status: 'Etude du dossier en cours' })
+        .eq('user_id', user.id);
+      setFormData(prev => ({ ...prev, status: 'Etude du dossier en cours' }));
       setSuccess(true);
       toast.success('Dossier d\xE9pos\xE9');
       setTimeout(() => navigate('/dashboard'), 2000);
