@@ -91,12 +91,14 @@ function Landing() {
                   Connexion
                 </button>
               )}
-              <button
-                onClick={() => setIsEligibilityModalOpen(true)}
-                className="bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
-              >
-                Déposer votre dossier
-              </button>
+              {!user && (
+                <button
+                  onClick={() => setIsEligibilityModalOpen(true)}
+                  className="bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
+                >
+                  Déposer votre dossier
+                </button>
+              )}
             </div>
             
             {/* Mobile Menu Button */}
@@ -131,15 +133,17 @@ function Landing() {
                     Connexion
                   </button>
                 )}
-                <button
-                  onClick={() => {
-                    setIsEligibilityModalOpen(true);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="bg-[#2D6A4F] text-white py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg text-center"
-                >
-                  Déposer votre dossier
-                </button>
+                {!user && (
+                  <button
+                    onClick={() => {
+                      setIsEligibilityModalOpen(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="bg-[#2D6A4F] text-white py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg text-center"
+                  >
+                    Déposer votre dossier
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -156,14 +160,16 @@ function Landing() {
     <span className="block">Vous souhaitez vous équiper de bassines de récupération d'eau de pluie pour renforcer la résilience de votre activité face au changement climatique ?</span>
   </p>
   <div className="flex justify-start space-x-4 mt-16">
-            <button
-              onClick={() => setIsEligibilityModalOpen(true)}
-              className="flex items-center bg-[#2D6A4F] text-white px-8 py-4 rounded-lg hover:bg-[#1B4332] transition-colors shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
-            >
-              Déposer votre dossier maintenant
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </button>
-          </div>
+            {!user && (
+              <button
+                onClick={() => setIsEligibilityModalOpen(true)}
+                className="flex items-center bg-[#2D6A4F] text-white px-8 py-4 rounded-lg hover:bg-[#1B4332] transition-colors shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+              >
+                Déposer votre dossier maintenant
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </button>
+            )}
+         </div>
         </div>
 
         <div className="mt-20">
