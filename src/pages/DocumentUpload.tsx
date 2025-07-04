@@ -245,7 +245,8 @@ function DocumentUpload() {
     for (const doc of documents) {
       const uploadedFile = files[doc.key];
       if (uploadedFile) {
-        const filePath = `${user.id}/${Date.now()}-${uploadedFile.file.name}`;
+        const sanitizedFilename = sanitizeFilename(uploadedFile.file.name);
+        const filePath = `${user.id}/${Date.now()}-${sanitizedFilename}`;
         const { error: uploadError } = await supabase.storage
           .from('documents')
           .upload(filePath, uploadedFile.file);
@@ -309,6 +310,14 @@ function DocumentUpload() {
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  const sanitizeFilename = (filename: string) => {
+    // Remove or replace problematic characters for Supabase storage
+    return filename
+      .replace(/[^a-zA-Z0-9.-]/g, '_') // Replace any non-alphanumeric characters (except dots and hyphens) with underscores
+      .replace(/_{2,}/g, '_') // Replace multiple consecutive underscores with a single underscore
+      .replace(/^_+|_+$/g, ''); // Remove leading and trailing underscores
   };
 
   return (
