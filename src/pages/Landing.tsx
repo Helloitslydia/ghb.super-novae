@@ -30,9 +30,9 @@ const programInfo = {
   title: "Pourquoi ce programme ?",
   description: "Notre entreprise, s’engage aux côtés des agriculteurs mahorais en mettant en place un fonds de soutien pour renforcer leur résilience à la sécheresse. Ce programme vise à financer l’acquisition d’équipements de récupération et de stockage des eaux pluviales à usage agricole.",
   benefits: [
-    "Réduire la vulnérabilité des exploitations agricoles au stress hydrique",
-    "Encourager des pratiques agricoles durables",
-    "Créer un impact environnemental et économique positif à l'échelle locale"
+    "Renforcer la résilience des exploitations agricoles face au stress hydrique",
+    "Promouvoir des pratiques agricoles durables",
+    "Générer un impact environnemental et économique positif à l’échelle locale"
   ]
 };
 
@@ -183,7 +183,7 @@ function Landing() {
   </h1>
   <p className="text-xl text-white mb-6 md:max-w-xl space-y-3">
     <span className="block">Vous êtes agriculteur, ou exploitant à Mayotte ?</span>
-    <span className="block">Vous souhaitez vous équiper de bassines de récupération d'eau de pluie pour renforcer la résilience de votre activité face au changement climatique ?</span>
+    <span className="block">Souhaitez-vous renforcer la résilience de votre exploitation face à la sécheresse grâce à des équipements de récupération et de stockage des eaux pluviales ?</span>
   </p>
   <div className="flex justify-start space-x-4 mt-16">
             {!user && (
