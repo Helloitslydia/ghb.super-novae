@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Recording from './pages/Recording';
 import NewRecording from './pages/NewRecording.tsx';
 import DocumentUpload from './pages/DocumentUpload';
+import Admin from './pages/Admin';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -16,6 +17,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route

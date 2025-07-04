@@ -65,14 +65,14 @@ function Landing() {
       <nav className="container mx-auto px-6 py-4 relative">
         <div className="relative">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <img 
-                src="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746787922004x941654894198586100/Capture%20d%E2%80%99e%CC%81cran%202025-05-09%20a%CC%80%2012.51.44.png" 
-                alt="Logo GBH" 
-                className="h-8 w-auto mr-2" 
+            <Link to="/admin" className="flex items-center space-x-2">
+              <img
+                src="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746787922004x941654894198586100/Capture%20d%E2%80%99e%CC%81cran%202025-05-09%20a%CC%80%2012.51.44.png"
+                alt="Logo GBH"
+                className="h-8 w-auto mr-2"
               />
               <span className="text-xl font-bold text-white">by GBH</span>
-            </div>
+            </Link>
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-4">
