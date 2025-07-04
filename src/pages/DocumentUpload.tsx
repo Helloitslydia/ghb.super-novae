@@ -363,9 +363,9 @@ function DocumentUpload() {
             <div>
               <h3 className="font-semibold text-blue-900 mb-2">Instructions importantes</h3>
               <ul className="text-blue-800 space-y-1 text-sm">
-                <li>\u2022 Les documents marqu\xE9s d'un ast\xE9risque (*) sont obligatoires</li>
-                <li>\u2022 Formats accept\xE9s : PDF, JPG, PNG (max 10MB)</li>
-                <li>\u2022 Vous pouvez sauvegarder votre progression</li>
+                <li>- Les documents marqués d'un astérisque (*) sont obligatoires</li>
+                <li>- Formats acceptés : PDF, JPG, PNG (max 10MB)</li>
+                <li>- Vous pouvez sauvegarder votre progression</li>
               </ul>
             </div>
           </div>
@@ -375,19 +375,19 @@ function DocumentUpload() {
           <div className="space-y-6 bg-white p-6 rounded-lg border border-gray-200">
             <h2 className="text-xl font-bold mb-4">Partie 1 : Votre exploitation</h2>
             <div className="grid md:grid-cols-2 gap-4">
-              <input name="siret" value={formData.siret} onChange={handleChange} className="border p-2 rounded" placeholder="N\xB0 SIRET" required />
-              <input name="pacage" value={formData.pacage} onChange={handleChange} className="border p-2 rounded" placeholder="N\xB0 PACAGE" />
-              <input name="ede" value={formData.ede} onChange={handleChange} className="border p-2 rounded" placeholder="N\xB0 EDE" />
-              <input name="inuav1" value={formData.inuav1} onChange={handleChange} className="border p-2 rounded" placeholder="N\xB0 INUAV 1" />
-              <input name="inuav2" value={formData.inuav2} onChange={handleChange} className="border p-2 rounded" placeholder="N\xB0 INUAV 2" />
-              <input name="inuav3" value={formData.inuav3} onChange={handleChange} className="border p-2 rounded" placeholder="N\xB0 INUAV 3" />
+              <input name="siret" value={formData.siret} onChange={handleChange} className="border p-2 rounded" placeholder="N° SIRET" required />
+              <input name="pacage" value={formData.pacage} onChange={handleChange} className="border p-2 rounded" placeholder="N° PACAGE" />
+              <input name="ede" value={formData.ede} onChange={handleChange} className="border p-2 rounded" placeholder="N° EDE" />
+              <input name="inuav1" value={formData.inuav1} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 1" />
+              <input name="inuav2" value={formData.inuav2} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 2" />
+              <input name="inuav3" value={formData.inuav3} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 3" />
               <input name="nom" value={formData.nom} onChange={handleChange} className="border p-2 rounded" placeholder="Nom / raison sociale" />
               <input name="statut" value={formData.statut} onChange={handleChange} className="border p-2 rounded" placeholder="Statut juridique" />
               <textarea name="adresse" value={formData.adresse} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Adresse" />
               <input name="code_postal" value={formData.code_postal} onChange={handleChange} className="border p-2 rounded" placeholder="Code postal" />
               <input name="commune" value={formData.commune} onChange={handleChange} className="border p-2 rounded" placeholder="Commune" />
-              <input name="tel_fixe" value={formData.tel_fixe} onChange={handleChange} className="border p-2 rounded" placeholder="T\xE9l\xE9phone fixe" />
-              <input name="tel_mobile" value={formData.tel_mobile} onChange={handleChange} className="border p-2 rounded" placeholder="T\xE9l\xE9phone mobile" />
+              <input name="tel_fixe" value={formData.tel_fixe} onChange={handleChange} className="border p-2 rounded" placeholder="Téléphone fixe" />
+              <input name="tel_mobile" value={formData.tel_mobile} onChange={handleChange} className="border p-2 rounded" placeholder="Téléphone mobile" />
               <input name="email" value={formData.email} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Email" />
               <label className="flex items-center space-x-2 md:col-span-2">
                 <input type="checkbox" name="affiliation_msa" checked={formData.affiliation_msa} onChange={handleChange} />
@@ -418,10 +418,10 @@ function DocumentUpload() {
               <input name="autres_production" value={formData.autres_production} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Autres productions" />
               <input name="besoin_actuel" value={formData.besoin_actuel} onChange={handleChange} className="border p-2 rounded" placeholder="Besoin stockage actuel (m3)" />
               <input name="besoin_prospectif" value={formData.besoin_prospectif} onChange={handleChange} className="border p-2 rounded" placeholder="Besoin stockage prospectif (m3)" />
-              <input name="capacite_actuelle" value={formData.capacite_actuelle} onChange={handleChange} className="border p-2 rounded" placeholder="Capacit\xE9 actuelle (m3)" />
-              <textarea name="detail_stockage" value={formData.detail_stockage} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="D\xE9tail du stockage actuel" />
-              <input name="capacite_besoins_actuels" value={formData.capacite_besoins_actuels} onChange={handleChange} className="border p-2 rounded" placeholder="Capacit\xE9 n\xE9cessaire (actuels)" />
-              <input name="capacite_besoins_prospectifs" value={formData.capacite_besoins_prospectifs} onChange={handleChange} className="border p-2 rounded" placeholder="Capacit\xE9 n\xE9cessaire (moyen terme)" />
+              <input name="capacite_actuelle" value={formData.capacite_actuelle} onChange={handleChange} className="border p-2 rounded" placeholder="Capacité actuelle (m3)" />
+              <textarea name="detail_stockage" value={formData.detail_stockage} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Détail du stockage actuel" />
+              <input name="capacite_besoins_actuels" value={formData.capacite_besoins_actuels} onChange={handleChange} className="border p-2 rounded" placeholder="Capacité nécessaire (actuels)" />
+              <input name="capacite_besoins_prospectifs" value={formData.capacite_besoins_prospectifs} onChange={handleChange} className="border p-2 rounded" placeholder="Capacité nécessaire (moyen terme)" />
               <input name="volume_total_investissement" value={formData.volume_total_investissement} onChange={handleChange} className="border p-2 rounded" placeholder="Volume stockage total invest. (m3)" />
               <input name="micro_surface" value={formData.micro_surface} onChange={handleChange} className="border p-2 rounded" placeholder="Micro-bassine surface (m2)" />
               <input name="micro_volume" value={formData.micro_volume} onChange={handleChange} className="border p-2 rounded" placeholder="Micro-bassine volume (m3)" />
@@ -433,15 +433,15 @@ function DocumentUpload() {
               <input name="citerne_vol_total" value={formData.citerne_vol_total} onChange={handleChange} className="border p-2 rounded" placeholder="Citerne vol. total (m3)" />
               <input name="water_tank_volume" value={formData.water_tank_volume} onChange={handleChange} className="border p-2 rounded" placeholder="Water-tank volume (m3)" />
               <input name="volume_stockage_actuel" value={formData.volume_stockage_actuel} onChange={handleChange} className="border p-2 rounded" placeholder="Volume stockage actuel" />
-              <input name="volume_stockage_total_post" value={formData.volume_stockage_total_post} onChange={handleChange} className="border p-2 rounded" placeholder="Volume stockage total apr\xE8s" />
+              <input name="volume_stockage_total_post" value={formData.volume_stockage_total_post} onChange={handleChange} className="border p-2 rounded" placeholder="Volume stockage total après" />
               <input name="surface_impluvium" value={formData.surface_impluvium} onChange={handleChange} className="border p-2 rounded" placeholder="Surface d'impluvium (m2)" />
-              <input name="cout_total_projet" value={formData.cout_total_projet} onChange={handleChange} className="border p-2 rounded" placeholder="Co\xFBt total du projet" />
-              <input name="depense_nature" value={formData.depense_nature} onChange={handleChange} className="border p-2 rounded" placeholder="Nature d\xE9pense" />
-              <input name="depense_cout" value={formData.depense_cout} onChange={handleChange} className="border p-2 rounded" placeholder="Co\xFBt d\xE9pense" />
-              <input name="depense_terrassement" value={formData.depense_terrassement} onChange={handleChange} className="border p-2 rounded" placeholder="Terrassement co\xFBt" />
-              <input name="depense_pose" value={formData.depense_pose} onChange={handleChange} className="border p-2 rounded" placeholder="Pose co\xFBt" />
-              <input name="depense_raccordement" value={formData.depense_raccordement} onChange={handleChange} className="border p-2 rounded" placeholder="Raccordement co\xFBt" />
-              <input name="depense_pompage" value={formData.depense_pompage} onChange={handleChange} className="border p-2 rounded" placeholder="Pompage co\xFBt" />
+              <input name="cout_total_projet" value={formData.cout_total_projet} onChange={handleChange} className="border p-2 rounded" placeholder="Coût total du projet" />
+              <input name="depense_nature" value={formData.depense_nature} onChange={handleChange} className="border p-2 rounded" placeholder="Nature dépense" />
+              <input name="depense_cout" value={formData.depense_cout} onChange={handleChange} className="border p-2 rounded" placeholder="Coût dépense" />
+              <input name="depense_terrassement" value={formData.depense_terrassement} onChange={handleChange} className="border p-2 rounded" placeholder="Terrassement coût" />
+              <input name="depense_pose" value={formData.depense_pose} onChange={handleChange} className="border p-2 rounded" placeholder="Pose coût" />
+              <input name="depense_raccordement" value={formData.depense_raccordement} onChange={handleChange} className="border p-2 rounded" placeholder="Raccordement coût" />
+              <input name="depense_pompage" value={formData.depense_pompage} onChange={handleChange} className="border p-2 rounded" placeholder="Pompage coût" />
             </div>
           </div>
 
