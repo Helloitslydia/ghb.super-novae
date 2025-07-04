@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 interface EligibilityModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenCriteria: () => void;
 }
 
-export function EligibilityModal({ isOpen, onClose }: EligibilityModalProps) {
+export function EligibilityModal({ isOpen, onClose, onOpenCriteria }: EligibilityModalProps) {
   const navigate = useNavigate();
   if (!isOpen) return null;
 
@@ -22,12 +23,27 @@ export function EligibilityModal({ isOpen, onClose }: EligibilityModalProps) {
         </button>
 
         <h2 className="text-xl font-semibold text-center mb-4">Critères d'éligibilité</h2>
-        <p className="text-gray-700 mb-4 text-center">
-          Pour bénéficier d'une subvention, vous devez&nbsp;:
-        </p>
-        <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Être agriculteur ou exploitant à Mayotte</li>
-        </ul>
+        <div className="text-gray-700 space-y-2 text-sm md:text-base">
+          <p>Ne sont pas éligibles&nbsp;:</p>
+          <ul className="list-disc list-inside ml-4 space-y-1">
+            <li>les constructions de bâtiments&nbsp;;</li>
+            <li>les investissements nécessitant un permis de construire ou une autorisation environnementale « Loi sur l’eau ».</li>
+          </ul>
+          <p>Sont éligibles les investissements de stockage d’eau suivants (si exemptés d’autorisation administrative)&nbsp;:</p>
+          <ul className="list-disc list-inside ml-4 space-y-1">
+            <li>Micro-bassines ou réservoirs creusés dans le sol (surface inférieure à 1000 m²)&nbsp;;</li>
+            <li>Cuves en plastique opaque&nbsp;;</li>
+            <li>Cuves métalliques en acier galvanisé avec pied&nbsp;;</li>
+            <li>Citernes souples&nbsp;;</li>
+            <li>Réservoir de type « water-tank ».</li>
+          </ul>
+        </div>
+        <button
+          onClick={onOpenCriteria}
+          className="mt-4 text-[#2D6A4F] hover:text-[#1B4332] underline"
+        >
+          En savoir plus
+        </button>
 
         <button
           onClick={() => {
