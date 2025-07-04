@@ -17,6 +17,8 @@ function Admin() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [applications, setApplications] = useState<Application[]>([]);
+  const [showAll, setShowAll] = useState(false);
+  const [allApplications, setAllApplications] = useState<any[]>([]);
 
   useEffect(() => {
     if (authenticated) {
@@ -32,6 +34,12 @@ function Admin() {
     if (!error && data) {
       setApplications(data as Application[]);
     }
+  };
+
+  const fetchAllApplications = async () => {
+    const { data } = await supabase.from('project_applications').select('*');
+    setAllApplications(data || []);
+    setShowAll(true);
   };
 
   const handleLogin = (e: React.FormEvent) => {
@@ -77,7 +85,15 @@ function Admin() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-2xl font-bold mb-4">Dossiers en cours d'étude</h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">Dossiers en cours d'étude</h1>
+        <button
+          onClick={fetchAllApplications}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Voir toutes les données
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded shadow">
           <thead>
@@ -121,6 +137,22 @@ function Admin() {
           </tbody>
         </table>
       </div>
+      {showAll && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow max-h-[90vh] overflow-auto w-[90vw] max-w-5xl">
+            <h2 className="text-xl font-bold mb-4">Toutes les données</h2>
+            <pre className="text-xs whitespace-pre-wrap">
+              {JSON.stringify(allApplications, null, 2)}
+            </pre>
+            <button
+              onClick={() => setShowAll(false)}
+              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
+            >
+              Fermer
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
