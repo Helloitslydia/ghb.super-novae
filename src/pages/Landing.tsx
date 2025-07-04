@@ -28,7 +28,7 @@ const features = [
 
 const programInfo = {
   title: "Pourquoi ce programme ?",
-  description: "Notre entreprise s'engage aux côtés des agriculteurs de Mayotte en mettant à disposition des financements pour des projets de récupération et de gestion durable de l'eau.",
+  description: "Notre entreprise, s’engage aux côtés des agriculteurs mahorais en mettant en place un fonds de soutien pour renforcer leur résilience à la sécheresse. Ce programme vise à financer l’acquisition d’équipements de récupération et de stockage des eaux pluviales à usage agricole.",
   benefits: [
     "Réduire la vulnérabilité des exploitations agricoles au stress hydrique",
     "Encourager des pratiques agricoles durables",
