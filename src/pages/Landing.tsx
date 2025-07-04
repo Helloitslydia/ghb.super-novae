@@ -9,17 +9,18 @@ import { useAuth } from '../contexts/AuthContext';
 const features = [
   {
     icon: <ClipboardCheck className="w-6 h-6" />,
-    title: "Vérifiez si votre projet est éligible",
-    description: "Prenez 2 minutes pour découvrir les critères et préparez votre candidature avant le [date limite]."
+    title: "1) Vérifiez si votre projet est éligible",
+    description:
+      "Prenez 2 minutes pour découvrir les critères et préparez votre candidature avant le [date limite]."
   },
   {
     icon: <Download className="w-6 h-6" />,
-    title: "Téléversez vos documents en toute simplicité",
+    title: "2) Téléversez vos documents en toute simplicité",
     description: "Déposez vos pièces en ligne, la plateforme vous guide à chaque étape."
   },
   {
     icon: <MessageSquareText className="w-6 h-6" />,
-    title: "Suivez l’avancement de votre dossier en temps réel",
+    title: "3) Suivez l’avancement de votre dossier en temps réel",
     description: "Accédez facilement aux informations dont vous avez besoin, à tout moment."
   }
 ];
