@@ -67,7 +67,11 @@ function Landing() {
         L’appel à proposition sera ouvert le jeudi 10 juillet
       </div>
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
-      <EligibilityModal isOpen={isEligibilityModalOpen} onClose={() => setIsEligibilityModalOpen(false)} />
+      <EligibilityModal
+        isOpen={isEligibilityModalOpen}
+        onClose={() => setIsEligibilityModalOpen(false)}
+        onOpenCriteria={() => setIsCriteriaModalOpen(true)}
+      />
       <CriteriaModal isOpen={isCriteriaModalOpen} onClose={() => setIsCriteriaModalOpen(false)} />
       <nav className="container mx-auto px-6 py-4 relative">
         <div className="relative">
