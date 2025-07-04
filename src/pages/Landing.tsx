@@ -3,6 +3,7 @@ import React from 'react';
 import { ClipboardCheck, Download, MessageSquareText, ArrowRight, Menu, X } from 'lucide-react';
 import { LoginModal } from '../components/LoginModal';
 import { EligibilityModal } from '../components/EligibilityModal';
+import { CriteriaModal } from '../components/CriteriaModal';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -39,6 +40,7 @@ function Landing() {
   const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isEligibilityModalOpen, setIsEligibilityModalOpen] = React.useState(false);
+  const [isCriteriaModalOpen, setIsCriteriaModalOpen] = React.useState(false);
   const { user } = useAuth();
   const videoUrl = "//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746742604286x870259835249476100/20250509_0009_Modern%20Farmland%20Harmony_remix_01jtrz3hf8e9krdsy57armr27d.mp4";
 
@@ -63,6 +65,7 @@ function Landing() {
       <div className="relative z-10 min-h-screen bg-black bg-opacity-50 flex flex-col">
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
       <EligibilityModal isOpen={isEligibilityModalOpen} onClose={() => setIsEligibilityModalOpen(false)} />
+      <CriteriaModal isOpen={isCriteriaModalOpen} onClose={() => setIsCriteriaModalOpen(false)} />
       <nav className="container mx-auto px-6 py-4 relative">
         <div className="relative">
           <div className="flex justify-between items-center">
@@ -93,12 +96,20 @@ function Landing() {
                 </button>
               )}
               {!user && (
-                <button
-                  onClick={() => setIsEligibilityModalOpen(true)}
-                  className="bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
-                >
-                  Déposer votre dossier
-                </button>
+                <>
+                  <button
+                    onClick={() => setIsEligibilityModalOpen(true)}
+                    className="bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
+                  >
+                    Déposer votre dossier
+                  </button>
+                  <button
+                    onClick={() => setIsCriteriaModalOpen(true)}
+                    className="ml-2 px-4 py-2 text-white hover:text-gray-200 rounded-lg transition-colors"
+                  >
+                    Consulter les critères
+                  </button>
+                </>
               )}
             </div>
             
@@ -135,15 +146,26 @@ function Landing() {
                   </button>
                 )}
                 {!user && (
-                  <button
-                    onClick={() => {
-                      setIsEligibilityModalOpen(true);
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="bg-[#2D6A4F] text-white py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg text-center"
-                  >
-                    Déposer votre dossier
-                  </button>
+                  <>
+                    <button
+                      onClick={() => {
+                        setIsEligibilityModalOpen(true);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="bg-[#2D6A4F] text-white py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg text-center"
+                    >
+                      Déposer votre dossier
+                    </button>
+                    <button
+                      onClick={() => {
+                        setIsCriteriaModalOpen(true);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="text-white hover:text-gray-200 py-2 text-center"
+                    >
+                      Consulter les critères
+                    </button>
+                  </>
                 )}
               </div>
             </div>
@@ -162,13 +184,21 @@ function Landing() {
   </p>
   <div className="flex justify-start space-x-4 mt-16">
             {!user && (
-              <button
-                onClick={() => setIsEligibilityModalOpen(true)}
-                className="flex items-center bg-[#2D6A4F] text-white px-8 py-4 rounded-lg hover:bg-[#1B4332] transition-colors shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
-              >
-                Déposer votre dossier maintenant
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </button>
+              <>
+                <button
+                  onClick={() => setIsEligibilityModalOpen(true)}
+                  className="flex items-center bg-[#2D6A4F] text-white px-8 py-4 rounded-lg hover:bg-[#1B4332] transition-colors shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+                >
+                  Déposer votre dossier maintenant
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => setIsCriteriaModalOpen(true)}
+                  className="flex items-center px-8 py-4 text-white hover:text-gray-200 transition-colors"
+                >
+                  Consulter les critères
+                </button>
+              </>
             )}
          </div>
         </div>
