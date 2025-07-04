@@ -166,9 +166,9 @@ function DocumentUpload() {
         .from('project_applications')
         .select('*')
         .eq('user_id', user.id)
-        .single();
-      if (data) {
-        setFormData({ ...(data as any) });
+        .limit(1);
+      if (data && data.length > 0) {
+        setFormData({ ...(data[0] as any) });
       }
     };
     loadData();
