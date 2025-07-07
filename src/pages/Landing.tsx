@@ -264,9 +264,6 @@ function Landing() {
                 </div>
               ))}
             </div>
-            <p className="text-xl text-gray-200 mt-8">
-              Pour consulter l'ensemble de nos engagements et de nos actions, <a href="https://gbh.fr/fr/nos-engagements" className="text-[#E8B647] underline" target="_blank" rel="noopener noreferrer">cliquez ici</a>.
-            </p>
           </div>
         </div>
 
