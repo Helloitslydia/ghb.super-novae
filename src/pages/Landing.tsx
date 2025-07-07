@@ -36,7 +36,7 @@ function Landing() {
             onClick={() => setIsCriteriaModalOpen(true)}
             className="text-[#E8B647] underline"
           >
-            Consulter les critères, Programme & Équipements Clés / Le Programme en Bref,
+            Consulter les critères, Programme & Équipements Clés, Le Programme en Bref
           </button>
         </span>
       )
