@@ -21,6 +21,7 @@ function Admin() {
   const [error, setError] = useState("");
   const [applications, setApplications] = useState<Application[]>([]);
   const [filter, setFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [allApplications, setAllApplications] = useState<any[]>([]);
   const [showDetails, setShowDetails] = useState(false);
@@ -35,8 +36,7 @@ function Admin() {
   const loadApplications = async () => {
     const { data, error } = await supabase
       .from("project_applications")
-      .select("id, user_id, nom, email, status, created_at")
-      .eq("status", "Etude du dossier en cours");
+      .select("id, user_id, nom, email, status, created_at");
     if (!error && data) {
       setApplications(data as Application[]);
     }
@@ -82,10 +82,11 @@ function Admin() {
 
   const filteredApplications = applications.filter((app) => {
     const query = filter.toLowerCase();
-    return (
+    const matchesQuery =
       (app.nom && app.nom.toLowerCase().includes(query)) ||
-      (app.email && app.email.toLowerCase().includes(query))
-    );
+      (app.email && app.email.toLowerCase().includes(query));
+    const matchesStatus = statusFilter === "" || app.status === statusFilter;
+    return matchesQuery && matchesStatus;
   });
 
   if (!authenticated) {
@@ -139,7 +140,7 @@ function Admin() {
       </div>
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold">Dossiers en cours d'étude</h2>
+          <h2 className="text-2xl font-bold">Dossiers</h2>
           <button
             onClick={fetchAllApplications}
             className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded shadow"
@@ -159,6 +160,17 @@ function Admin() {
             onChange={(e) => setFilter(e.target.value)}
             className="border p-2 rounded w-full"
           />
+          <select
+            id="status-filter"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="border p-2 rounded w-full mt-2"
+          >
+            <option value="">Tous les statuts</option>
+            <option value="Etude du dossier en cours">Etude du dossier en cours</option>
+            <option value="Validé">Validé</option>
+            <option value="Refusé">Refusé</option>
+          </select>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white rounded shadow">
