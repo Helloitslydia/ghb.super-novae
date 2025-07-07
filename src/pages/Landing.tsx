@@ -10,7 +10,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 const programInfo = {
   title: "Pourquoi ce programme ?",
-  description: "Notre entreprise, s’engage aux côtés des agriculteurs mahorais en mettant en place un fonds de soutien pour renforcer leur résilience à la sécheresse. Ce programme vise à financer l’acquisition d’équipements de récupération et de stockage des eaux pluviales à usage agricole.",
+  description: "GBH et Super-Novae s'engagent ensemble aux cotés des agriculteurs mahorais, en mettant en place un fonds de soutien pour renforcer leur résilience à la sécheresse. Ce programme vise à financer l’acquisition d’équipements de récupération et de stockage des eaux pluviales à usage agricole.",
   benefits: [
     "Renforcer la résilience des exploitations agricoles face au stress hydrique",
     "Promouvoir des pratiques agricoles durables",
@@ -95,7 +95,7 @@ function Landing() {
                 alt="Logo partenaire"
                 className="h-8 w-auto"
               />
-              <span className="text-xl font-bold text-white">By GBH</span>
+              <span className="text-xl font-bold text-white">By GBH x Super-Novae</span>
             </Link>
             
             {/* Desktop Navigation */}
