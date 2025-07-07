@@ -34,7 +34,7 @@ function Landing() {
         <span>
           <button
             onClick={() => setIsCriteriaModalOpen(true)}
-            className="text-[#2D6A4F] hover:text-[#1B4332] underline"
+            className="text-[#E8B647] underline"
           >
             Consulter les critères, Programme & Équipements Clés / Le Programme en Bref,
           </button>
@@ -74,9 +74,6 @@ function Landing() {
       </video>
       
       <div className="relative z-10 min-h-screen bg-black bg-opacity-50 flex flex-col">
-      <div className="bg-red-600 text-white text-center text-sm py-2">
-        L’appel à proposition sera ouvert le jeudi 10 juillet 2025
-      </div>
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
       <EligibilityModal
         isOpen={isEligibilityModalOpen}
@@ -268,7 +265,7 @@ function Landing() {
               ))}
             </div>
             <p className="text-xl text-gray-200 mt-8">
-              Pour consulter l'ensemble de nos engagements et de nos actions, <a href="https://gbh.fr/fr/nos-engagements" className="text-[#2D6A4F] hover:text-[#1B4332] underline" target="_blank" rel="noopener noreferrer">cliquez ici</a>.
+              Pour consulter l'ensemble de nos engagements et de nos actions, <a href="https://gbh.fr/fr/nos-engagements" className="text-[#E8B647] underline" target="_blank" rel="noopener noreferrer">cliquez ici</a>.
             </p>
           </div>
         </div>
@@ -297,7 +294,7 @@ function Landing() {
                   href="https://gbh.fr/fr"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#2D6A4F] hover:text-[#1B4332] underline"
+                  className="text-[#E8B647] underline"
                 >
                   Lien vers le site GBH
                 </a>
@@ -316,7 +313,7 @@ function Landing() {
                   href="https://super-novae.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#2D6A4F] hover:text-[#1B4332] underline"
+                  className="text-[#E8B647] underline"
                 >
                   Lien vers le site Super-Novae
                 </a>
