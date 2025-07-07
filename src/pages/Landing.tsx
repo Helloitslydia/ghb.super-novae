@@ -10,19 +10,20 @@ import { useAuth } from '../contexts/AuthContext';
 const features = [
   {
     icon: <ClipboardCheck className="w-6 h-6" />,
-    title: "1) Vérifiez si votre projet est éligible",
-    description:
-      "Prenez 2 minutes pour découvrir les critères et préparez votre candidature avant le [date limite]."
+    title: "Etape 1 : préparez votre candidature avant le 15/09/2025",
+    description: ""
   },
   {
     icon: <Download className="w-6 h-6" />,
     title: "2) Téléversez vos documents en toute simplicité",
-    description: "Déposez vos pièces en ligne, la plateforme vous guide à chaque étape."
+    description: "Déposez vos pièces en ligne, la plateforme vous guide à chaque étape.",
+    buttonLabel: "Déposer votre dossier"
   },
   {
     icon: <MessageSquareText className="w-6 h-6" />,
     title: "3) Suivez l’avancement de votre dossier en temps réel",
-    description: "Accédez facilement aux informations dont vous avez besoin, à tout moment."
+    description: "Accédez facilement aux informations dont vous avez besoin, à tout moment.",
+    buttonLabel: "Connexion"
   }
 ];
 
@@ -214,12 +215,23 @@ function Landing() {
           <h2 className="text-3xl font-bold text-white mb-6">Les étapes</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-white border-opacity-20">
-                <div className="text-[#2D6A4F] mb-4">
-                  {feature.icon}
-                </div>
+              <div
+                key={index}
+                className="bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-white border-opacity-20"
+              >
+                <div className="text-[#2D6A4F] mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
-                <p className="text-gray-300">{feature.description}</p>
+                {feature.description && (
+                  <p className="text-gray-300">{feature.description}</p>
+                )}
+                {feature.buttonLabel && (
+                  <button
+                    disabled
+                    className="mt-4 bg-[#2D6A4F] text-white px-4 py-2 rounded-lg opacity-50 cursor-not-allowed"
+                  >
+                    {feature.buttonLabel}
+                  </button>
+                )}
               </div>
             ))}
           </div>
