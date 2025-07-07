@@ -20,6 +20,7 @@ function Admin() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [applications, setApplications] = useState<Application[]>([]);
+  const [filter, setFilter] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [allApplications, setAllApplications] = useState<any[]>([]);
   const [showDetails, setShowDetails] = useState(false);
@@ -78,6 +79,14 @@ function Admin() {
       await loadApplications();
     }
   };
+
+  const filteredApplications = applications.filter((app) => {
+    const query = filter.toLowerCase();
+    return (
+      (app.nom && app.nom.toLowerCase().includes(query)) ||
+      (app.email && app.email.toLowerCase().includes(query))
+    );
+  });
 
   if (!authenticated) {
     return (
@@ -138,6 +147,19 @@ function Admin() {
             Voir toutes les données
           </button>
         </div>
+        <div className="bg-white p-4 rounded shadow mb-4">
+          <label htmlFor="filter" className="block text-sm font-medium mb-2">
+            Filtrer les dossiers
+          </label>
+          <input
+            id="filter"
+            type="text"
+            placeholder="Rechercher par nom ou email"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="border p-2 rounded w-full"
+          />
+        </div>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white rounded shadow">
             <thead>
@@ -150,7 +172,7 @@ function Admin() {
               </tr>
             </thead>
             <tbody>
-              {applications.map((app) => (
+              {filteredApplications.map((app) => (
                 <tr key={app.id} className="border-t">
                   <td className="px-4 py-2">{app.nom}</td>
                   <td className="px-4 py-2">{app.email}</td>
@@ -184,7 +206,7 @@ function Admin() {
                   </td>
                 </tr>
               ))}
-              {applications.length === 0 && (
+              {filteredApplications.length === 0 && (
                 <tr>
                   <td
                     colSpan={5}
