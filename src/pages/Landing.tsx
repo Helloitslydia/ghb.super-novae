@@ -82,7 +82,7 @@ function Landing() {
                 alt="Logo GBH"
                 className="h-8 w-auto mr-2"
               />
-              <span className="text-xl font-bold text-white">by GBH</span>
+              <span className="text-xl font-bold text-white">en partenariat avec GBH</span>
             </Link>
             
             {/* Desktop Navigation */}
