@@ -246,6 +246,58 @@ function Landing() {
           </div>
         </div>
 
+        {/* About cards */}
+        <div className="mt-16">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20">
+              <h3 className="text-2xl font-bold text-white mb-4">A propos de GBH</h3>
+              <p className="text-gray-200">
+                GBH. Fondé en 1960, GBH s’est développé à partir des départements d’Outre-mer,
+                puis à l’international. Le Groupe est aujourd’hui implanté sur 19 territoires, emploie
+                18 000 collaborateurs et a un chiffre d’affaires consolidé de 5 milliards d’euros.
+                Groupe familial basé à la Martinique, GBH exerce ses activités autour de trois pôles :
+                Un pôle "grande distribution", un pôle "automobile" ainsi qu’un pôle "activités
+                industrielles" qui compte notamment la production et la distribution de marques de
+                spiritueux ainsi que diverses activités dans le secteur agroalimentaire. Implanté à
+                Mayotte depuis 2020, GBH détient la société BDM, Bourbon Distribution Mayotte,
+                comprenant deux supermarchés Carrefour et 39 magasins Douka Bé, petits
+                magasins d’ultra proximité, répartis dans tous les villages de Mayotte. Le groupe
+                est aussi présent à Mayotte dans l’activité automobile avec les marques Hyundai,
+                Ada, Bosch et Point S. Au total, 540 collaborateurs travaillent au sein du groupe.
+              </p>
+              <p className="text-gray-200 mt-4">
+                <a
+                  href="https://gbh.fr/fr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#2D6A4F] hover:text-[#1B4332] underline"
+                >
+                  Lien vers le site GBH
+                </a>
+              </p>
+            </div>
+            <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20">
+              <h3 className="text-2xl font-bold text-white mb-4">A propos de Super Novae</h3>
+              <p className="text-gray-200">
+                SUPER-NOVAE. ONG humanitaire et de développement, Super Novae intervient
+                dans les zones de crise pour renforcer l’accès à la santé, à l’emploi et à l’éducation.
+                En s’appuyant sur les dynamiques locales, elle met en œuvre des solutions
+                innovantes pour accompagner les populations vers l’autonomie et la résilience.
+              </p>
+              <p className="text-gray-200 mt-4">
+                <a
+                  href="https://super-novae.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#2D6A4F] hover:text-[#1B4332] underline"
+                >
+                  Lien vers le site Super-Novae
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+
       </main>
       
       <footer className="mt-auto bg-black bg-opacity-50 border-t border-white border-opacity-20">
