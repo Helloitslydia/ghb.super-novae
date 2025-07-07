@@ -1,6 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 interface EligibilityModalProps {
   isOpen: boolean;
@@ -9,7 +9,6 @@ interface EligibilityModalProps {
 }
 
 export function EligibilityModal({ isOpen, onClose, onOpenCriteria }: EligibilityModalProps) {
-  const navigate = useNavigate();
   if (!isOpen) return null;
 
   return (
@@ -48,7 +47,7 @@ export function EligibilityModal({ isOpen, onClose, onOpenCriteria }: Eligibilit
         <button
           onClick={() => {
             onClose();
-            navigate('/signup');
+            toast.error('Le dépôt de candidatures sera possible le 10 juillet à 16h.');
           }}
           className="mt-6 w-full bg-[#2D6A4F] text-white py-2 px-4 rounded-md hover:bg-[#1B4332] transition-colors"
         >
