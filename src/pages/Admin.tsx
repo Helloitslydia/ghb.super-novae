@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface Application {
@@ -64,18 +66,25 @@ function Admin() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow-md space-y-4">
-          <h1 className="text-xl font-bold">Accès administrateur</h1>
+      <div className="min-h-screen bg-gradient-to-b from-[#2D6A4F] to-[#1B4332] flex items-center justify-center px-4">
+        <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-xl space-y-6 w-full max-w-sm">
+          <div className="flex flex-col items-center space-y-2">
+            <img
+              src="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746787922004x941654894198586100/Capture%20d%E2%80%99e%CC%81cran%202025-05-09%20a%CC%80%2012.51.44.png"
+              alt="Logo GBH"
+              className="h-8 w-auto"
+            />
+            <h1 className="text-xl font-bold text-gray-800">Accès administrateur</h1>
+          </div>
           <input
             type="password"
             placeholder="Mot de passe"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border p-2 rounded w-64"
+            className="border p-2 rounded w-full"
           />
           {error && <p className="text-red-600 text-sm">{error}</p>}
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+          <button type="submit" className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded w-full">
             Valider
           </button>
         </form>
@@ -84,17 +93,26 @@ function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold">Dossiers en cours d'étude</h1>
-        <button
-          onClick={fetchAllApplications}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          Voir toutes les données
-        </button>
+    <div className="min-h-screen bg-gray-50">
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <Link to="/" className="flex items-center text-gray-600 hover:text-gray-900">
+            <ArrowLeft className="w-5 h-5 mr-2" /> Retour
+          </Link>
+          <h1 className="text-xl font-bold text-gray-900">Administration</h1>
+        </div>
       </div>
-      <div className="overflow-x-auto">
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold">Dossiers en cours d'étude</h2>
+          <button
+            onClick={fetchAllApplications}
+            className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded shadow"
+          >
+            Voir toutes les données
+          </button>
+        </div>
+        <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded shadow">
           <thead>
             <tr className="bg-gray-100">
