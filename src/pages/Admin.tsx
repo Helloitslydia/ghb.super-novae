@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Eye } from "lucide-react";
+import { ApplicationDetailsModal } from "../components/ApplicationDetailsModal";
 import { supabase } from "../lib/supabase";
 
 interface Application {
@@ -21,6 +22,8 @@ function Admin() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [showAll, setShowAll] = useState(false);
   const [allApplications, setAllApplications] = useState<any[]>([]);
+  const [showDetails, setShowDetails] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState<any | null>(null);
 
   useEffect(() => {
     if (authenticated) {
@@ -42,6 +45,18 @@ function Admin() {
     const { data } = await supabase.from("project_applications").select("*");
     setAllApplications(data || []);
     setShowAll(true);
+  };
+
+  const fetchApplicationDetails = async (id: string) => {
+    const { data } = await supabase
+      .from("project_applications")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (data) {
+      setSelectedApplication(data);
+      setShowDetails(true);
+    }
   };
 
   const handleLogin = (e: React.FormEvent) => {
@@ -142,7 +157,18 @@ function Admin() {
                   <td className="px-4 py-2">
                     {new Date(app.created_at).toLocaleDateString()}
                   </td>
-                  <td className="px-4 py-2">{app.status}</td>
+                  <td className="px-4 py-2">
+                    <div className="flex items-center space-x-2">
+                      <span>{app.status}</span>
+                      <button
+                        onClick={() => fetchApplicationDetails(app.id)}
+                        className="text-gray-500 hover:text-blue-600"
+                        title="Voir les détails"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
                   <td className="px-4 py-2">
                     <select
                       className="border rounded p-1"
@@ -186,6 +212,13 @@ function Admin() {
               </button>
             </div>
           </div>
+        )}
+        {showDetails && selectedApplication && (
+          <ApplicationDetailsModal
+            isOpen={showDetails}
+            onClose={() => setShowDetails(false)}
+            application={selectedApplication}
+          />
         )}
       </div>
     </div>
