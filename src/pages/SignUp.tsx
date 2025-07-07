@@ -22,14 +22,14 @@ function SignUp() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#2D6A4F] to-[#1B4332] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-          <Link to="/" className="flex justify-center items-center space-x-2">
-            <img
-              src="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746787922004x941654894198586100/Capture%20d%E2%80%99e%CC%81cran%202025-05-09%20a%CC%80%2012.51.44.png"
-              alt="Logo GBH"
-              className="h-8 w-auto"
-            />
-            <span className="text-2xl font-bold text-white">en partenariat avec GBH</span>
-          </Link>
+        <Link to="/" className="flex justify-center items-center space-x-2">
+          <img
+            src="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746787922004x941654894198586100/Capture%20d%E2%80%99e%CC%81cran%202025-05-09%20a%CC%80%2012.51.44.png"
+            alt="Logo GBH"
+            className="h-8 w-auto"
+          />
+          <span className="text-2xl font-bold text-white">By GBH</span>
+        </Link>
           <h2 className="mt-6 text-3xl font-bold text-white">Inscriptions bientôt disponibles</h2>
           <p className="mt-2 text-sm text-gray-200">
             La création de compte sera possible le 10 juillet à 16h.
@@ -86,7 +86,7 @@ function SignUp() {
             alt="Logo GBH"
             className="h-8 w-auto"
           />
-          <span className="text-2xl font-bold text-white">en partenariat avec GBH</span>
+          <span className="text-2xl font-bold text-white">By GBH</span>
         </Link>
         <h2 className="mt-6 text-center text-3xl font-bold text-white">
           Créez votre compte
