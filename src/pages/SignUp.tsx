@@ -3,18 +3,31 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, User } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
+const ALLOWED_SIGNUP_DATE = new Date('2024-07-10T16:00:00');
+
 function SignUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isBeforeAllowedDate, setIsBeforeAllowedDate] = useState(true);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    setIsBeforeAllowedDate(new Date() < ALLOWED_SIGNUP_DATE);
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
+
+    if (isBeforeAllowedDate) {
+      setLoading(false);
+      setError('La création de compte sera possible le 10 juillet à 16h.');
+      return;
+    }
 
     try {
       const { error: signUpError } = await supabase.auth.signUp({
@@ -132,10 +145,15 @@ function SignUp() {
                   {error}
                 </div>
               )}
+              {isBeforeAllowedDate && (
+                <div className="mb-4 text-sm text-red-600">
+                  La création de compte sera possible le 10 juillet à 16h.
+                </div>
+              )}
               <button
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#2D6A4F] hover:bg-[#1B4332] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2D6A4F] disabled:opacity-50"
-                disabled={loading}
+                disabled={loading || isBeforeAllowedDate}
               >
                 {loading ? 'Création en cours...' : 'Créer mon compte'}
               </button>
