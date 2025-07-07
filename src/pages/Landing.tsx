@@ -7,25 +7,6 @@ import { CriteriaModal } from '../components/CriteriaModal';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-const features = [
-  {
-    icon: <ClipboardCheck className="w-6 h-6" />,
-    title: "Etape 1 : préparez votre candidature avant le 15/09/2025",
-    description: ""
-  },
-  {
-    icon: <Download className="w-6 h-6" />,
-    title: "2) Téléversez vos documents en toute simplicité",
-    description: "Déposez vos pièces en ligne, la plateforme vous guide à chaque étape.",
-    buttonLabel: "Déposer votre dossier"
-  },
-  {
-    icon: <MessageSquareText className="w-6 h-6" />,
-    title: "3) Suivez l’avancement de votre dossier en temps réel",
-    description: "Accédez facilement aux informations dont vous avez besoin, à tout moment.",
-    buttonLabel: "Connexion"
-  }
-];
 
 const programInfo = {
   title: "Pourquoi ce programme ?",
@@ -44,6 +25,35 @@ function Landing() {
   const [isCriteriaModalOpen, setIsCriteriaModalOpen] = React.useState(false);
   const { user } = useAuth();
   const videoUrl = "//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746742604286x870259835249476100/20250509_0009_Modern%20Farmland%20Harmony_remix_01jtrz3hf8e9krdsy57armr27d.mp4";
+
+  const features = [
+    {
+      icon: <ClipboardCheck className="w-6 h-6" />,
+      title: "Etape 1 : préparez votre candidature avant le 15/09/2025",
+      description: (
+        <span>
+          <button
+            onClick={() => setIsCriteriaModalOpen(true)}
+            className="text-[#2D6A4F] hover:text-[#1B4332] underline"
+          >
+            Consulter les critères, Programme & Équipements Clés / Le Programme en Bref,
+          </button>
+        </span>
+      )
+    },
+    {
+      icon: <Download className="w-6 h-6" />,
+      title: "2) Téléversez vos documents en toute simplicité",
+      description: "Déposez vos pièces en ligne, la plateforme vous guide à chaque étape.",
+      buttonLabel: "Déposer votre dossier"
+    },
+    {
+      icon: <MessageSquareText className="w-6 h-6" />,
+      title: "3) Suivez l’avancement de votre dossier en temps réel",
+      description: "Accédez facilement aux informations dont vous avez besoin, à tout moment.",
+      buttonLabel: "Connexion"
+    }
+  ];
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -222,7 +232,7 @@ function Landing() {
                 <div className="text-[#2D6A4F] mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
                 {feature.description && (
-                  <p className="text-gray-300">{feature.description}</p>
+                  <div className="text-gray-300">{feature.description}</div>
                 )}
                 {feature.buttonLabel && (
                   <button
