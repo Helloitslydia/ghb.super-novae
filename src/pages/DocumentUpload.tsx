@@ -84,6 +84,7 @@ interface FormDataState {
   depense_pose: string;
   depense_raccordement: string;
   depense_pompage: string;
+  commentaire_projet: string;
   status: string;
   attestation: boolean;
 }
@@ -138,6 +139,7 @@ const initialFormData: FormDataState = {
   depense_pose: '',
   depense_raccordement: '',
   depense_pompage: '',
+  commentaire_projet: '',
   status: 'Brouillon',
   attestation: false,
 };
@@ -442,6 +444,13 @@ function DocumentUpload() {
               <input name="depense_pose" value={formData.depense_pose} onChange={handleChange} className="border p-2 rounded" placeholder="Pose coût" />
               <input name="depense_raccordement" value={formData.depense_raccordement} onChange={handleChange} className="border p-2 rounded" placeholder="Raccordement coût" />
               <input name="depense_pompage" value={formData.depense_pompage} onChange={handleChange} className="border p-2 rounded" placeholder="Pompage coût" />
+              <textarea
+                name="commentaire_projet"
+                value={formData.commentaire_projet}
+                onChange={handleChange}
+                className="border p-2 rounded md:col-span-2"
+                placeholder="Commentaire sur votre projet"
+              />
             </div>
           </div>
 
