@@ -560,10 +560,54 @@ function DocumentUpload() {
 
           <div className="bg-white p-6 rounded-lg border border-gray-200">
             <h2 className="text-xl font-bold mb-4">Partie 4 : Attestation</h2>
-            <label className="flex items-center space-x-2">
-              <input type="checkbox" name="attestation" checked={formData.attestation} onChange={handleChange} />
-              <span>Je certifie l'exactitude des informations fournies</span>
-            </label>
+            <div className="space-y-2">
+              <div>
+                <label className="block mb-1">Je soussigné(e) (nom et prénom) :</label>
+                <input className="border p-2 rounded w-full" type="text" />
+              </div>
+              <label className="flex items-start space-x-2">
+                <input type="checkbox" />
+                <span className="flex-1">Certifie avoir pouvoir pour représenter le demandeur dans le cadre de la présente formalité ;</span>
+              </label>
+              <label className="flex items-start space-x-2">
+                <input type="checkbox" />
+                <span className="flex-1">Certifie l'ensemble des informations fournies dans le présent formulaire et les pièces jointes.</span>
+              </label>
+              <label className="flex items-start space-x-2">
+                <input type="checkbox" />
+                <span className="flex-1">Je suis informé qu'en cas d'irrégularité ou de non-respect de mes engagements, le remboursement des sommes perçues sera exigé, majoré d'intérêts de retard et éventuellement de pénalités financières, sans exclure d'autres poursuites et sanctions prévues par les textes en vigueur.</span>
+              </label>
+              <p className="font-semibold mt-2">Je déclare :</p>
+              <label className="flex items-start space-x-2">
+                <input type="checkbox" />
+                <span className="flex-1">ne pas disposer de forage sur mon exploitation et ne pas avoir engagé de démarche pour en disposer.</span>
+              </label>
+              <label className="flex items-start space-x-2">
+                <input type="checkbox" />
+                <span className="flex-1">que mon projet ne nécessite ni permis de construire ni autorisation environnementale « Loi sur l’eau ».</span>
+              </label>
+              <label className="flex items-start space-x-2">
+                <input type="checkbox" />
+                <span className="flex-1">Je demande à bénéficier de l’aide aux investissements visant à renforcer la résistance à la sécheresse des exploitations agricoles mahoraises via l’acquisition d’équipements de récupération et de stockage des eaux pluviales à usage agricole.</span>
+              </label>
+              <label className="flex items-start space-x-2">
+                <input type="checkbox" />
+                <span className="flex-1">Je m’engage à ce que mon projet soit réalisé au plus tard le 30 juillet 2025 (mise en œuvre opérationnelle avec raccordement aux impluviums).</span>
+              </label>
+              <p className="font-semibold mt-2">Je m'engage, sous réserve d'attribution de l'aide :</p>
+              <label className="flex items-start space-x-2">
+                <input type="checkbox" />
+                <span className="flex-1">À délivrer tout document ou justificatif demandé par le bailleur pendant 3 années ;</span>
+              </label>
+              <p className="font-semibold mt-2">Protection des données personnelles :</p>
+              <label className="flex items-start space-x-2">
+                <input type="checkbox" name="attestation" checked={formData.attestation} onChange={handleChange} />
+                <span className="flex-1">J’autorise les organismes tiers (Direction des finances publiques, MSA, DAAF, fournisseurs des équipements financés par l’appel à projet.) à transmettre à GBH ou son partenaire de mise en œuvre Super Novae les données utiles à l’instruction et au paiement de la présente demande d’aide.</span>
+              </label>
+              <div className="mt-2">
+                Fait le <input type="text" className="border p-2 rounded mx-2" placeholder="JJ/MM/AAAA" /> Signature(s) (de tous les associés si GAEC) :
+              </div>
+            </div>
           </div>
 
           {error && (
