@@ -28,7 +28,7 @@ function Landing() {
 
   const features = [
     {
-      icon: <ClipboardCheck className="w-6 h-6" />,
+      icon: <ClipboardCheck className="w-6 h-6 text-[#E8B647]" />,
       title: "Etape 1 : préparez votre candidature avant le 15/09/2025",
       description: (
         <span>
@@ -42,13 +42,13 @@ function Landing() {
       )
     },
     {
-      icon: <Download className="w-6 h-6" />,
+      icon: <Download className="w-6 h-6 text-[#E8B647]" />,
       title: "2) Téléversez vos documents en toute simplicité",
       description: "Déposez vos pièces en ligne, la plateforme vous guide à chaque étape.",
       buttonLabel: "Déposer votre dossier"
     },
     {
-      icon: <MessageSquareText className="w-6 h-6" />,
+      icon: <MessageSquareText className="w-6 h-6 text-[#E8B647]" />,
       title: "3) Suivez l’avancement de votre dossier en temps réel",
       description: "Accédez facilement aux informations dont vous avez besoin, à tout moment.",
       buttonLabel: "Connexion"
@@ -138,7 +138,11 @@ function Landing() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden p-2 text-white hover:text-gray-200"
             >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6 text-[#E8B647]" />
+              ) : (
+                <Menu className="h-6 w-6 text-[#E8B647]" />
+              )}
             </button>
           </div>
           
@@ -210,7 +214,7 @@ function Landing() {
                   className="flex items-center bg-[#2D6A4F] text-white px-8 py-4 rounded-lg hover:bg-[#1B4332] transition-colors shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
                 >
                   Déposer votre dossier maintenant
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <ArrowRight className="ml-2 w-5 h-5 text-[#E8B647]" />
                 </button>
                 <button
                   onClick={() => setIsCriteriaModalOpen(true)}
@@ -231,7 +235,7 @@ function Landing() {
                 key={index}
                 className="bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-white border-opacity-20"
               >
-                <div className="text-[#2D6A4F] mb-4">{feature.icon}</div>
+                <div className="text-[#E8B647] mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
                 {feature.description && (
                   <div className="text-gray-300">{feature.description}</div>
