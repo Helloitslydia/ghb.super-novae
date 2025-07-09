@@ -86,6 +86,7 @@ interface FormDataState {
   depense_pompage: string;
   commentaire_projet: string;
   status: string;
+  created_at?: string;
   attestation: boolean;
 }
 
@@ -141,6 +142,7 @@ const initialFormData: FormDataState = {
   depense_pompage: '',
   commentaire_projet: '',
   status: 'Brouillon',
+  created_at: '',
   attestation: false,
 };
 
@@ -328,6 +330,48 @@ function DocumentUpload() {
       .replace(/_{2,}/g, '_') // Replace multiple consecutive underscores with a single underscore
       .replace(/^_+|_+$/g, ''); // Remove leading and trailing underscores
   };
+
+  if (formData.status && formData.status !== 'Brouillon') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-6xl mx-auto px-4 py-4">
+            <div className="flex items-center space-x-4">
+              <Link to="/" className="flex items-center text-gray-600 hover:text-gray-900">
+                <ArrowLeft className="w-5 h-5 mr-2" /> Retour
+              </Link>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Votre dossier</h1>
+                <p className="text-gray-600">Voici l'\xE9tat actuel de votre dossier</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          <table className="min-w-full bg-white rounded-lg border divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Date de d\xE9p\xF4t
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Statut
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {formData.created_at ? new Date(formData.created_at).toLocaleDateString() : '-'}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">{formData.status}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
