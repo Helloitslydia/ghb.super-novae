@@ -280,7 +280,7 @@ function DocumentUpload() {
     if (!user) return;
     const missingRequired = documents.filter(d => d.required && !files[d.key]);
     if (missingRequired.length > 0) {
-      toast.error('Veuillez t\xE9l\xE9verser tous les documents requis');
+      toast.error('Veuillez téléverser tous les documents requis');
       return;
     }
     setLoading(true);
@@ -337,8 +337,8 @@ function DocumentUpload() {
                 <ArrowLeft className="w-5 h-5 mr-2" /> Retour
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">D\xE9p\xF4t de dossier</h1>
-                <p className="text-gray-600">Compl\xE9tez les informations et t\xE9l\xE9versez vos fichiers</p>
+                <h1 className="text-2xl font-bold text-gray-900">Déposez votre dossier</h1>
+                <p className="text-gray-600">Complétez les informations et Téléversez vos fichiers</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -402,9 +402,9 @@ function DocumentUpload() {
               <input name="sau_totale" value={formData.sau_totale} onChange={handleChange} className="border p-2 rounded" placeholder="SAU totale (ha)" />
               <label className="flex items-center space-x-2">
                 <input type="checkbox" name="production_maraichage" checked={formData.production_maraichage} onChange={handleChange} />
-                <span>Mara\xEEchage</span>
+                <span>Maréchage</span>
               </label>
-              <input name="surface_maraichage" value={formData.surface_maraichage} onChange={handleChange} className="border p-2 rounded" placeholder="Surface mara\xEEchage (ha)" />
+              <input name="surface_maraichage" value={formData.surface_maraichage} onChange={handleChange} className="border p-2 rounded" placeholder="Surface maréchage (ha)" />
               <label className="flex items-center space-x-2">
                 <input type="checkbox" name="production_bovins" checked={formData.production_bovins} onChange={handleChange} />
                 <span>Bovins</span>
@@ -446,7 +446,7 @@ function DocumentUpload() {
           </div>
 
           <div className="space-y-6 bg-white p-6 rounded-lg border border-gray-200">
-            <h2 className="text-xl font-bold mb-4">Partie 3 : Documents \xE0 t\xE9l\xE9charger</h2>
+            <h2 className="text-xl font-bold mb-4">Partie 3 : Télécharger</h2>
             <div className="grid gap-6 md:grid-cols-2">
               {documents.map(doc => {
                 const uploadedFile = files[doc.key];
@@ -540,7 +540,7 @@ function DocumentUpload() {
                 <Send className="w-5 h-5 mr-2" /> {loading ? 'Envoi...' : 'D\xE9poser le dossier'}
               </button>
             </div>
-            {completionRate < 100 && <p className="text-sm text-gray-600 mt-3 text-center">Veuillez t\xE9l\xE9verser tous les documents requis</p>}
+            {completionRate < 100 && <p className="text-sm text-gray-600 mt-3 text-center">Veuillez téléverser tous les documents requis</p>}
           </div>
         </form>
       </div>
