@@ -15,6 +15,7 @@ import {
   Send
 } from 'lucide-react';
 import { toast } from 'sonner';
+import SignaturePad from '../components/SignaturePad';
 
 interface DocumentItem {
   key: string;
@@ -157,6 +158,7 @@ function DocumentUpload() {
   const [success, setSuccess] = useState(false);
   const [dragOver, setDragOver] = useState<string | null>(null);
   const [completionRate, setCompletionRate] = useState(0);
+  const [signature, setSignature] = useState<string | null>(null);
 
   useEffect(() => {
     const requiredDocs = documents.filter(d => d.required);
@@ -265,11 +267,38 @@ function DocumentUpload() {
     }
   };
 
+  const dataURLToBlob = (dataUrl: string) => {
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+  };
+
+  const saveSignature = async () => {
+    if (!user || !signature) return;
+    const blob = dataURLToBlob(signature);
+    const filePath = `${user.id}/${Date.now()}-signature.png`;
+    const { error: uploadError } = await supabase.storage
+      .from('signatures')
+      .upload(filePath, blob);
+    if (uploadError) throw uploadError;
+    const { error: insertError } = await supabase
+      .from('user_documents')
+      .insert({ user_id: user.id, doc_key: 'signature', file_path: filePath });
+    if (insertError) throw insertError;
+  };
+
   const handleSave = async () => {
     setSaving(true);
     try {
       await saveFormData();
       await saveFiles();
+      await saveSignature();
       toast.success('Donn\xE9es sauvegard\xE9es');
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Erreur lors de la sauvegarde';
@@ -604,8 +633,11 @@ function DocumentUpload() {
                 <input type="checkbox" name="attestation" checked={formData.attestation} onChange={handleChange} />
                 <span className="flex-1">J’autorise les organismes tiers (Direction des finances publiques, MSA, DAAF, fournisseurs des équipements financés par l’appel à projet.) à transmettre à GBH ou son partenaire de mise en œuvre Super Novae les données utiles à l’instruction et au paiement de la présente demande d’aide.</span>
               </label>
-              <div className="mt-2">
-                Fait le <input type="text" className="border p-2 rounded mx-2" placeholder="JJ/MM/AAAA" /> Signature(s) (de tous les associés si GAEC) :
+              <div className="mt-2 space-y-2">
+                <div>
+                  Fait le <input type="text" className="border p-2 rounded mx-2" placeholder="JJ/MM/AAAA" /> Signature(s) (de tous les associés si GAEC) :
+                </div>
+                <SignaturePad value={signature} onChange={setSignature} />
               </div>
             </div>
           </div>
