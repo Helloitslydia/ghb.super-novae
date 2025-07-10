@@ -2,6 +2,7 @@ import React, { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { redirectBasedOnApplication } from '../lib/application';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -36,22 +37,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
       }
 
       if (data.user) {
-        const { data: application, error } = await supabase
-          .from('project_applications')
-          .select('id, status')
-          .eq('user_id', data.user.id)
-          .maybeSingle();
-
-        if (
-          !error &&
-          application &&
-          application.status &&
-          application.status !== 'Brouillon'
-        ) {
-          navigate('/application');
-        } else {
-          navigate('/documentupload');
-        }
+        await redirectBasedOnApplication(navigate, supabase, data.user.id);
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Une erreur est survenue lors de la connexion';
