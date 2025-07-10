@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
@@ -11,6 +11,7 @@ interface ApplicationData {
 
 function DocumentStatus() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [data, setData] = useState<ApplicationData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -23,12 +24,25 @@ function DocumentStatus() {
         .eq('user_id', user.id)
         .single();
       if (!error && data) {
-        setData(data as ApplicationData);
+        const allowedStatuses = [
+          'Etude du dossier en cours',
+          'Validé',
+          'Refusé',
+        ];
+        if (data.status && allowedStatuses.includes(data.status)) {
+          setData(data as ApplicationData);
+        } else {
+          navigate('/documentupload');
+          return;
+        }
+      } else {
+        navigate('/documentupload');
+        return;
       }
       setLoading(false);
     };
     fetchData();
-  }, [user]);
+  }, [user, navigate]);
 
   if (loading) {
     return (

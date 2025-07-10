@@ -69,7 +69,18 @@ function Landing() {
         .eq('user_id', user.id)
         .single();
 
-      if (!error && data && data.status && data.status !== 'Brouillon') {
+      const allowedStatuses = [
+        'Etude du dossier en cours',
+        'Validé',
+        'Refusé',
+      ];
+
+      if (
+        !error &&
+        data &&
+        data.status &&
+        allowedStatuses.includes(data.status)
+      ) {
         setDashboardLink('/application');
       } else {
         setDashboardLink('/documentupload');

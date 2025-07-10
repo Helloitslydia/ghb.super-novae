@@ -6,7 +6,18 @@ export async function redirectBasedOnApplication(navigate: (path: string) => voi
     .limit(1)
     .maybeSingle();
 
-  if (!error && application && application.status && application.status !== 'Brouillon') {
+  const allowedStatuses = [
+    'Etude du dossier en cours',
+    'Validé',
+    'Refusé',
+  ];
+
+  if (
+    !error &&
+    application &&
+    application.status &&
+    allowedStatuses.includes(application.status)
+  ) {
     navigate('/application');
   } else {
     navigate('/documentupload');
