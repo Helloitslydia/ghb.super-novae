@@ -7,7 +7,6 @@ import { useAuth } from '../contexts/AuthContext';
 interface ApplicationData {
   status?: string | null;
   created_at?: string | null;
-  [key: string]: any;
 }
 
 function DocumentStatus() {
@@ -20,7 +19,7 @@ function DocumentStatus() {
       if (!user) return;
       const { data, error } = await supabase
         .from('project_applications')
-        .select('*')
+        .select('created_at,status')
         .eq('user_id', user.id)
         .single();
       if (!error && data) {
@@ -62,25 +61,22 @@ function DocumentStatus() {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Champ
+                Date de création
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Valeur
+                Statut
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {data &&
-              Object.entries(data).map(([key, value]) => (
-                <tr key={key}>
-                  <td className="px-6 py-4 whitespace-nowrap">{key}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {key === 'created_at' && value
-                      ? new Date(value as string).toLocaleDateString()
-                      : String(value)}
-                  </td>
-                </tr>
-              ))}
+            {data && (
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {data.created_at ? new Date(data.created_at).toLocaleDateString() : ''}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">{data.status ?? ''}</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
