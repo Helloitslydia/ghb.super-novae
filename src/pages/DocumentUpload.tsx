@@ -92,6 +92,64 @@ interface FormDataState {
   attestation: boolean;
 }
 
+const optionalFields: (keyof FormDataState)[] = [
+  'besoin_equipement',
+  'sau_totale',
+  'production_maraichage',
+  'surface_maraichage',
+  'production_bovins',
+  'bovins_nombre',
+  'production_volailles',
+  'volailles_effectif',
+  'autres_production',
+  'besoin_actuel',
+  'besoin_prospectif',
+  'capacite_actuelle',
+  'detail_stockage',
+  'capacite_besoins_actuels',
+  'capacite_besoins_prospectifs',
+  'volume_total_investissement',
+  'micro_surface',
+  'micro_volume',
+  'cuve_nombre',
+  'cuve_vol_unitaire',
+  'cuve_vol_total',
+  'citerne_nombre',
+  'citerne_vol_unitaire',
+  'citerne_vol_total',
+  'water_tank_volume',
+  'volume_stockage_actuel',
+  'volume_stockage_total_post',
+  'surface_impluvium',
+  'cout_total_projet',
+  'depense_nature',
+  'depense_cout',
+  'depense_terrassement',
+  'depense_pose',
+  'depense_raccordement',
+  'depense_pompage',
+  'commentaire_projet',
+];
+
+const fieldLabels: Record<string, string> = {
+  siret: 'N° SIRET',
+  pacage: 'N° PACAGE',
+  ede: 'N° EDE',
+  inuav1: 'N° INUAV 1',
+  inuav2: 'N° INUAV 2',
+  inuav3: 'N° INUAV 3',
+  nom: 'Nom / raison sociale',
+  statut: 'Statut juridique',
+  adresse: 'Adresse',
+  code_postal: 'Code postal',
+  commune: 'Commune',
+  tel_fixe: 'Téléphone fixe',
+  tel_mobile: 'Téléphone mobile',
+  email: 'Email',
+  attestation: 'Autorisation de transmission des données',
+  signature: 'Signature',
+};
+
 const initialFormData: FormDataState = {
   siret: '',
   pacage: '',
@@ -231,6 +289,29 @@ function DocumentUpload() {
     });
   };
 
+  const validateForm = () => {
+    const allKeys = Object.keys(formData) as (keyof FormDataState)[];
+    const fieldsToCheck = allKeys.filter(
+      key =>
+        !optionalFields.includes(key) &&
+        key !== 'affiliation_msa' &&
+        key !== 'status' &&
+        key !== 'created_at'
+    );
+
+    const missing = fieldsToCheck.filter(key => {
+      const value = formData[key];
+      if (typeof value === 'boolean') return !value;
+      return !value || value.trim() === '';
+    });
+
+    if (!signature) {
+      missing.push('signature' as keyof FormDataState);
+    }
+
+    return missing.map(key => fieldLabels[key as string] || key);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -312,6 +393,11 @@ function DocumentUpload() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!user) return;
+    const missingFields = validateForm();
+    if (missingFields.length > 0) {
+      alert('Veuillez renseigner les champs suivants :\n' + missingFields.join('\n'));
+      return;
+    }
     const missingRequired = documents.filter(d => d.required && !files[d.key]);
     if (missingRequired.length > 0) {
       toast.error('Veuillez téléverser tous les documents requis');
@@ -459,19 +545,19 @@ function DocumentUpload() {
             <h2 className="text-xl font-bold mb-4">Partie 1 : Votre exploitation</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <input name="siret" value={formData.siret} onChange={handleChange} className="border p-2 rounded" placeholder="N° SIRET" required />
-              <input name="pacage" value={formData.pacage} onChange={handleChange} className="border p-2 rounded" placeholder="N° PACAGE" />
-              <input name="ede" value={formData.ede} onChange={handleChange} className="border p-2 rounded" placeholder="N° EDE" />
-              <input name="inuav1" value={formData.inuav1} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 1" />
-              <input name="inuav2" value={formData.inuav2} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 2" />
-              <input name="inuav3" value={formData.inuav3} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 3" />
-              <input name="nom" value={formData.nom} onChange={handleChange} className="border p-2 rounded" placeholder="Nom / raison sociale" />
-              <input name="statut" value={formData.statut} onChange={handleChange} className="border p-2 rounded" placeholder="Statut juridique" />
-              <textarea name="adresse" value={formData.adresse} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Adresse" />
-              <input name="code_postal" value={formData.code_postal} onChange={handleChange} className="border p-2 rounded" placeholder="Code postal" />
-              <input name="commune" value={formData.commune} onChange={handleChange} className="border p-2 rounded" placeholder="Commune" />
-              <input name="tel_fixe" value={formData.tel_fixe} onChange={handleChange} className="border p-2 rounded" placeholder="Téléphone fixe" />
-              <input name="tel_mobile" value={formData.tel_mobile} onChange={handleChange} className="border p-2 rounded" placeholder="Téléphone mobile" />
-              <input name="email" value={formData.email} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Email" />
+              <input name="pacage" value={formData.pacage} onChange={handleChange} className="border p-2 rounded" placeholder="N° PACAGE" required />
+              <input name="ede" value={formData.ede} onChange={handleChange} className="border p-2 rounded" placeholder="N° EDE" required />
+              <input name="inuav1" value={formData.inuav1} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 1" required />
+              <input name="inuav2" value={formData.inuav2} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 2" required />
+              <input name="inuav3" value={formData.inuav3} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 3" required />
+              <input name="nom" value={formData.nom} onChange={handleChange} className="border p-2 rounded" placeholder="Nom / raison sociale" required />
+              <input name="statut" value={formData.statut} onChange={handleChange} className="border p-2 rounded" placeholder="Statut juridique" required />
+              <textarea name="adresse" value={formData.adresse} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Adresse" required />
+              <input name="code_postal" value={formData.code_postal} onChange={handleChange} className="border p-2 rounded" placeholder="Code postal" required />
+              <input name="commune" value={formData.commune} onChange={handleChange} className="border p-2 rounded" placeholder="Commune" required />
+              <input name="tel_fixe" value={formData.tel_fixe} onChange={handleChange} className="border p-2 rounded" placeholder="Téléphone fixe" required />
+              <input name="tel_mobile" value={formData.tel_mobile} onChange={handleChange} className="border p-2 rounded" placeholder="Téléphone mobile" required />
+              <input name="email" value={formData.email} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Email" required />
               <label className="flex items-center space-x-2 md:col-span-2">
                 <input type="checkbox" name="affiliation_msa" checked={formData.affiliation_msa} onChange={handleChange} />
                 <span>Affiliation MSA agriculteur au 31/03/2025</span>
@@ -626,50 +712,50 @@ function DocumentUpload() {
             <div className="space-y-2">
               <div>
                 <label className="block mb-1">Je soussigné(e) (nom et prénom) :</label>
-                <input className="border p-2 rounded w-full" type="text" />
+                <input className="border p-2 rounded w-full" type="text" required />
               </div>
               <label className="flex items-start space-x-2">
-                <input type="checkbox" />
+                <input type="checkbox" required />
                 <span className="flex-1">Certifie avoir pouvoir pour représenter le demandeur dans le cadre de la présente formalité ;</span>
               </label>
               <label className="flex items-start space-x-2">
-                <input type="checkbox" />
+                <input type="checkbox" required />
                 <span className="flex-1">Certifie l'ensemble des informations fournies dans le présent formulaire et les pièces jointes.</span>
               </label>
               <label className="flex items-start space-x-2">
-                <input type="checkbox" />
+                <input type="checkbox" required />
                 <span className="flex-1">Je suis informé qu'en cas d'irrégularité ou de non-respect de mes engagements, le remboursement des sommes perçues sera exigé, majoré d'intérêts de retard et éventuellement de pénalités financières, sans exclure d'autres poursuites et sanctions prévues par les textes en vigueur.</span>
               </label>
               <p className="font-semibold mt-2">Je déclare :</p>
               <label className="flex items-start space-x-2">
-                <input type="checkbox" />
+                <input type="checkbox" required />
                 <span className="flex-1">ne pas disposer de forage sur mon exploitation et ne pas avoir engagé de démarche pour en disposer.</span>
               </label>
               <label className="flex items-start space-x-2">
-                <input type="checkbox" />
+                <input type="checkbox" required />
                 <span className="flex-1">que mon projet ne nécessite ni permis de construire ni autorisation environnementale « Loi sur l’eau ».</span>
               </label>
               <label className="flex items-start space-x-2">
-                <input type="checkbox" />
+                <input type="checkbox" required />
                 <span className="flex-1">Je demande à bénéficier de l’aide aux investissements visant à renforcer la résistance à la sécheresse des exploitations agricoles mahoraises via l’acquisition d’équipements de récupération et de stockage des eaux pluviales à usage agricole.</span>
               </label>
               <label className="flex items-start space-x-2">
-                <input type="checkbox" />
+                <input type="checkbox" required />
                 <span className="flex-1">Je m’engage à ce que mon projet soit réalisé au plus tard le 30 juillet 2025 (mise en œuvre opérationnelle avec raccordement aux impluviums).</span>
               </label>
               <p className="font-semibold mt-2">Je m'engage, sous réserve d'attribution de l'aide :</p>
               <label className="flex items-start space-x-2">
-                <input type="checkbox" />
+                <input type="checkbox" required />
                 <span className="flex-1">À délivrer tout document ou justificatif demandé par le bailleur pendant 3 années ;</span>
               </label>
               <p className="font-semibold mt-2">Protection des données personnelles :</p>
               <label className="flex items-start space-x-2">
-                <input type="checkbox" name="attestation" checked={formData.attestation} onChange={handleChange} />
+                <input type="checkbox" name="attestation" checked={formData.attestation} onChange={handleChange} required />
                 <span className="flex-1">J’autorise les organismes tiers (Direction des finances publiques, MSA, DAAF, fournisseurs des équipements financés par l’appel à projet.) à transmettre à GBH ou son partenaire de mise en œuvre Super Novae les données utiles à l’instruction et au paiement de la présente demande d’aide.</span>
               </label>
               <div className="mt-2 space-y-2">
                 <div>
-                  Fait le <input type="text" className="border p-2 rounded mx-2" placeholder="JJ/MM/AAAA" /> Signature(s) (de tous les associés si GAEC) :
+                  Fait le <input type="text" className="border p-2 rounded mx-2" placeholder="JJ/MM/AAAA" required /> Signature(s) (de tous les associés si GAEC) :
                 </div>
                 <SignaturePad value={signature} onChange={setSignature} />
               </div>
