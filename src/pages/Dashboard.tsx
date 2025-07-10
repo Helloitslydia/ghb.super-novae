@@ -43,7 +43,7 @@ function Dashboard() {
         .single();
 
       if (!error && data && data.status && data.status !== 'Brouillon') {
-        navigate('/documentupload');
+        navigate('/application');
       }
     };
 

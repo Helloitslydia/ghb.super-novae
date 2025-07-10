@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Recording from './pages/Recording';
 import NewRecording from './pages/NewRecording.tsx';
 import DocumentUpload from './pages/DocumentUpload';
+import DocumentStatus from './pages/DocumentStatus';
 import Admin from './pages/Admin';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
@@ -33,6 +34,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <DocumentUpload />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/application"
+            element={
+              <ProtectedRoute>
+                <DocumentStatus />
               </ProtectedRoute>
             }
           />
