@@ -51,6 +51,7 @@ interface FormDataState {
   tel_mobile: string;
   email: string;
   affiliation_msa: boolean;
+  besoin_equipement: string;
   sau_totale: string;
   production_maraichage: boolean;
   surface_maraichage: string;
@@ -107,6 +108,7 @@ const initialFormData: FormDataState = {
   tel_mobile: '',
   email: '',
   affiliation_msa: false,
+  besoin_equipement: '',
   sau_totale: '',
   production_maraichage: false,
   surface_maraichage: '',
@@ -473,6 +475,29 @@ function DocumentUpload() {
                 <input type="checkbox" name="affiliation_msa" checked={formData.affiliation_msa} onChange={handleChange} />
                 <span>Affiliation MSA agriculteur au 31/03/2025</span>
               </label>
+              <select
+                name="besoin_equipement"
+                value={formData.besoin_equipement}
+                onChange={handleChange}
+                className="border p-2 rounded md:col-span-2"
+              >
+                <option value="">Sélectionnez une option</option>
+                <option value="j’ai besoin de reconstruction des équipements détériorés">
+                  j’ai besoin de reconstruction des équipements détériorés
+                </option>
+                <option value="j’ai besoin d’une petite structure en bambou pour récolter et conserver l’eau de petites et moyennes exploitations">
+                  j’ai besoin d’une petite structure en bambou pour récolter et conserver l’eau de petites et moyennes exploitations
+                </option>
+                <option value="j’ai besoin d’équipements et de gros réservoirs pour récolter et conserver l’eau de pluie (moyennes et grandes exploitations)">
+                  j’ai besoin d’équipements et de gros réservoirs pour récolter et conserver l’eau de pluie (moyennes et grandes exploitations)
+                </option>
+                <option value="j’ai besoins de gros équipement et de grosses citernes (grandes exploitations)">
+                  j’ai besoins de gros équipement et de grosses citernes (grandes exploitations)
+                </option>
+                <option value="aucune de ces options, nos correspond à mon besoin, je joins un devis personnalisé">
+                  Aucune de ces options ne correspond à mon besoin, je joins un devis personnalisé
+                </option>
+              </select>
             </div>
           </div>
 
