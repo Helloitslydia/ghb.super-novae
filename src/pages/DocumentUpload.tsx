@@ -475,35 +475,38 @@ function DocumentUpload() {
                 <input type="checkbox" name="affiliation_msa" checked={formData.affiliation_msa} onChange={handleChange} />
                 <span>Affiliation MSA agriculteur au 31/03/2025</span>
               </label>
-              <select
-                name="besoin_equipement"
-                value={formData.besoin_equipement}
-                onChange={handleChange}
-                className="border p-2 rounded md:col-span-2"
-              >
-                <option value="">Sélectionnez une option</option>
-                <option value="j’ai besoin de reconstruction des équipements détériorés">
-                  j’ai besoin de reconstruction des équipements détériorés
-                </option>
-                <option value="j’ai besoin d’une petite structure en bambou pour récolter et conserver l’eau de petites et moyennes exploitations">
-                  j’ai besoin d’une petite structure en bambou pour récolter et conserver l’eau de petites et moyennes exploitations
-                </option>
-                <option value="j’ai besoin d’équipements et de gros réservoirs pour récolter et conserver l’eau de pluie (moyennes et grandes exploitations)">
-                  j’ai besoin d’équipements et de gros réservoirs pour récolter et conserver l’eau de pluie (moyennes et grandes exploitations)
-                </option>
-                <option value="j’ai besoins de gros équipement et de grosses citernes (grandes exploitations)">
-                  j’ai besoins de gros équipement et de grosses citernes (grandes exploitations)
-                </option>
-                <option value="aucune de ces options, nos correspond à mon besoin, je joins un devis personnalisé">
-                  Aucune de ces options ne correspond à mon besoin, je joins un devis personnalisé
-                </option>
-              </select>
             </div>
           </div>
 
           <div className="space-y-6 bg-white p-6 rounded-lg border border-gray-200">
             <h2 className="text-xl font-bold mb-4">Partie 2 : Votre projet</h2>
             <div className="grid md:grid-cols-2 gap-4">
+              <div className="md:col-span-2">
+                <p className="font-medium mb-2">Choisissez l&apos;option qui se rapproche le plus de votre situation</p>
+                <select
+                  name="besoin_equipement"
+                  value={formData.besoin_equipement}
+                  onChange={handleChange}
+                  className="border p-2 rounded w-full"
+                >
+                  <option value="">Sélectionnez une option</option>
+                  <option value="j’ai besoin de reconstruction des équipements détériorés">
+                    j’ai besoin de reconstruction des équipements détériorés
+                  </option>
+                  <option value="j’ai besoin d’une petite structure en bambou pour récolter et conserver l’eau de petites et moyennes exploitations">
+                    j’ai besoin d’une petite structure en bambou pour récolter et conserver l’eau de petites et moyennes exploitations
+                  </option>
+                  <option value="j’ai besoin d’équipements et de gros réservoirs pour récolter et conserver l’eau de pluie (moyennes et grandes exploitations)">
+                    j’ai besoin d’équipements et de gros réservoirs pour récolter et conserver l’eau de pluie (moyennes et grandes exploitations)
+                  </option>
+                  <option value="j’ai besoins de gros équipement et de grosses citernes (grandes exploitations)">
+                    j’ai besoins de gros équipement et de grosses citernes (grandes exploitations)
+                  </option>
+                  <option value="aucune de ces options, nos correspond à mon besoin, je joins un devis personnalisé">
+                    Aucune de ces options ne correspond à mon besoin, je joins un devis personnalisé
+                  </option>
+                </select>
+              </div>
               <input name="sau_totale" value={formData.sau_totale} onChange={handleChange} className="border p-2 rounded" placeholder="SAU totale (ha)" />
               <label className="flex items-center space-x-2">
                 <input type="checkbox" name="production_maraichage" checked={formData.production_maraichage} onChange={handleChange} />
@@ -582,7 +585,7 @@ function DocumentUpload() {
                         onDragLeave={handleDragLeave}
                       >
                         <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                        <p className="text-sm text-gray-600 mb-2">Glissez-d\xE9posez ou</p>
+                        <p className="text-sm text-gray-600 mb-2">Glissez-déposez ou</p>
                         <label className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 cursor-pointer">
                           <Plus className="w-4 h-4 mr-2" /> Choisir un fichier
                           <input type="file" className="hidden" accept=".pdf,.jpg,.jpeg,.png" onChange={e => handleFileSelect(doc.key, e.target.files)} />
