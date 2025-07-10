@@ -48,13 +48,15 @@ function Landing() {
       icon: <Download className="w-6 h-6 text-[#E8B647]" />,
       title: "2) Téléversez vos documents en toute simplicité",
       description: "Déposez vos pièces en ligne, la plateforme vous guide à chaque étape.",
-      buttonLabel: "Déposer votre dossier"
+      buttonLabel: "Déposer votre dossier",
+      onClick: () => setIsEligibilityModalOpen(true)
     },
     {
       icon: <MessageSquareText className="w-6 h-6 text-[#E8B647]" />,
       title: "3) Suivez l’avancement de votre dossier en temps réel",
       description: "Accédez facilement aux informations dont vous avez besoin, à tout moment.",
-      buttonLabel: "Connexion"
+      buttonLabel: "Connexion",
+      onClick: () => setIsLoginModalOpen(true)
     }
   ];
 
@@ -286,10 +288,10 @@ function Landing() {
                 {feature.description && (
                   <div className="text-gray-300">{feature.description}</div>
                 )}
-                {feature.buttonLabel && (
+                {feature.buttonLabel && !user && (
                   <button
-                    disabled
-                    className="mt-4 bg-[#2D6A4F] text-white px-4 py-2 rounded-lg opacity-50 cursor-not-allowed"
+                    onClick={feature.onClick}
+                    className="mt-4 bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
                   >
                     {feature.buttonLabel}
                   </button>
