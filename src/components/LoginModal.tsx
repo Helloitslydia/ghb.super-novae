@@ -38,11 +38,16 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
       if (data.user) {
         const { data: application, error } = await supabase
           .from('project_applications')
-          .select('id')
+          .select('id, status')
           .eq('user_id', data.user.id)
           .maybeSingle();
 
-        if (!error && application) {
+        if (
+          !error &&
+          application &&
+          application.status &&
+          application.status !== 'Brouillon'
+        ) {
           navigate('/application');
         } else {
           navigate('/documentupload');
