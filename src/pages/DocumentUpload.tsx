@@ -371,17 +371,20 @@ function DocumentUpload() {
               </Link>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Votre dossier</h1>
-                <p className="text-gray-600">Voici l'\xE9tat actuel de votre dossier</p>
+                <p className="text-gray-600">Voici l'état actuel de votre dossier</p>
               </div>
             </div>
           </div>
         </div>
         <div className="max-w-6xl mx-auto px-4 py-8">
+          <div className="bg-blue-50 border border-blue-200 text-blue-800 rounded-lg p-4 mb-4">
+            Vous serez informé.e.s dans un délais de 15 jours.
+          </div>
           <table className="min-w-full bg-white rounded-lg border divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date de d\xE9p\xF4t
+                  Date de création
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Statut
