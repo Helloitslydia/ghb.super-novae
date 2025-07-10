@@ -14,9 +14,23 @@ function Login() {
 
   // Rediriger si déjà connecté
   React.useEffect(() => {
-    if (user) {
-      navigate('/');
-    }
+    const redirect = async () => {
+      if (user) {
+        const { data: application, error } = await supabase
+          .from('project_applications')
+          .select('status')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (!error && application && application.status && application.status !== 'Brouillon') {
+          navigate('/application');
+        } else {
+          navigate('/documentupload');
+        }
+      }
+    };
+
+    redirect();
   }, [user, navigate]);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -33,7 +47,17 @@ function Login() {
       if (signInError) throw signInError;
 
       if (data.user) {
-        navigate('/dashboard');
+        const { data: application, error } = await supabase
+          .from('project_applications')
+          .select('status')
+          .eq('user_id', data.user.id)
+          .maybeSingle();
+
+        if (!error && application && application.status && application.status !== 'Brouillon') {
+          navigate('/application');
+        } else {
+          navigate('/documentupload');
+        }
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue lors de la connexion');
