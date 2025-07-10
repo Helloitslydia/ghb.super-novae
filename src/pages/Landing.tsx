@@ -4,7 +4,7 @@ import { ClipboardCheck, Download, MessageSquareText, ArrowRight, Menu, X } from
 import { LoginModal } from '../components/LoginModal';
 import { EligibilityModal } from '../components/EligibilityModal';
 import { CriteriaModal } from '../components/CriteriaModal';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 
@@ -24,6 +24,7 @@ function Landing() {
   const [isEligibilityModalOpen, setIsEligibilityModalOpen] = React.useState(false);
   const [isCriteriaModalOpen, setIsCriteriaModalOpen] = React.useState(false);
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const videoUrl = "//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746742604286x870259835249476100/20250509_0009_Modern%20Farmland%20Harmony_remix_01jtrz3hf8e9krdsy57armr27d.mp4";
 
   const features = [
@@ -57,6 +58,7 @@ function Landing() {
 
   const handleSignOut = async () => {
     await signOut();
+    navigate('/login');
   };
 
   return (
