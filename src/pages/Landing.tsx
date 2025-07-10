@@ -23,7 +23,7 @@ function Landing() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isEligibilityModalOpen, setIsEligibilityModalOpen] = React.useState(false);
   const [isCriteriaModalOpen, setIsCriteriaModalOpen] = React.useState(false);
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const videoUrl = "//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746742604286x870259835249476100/20250509_0009_Modern%20Farmland%20Harmony_remix_01jtrz3hf8e9krdsy57armr27d.mp4";
 
   const features = [
@@ -54,6 +54,10 @@ function Landing() {
       buttonLabel: "Connexion"
     }
   ];
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -101,12 +105,20 @@ function Landing() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-4">
               {user ? (
-                <Link
-                  to="/documentupload"
-                  className="px-4 py-2 text-white hover:text-gray-200 rounded-lg transition-colors"
-                >
-                  Dashboard
-                </Link>
+                <>
+                  <Link
+                    to="/documentupload"
+                    className="px-4 py-2 text-white hover:text-gray-200 rounded-lg transition-colors"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="px-4 py-2 text-white hover:text-gray-200 rounded-lg transition-colors"
+                  >
+                    Déconnexion
+                  </button>
+                </>
               ) : (
                 <button
                   onClick={() => setIsLoginModalOpen(true)}
@@ -151,13 +163,24 @@ function Landing() {
             <div className="absolute top-full left-0 right-0 bg-black bg-opacity-90 mt-2 py-4 rounded-lg md:hidden">
               <div className="flex flex-col space-y-3 px-4">
                 {user ? (
-                  <Link
-                    to="/documentupload"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-white hover:text-gray-200 py-2 text-center"
-                  >
-                    Dashboard
-                  </Link>
+                  <>
+                    <Link
+                      to="/documentupload"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="text-white hover:text-gray-200 py-2 text-center"
+                    >
+                      Dashboard
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleSignOut();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="text-white hover:text-gray-200 py-2 text-center"
+                    >
+                      Déconnexion
+                    </button>
+                  </>
                 ) : (
                   <button
                     onClick={() => {
