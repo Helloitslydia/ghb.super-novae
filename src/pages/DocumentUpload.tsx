@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import {
@@ -151,7 +151,6 @@ const initialFormData: FormDataState = {
 
 function DocumentUpload() {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [files, setFiles] = useState<Record<string, UploadedFile>>({});
   const [formData, setFormData] = useState<FormDataState>(initialFormData);
   const [loading, setLoading] = useState(false);
@@ -329,7 +328,6 @@ function DocumentUpload() {
       setFormData(prev => ({ ...prev, status: 'Etude du dossier en cours' }));
       setSuccess(true);
       toast.success('Dossier d\xE9pos\xE9');
-      setTimeout(() => navigate('/dashboard'), 2000);
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Erreur lors du d\xE9p\xF4t';
       setError(msg);
