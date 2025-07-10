@@ -329,9 +329,10 @@ function DocumentUpload() {
 
   const saveFormData = async () => {
     if (!user) return;
+    const { created_at, ...data } = formData;
     const { error: upsertError } = await supabase
       .from('project_applications')
-      .upsert({ user_id: user.id, ...formData }, { onConflict: 'user_id' });
+      .upsert({ user_id: user.id, ...data }, { onConflict: 'user_id' });
     if (upsertError) {
       throw upsertError;
     }
