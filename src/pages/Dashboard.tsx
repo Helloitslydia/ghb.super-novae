@@ -33,6 +33,23 @@ function Dashboard() {
     }
   }, [user]);
 
+  React.useEffect(() => {
+    const checkApplication = async () => {
+      if (!user) return;
+      const { data, error } = await supabase
+        .from('project_applications')
+        .select('status')
+        .eq('user_id', user.id)
+        .single();
+
+      if (!error && data && data.status && data.status !== 'Brouillon') {
+        navigate('/documentupload');
+      }
+    };
+
+    checkApplication();
+  }, [user, navigate]);
+
   const loadUserStatus = async () => {
     const { data, error } = await supabase
       .from('users')
