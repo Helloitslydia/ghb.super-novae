@@ -42,7 +42,18 @@ function Dashboard() {
         .eq('user_id', user.id)
         .single();
 
-      if (!error && data && data.status && data.status !== 'Brouillon') {
+      const allowedStatuses = [
+        'Etude du dossier en cours',
+        'Validé',
+        'Refusé',
+      ];
+
+      if (
+        !error &&
+        data &&
+        data.status &&
+        allowedStatuses.includes(data.status)
+      ) {
         navigate('/application');
       }
     };

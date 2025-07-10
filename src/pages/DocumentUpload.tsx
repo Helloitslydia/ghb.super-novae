@@ -243,7 +243,12 @@ function DocumentUpload() {
   }, [user]);
 
   useEffect(() => {
-    if (formData.status && formData.status !== 'Brouillon') {
+    const allowedStatuses = [
+      'Etude du dossier en cours',
+      'Validé',
+      'Refusé',
+    ];
+    if (formData.status && allowedStatuses.includes(formData.status)) {
       navigate('/application');
     }
   }, [formData.status, navigate]);
