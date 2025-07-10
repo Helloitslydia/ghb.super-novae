@@ -36,7 +36,17 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
       }
 
       if (data.user) {
-        navigate('/dashboard');
+        const { data: application, error } = await supabase
+          .from('project_applications')
+          .select('id')
+          .eq('user_id', data.user.id)
+          .maybeSingle();
+
+        if (!error && application) {
+          navigate('/application');
+        } else {
+          navigate('/documentupload');
+        }
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Une erreur est survenue lors de la connexion';

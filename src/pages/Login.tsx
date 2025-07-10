@@ -18,11 +18,11 @@ function Login() {
       if (user) {
         const { data: application, error } = await supabase
           .from('project_applications')
-          .select('status')
+          .select('id')
           .eq('user_id', user.id)
           .maybeSingle();
 
-        if (!error && application && application.status && application.status !== 'Brouillon') {
+        if (!error && application) {
           navigate('/application');
         } else {
           navigate('/documentupload');
@@ -49,11 +49,11 @@ function Login() {
       if (data.user) {
         const { data: application, error } = await supabase
           .from('project_applications')
-          .select('status')
+          .select('id')
           .eq('user_id', data.user.id)
           .maybeSingle();
 
-        if (!error && application && application.status && application.status !== 'Brouillon') {
+        if (!error && application) {
           navigate('/application');
         } else {
           navigate('/documentupload');
