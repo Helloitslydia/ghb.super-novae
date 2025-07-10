@@ -4,14 +4,7 @@ import { ArrowLeft, Eye } from "lucide-react";
 import { ApplicationDetailsModal } from "../components/ApplicationDetailsModal";
 import { supabase } from "../lib/supabase";
 
-interface Application {
-  id: string;
-  user_id: string;
-  nom: string | null;
-  email: string | null;
-  status: string;
-  created_at: string;
-}
+type Application = Record<string, any>;
 
 const PASSWORD = "SuperNovae2025";
 
@@ -36,7 +29,7 @@ function Admin() {
   const loadApplications = async () => {
     const { data, error } = await supabase
       .from("project_applications")
-      .select("id, user_id, nom, email, status, created_at");
+      .select("*");
     if (!error && data) {
       setApplications(data as Application[]);
     }
@@ -88,6 +81,7 @@ function Admin() {
     const matchesStatus = statusFilter === "" || app.status === statusFilter;
     return matchesQuery && matchesStatus;
   });
+  const columns = applications.length > 0 ? Object.keys(applications[0]) : [];
 
   if (!authenticated) {
     return (
@@ -173,55 +167,55 @@ function Admin() {
           </select>
         </div>
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white rounded shadow">
+          <table className="min-w-full bg-white rounded shadow text-sm">
             <thead>
               <tr className="bg-gray-100">
-                <th className="px-4 py-2 text-left">Nom</th>
-                <th className="px-4 py-2 text-left">Email</th>
-                <th className="px-4 py-2 text-left">Soumis le</th>
-                <th className="px-4 py-2 text-left">Status</th>
+                {columns.map((col) => (
+                  <th key={col} className="px-4 py-2 text-left capitalize">
+                    {col.replace(/_/g, " ")}
+                  </th>
+                ))}
                 <th className="px-4 py-2" />
               </tr>
             </thead>
             <tbody>
               {filteredApplications.map((app) => (
                 <tr key={app.id} className="border-t">
-                  <td className="px-4 py-2">{app.nom}</td>
-                  <td className="px-4 py-2">{app.email}</td>
+                  {columns.map((col) => (
+                    <td key={col} className="px-4 py-2 break-words">
+                      {col === "status" ? (
+                        <select
+                          className="border rounded p-1"
+                          value={app.status}
+                          onChange={(e) => updateStatus(app.id, e.target.value)}
+                        >
+                          <option value="Etude du dossier en cours">
+                            Etude du dossier en cours
+                          </option>
+                          <option value="Validé">Validé</option>
+                          <option value="Refusé">Refusé</option>
+                        </select>
+                      ) : (
+                        String(app[col] ?? "")
+                      )}
+                    </td>
+                  ))}
                   <td className="px-4 py-2">
-                    {new Date(app.created_at).toLocaleDateString()}
-                  </td>
-                  <td className="px-4 py-2">
-                    <div className="flex items-center space-x-2">
-                      <span>{app.status}</span>
-                      <button
-                        onClick={() => fetchApplicationDetails(app.id)}
-                        className="text-gray-500 hover:text-blue-600"
-                        title="Voir les détails"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </td>
-                  <td className="px-4 py-2">
-                    <select
-                      className="border rounded p-1"
-                      value={app.status}
-                      onChange={(e) => updateStatus(app.id, e.target.value)}
+                    <button
+                      onClick={() => fetchApplicationDetails(app.id)}
+                      className="text-gray-500 hover:text-blue-600 flex items-center space-x-1"
+                      title="Voir les détails"
                     >
-                      <option value="Etude du dossier en cours">
-                        Etude du dossier en cours
-                      </option>
-                      <option value="Validé">Validé</option>
-                      <option value="Refusé">Refusé</option>
-                    </select>
+                      <Eye className="w-4 h-4" />
+                      <span className="hidden sm:inline">Voir le détail</span>
+                    </button>
                   </td>
                 </tr>
               ))}
               {filteredApplications.length === 0 && (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={columns.length + 1}
                     className="px-4 py-8 text-center text-gray-500"
                   >
                     Aucun dossier
