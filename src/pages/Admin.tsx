@@ -29,7 +29,7 @@ function Admin() {
   const loadApplications = async () => {
     const { data, error } = await supabase
       .from("project_applications")
-      .select("*");
+      .select("id, user_id, nom, email, created_at, status");
     if (!error && data) {
       setApplications(data as Application[]);
     }
@@ -48,7 +48,11 @@ function Admin() {
       .eq("id", id)
       .single();
     if (data) {
-      setSelectedApplication(data);
+      const { data: docs } = await supabase
+        .from("user_documents")
+        .select("id, doc_key, file_path")
+        .eq("user_id", data.user_id);
+      setSelectedApplication({ ...data, documents: docs || [] });
       setShowDetails(true);
     }
   };
@@ -81,7 +85,7 @@ function Admin() {
     const matchesStatus = statusFilter === "" || app.status === statusFilter;
     return matchesQuery && matchesStatus;
   });
-  const columns = applications.length > 0 ? Object.keys(applications[0]) : [];
+  const columns = ["nom", "email", "created_at", "status"];
 
   if (!authenticated) {
     return (
@@ -172,7 +176,9 @@ function Admin() {
               <tr className="bg-gray-100">
                 {columns.map((col) => (
                   <th key={col} className="px-4 py-2 text-left capitalize">
-                    {col.replace(/_/g, " ")}
+                    {col === "created_at"
+                      ? "Soumis le"
+                      : col.replace(/_/g, " ")}
                   </th>
                 ))}
                 <th className="px-4 py-2" />
@@ -195,6 +201,8 @@ function Admin() {
                           <option value="Validé">Validé</option>
                           <option value="Refusé">Refusé</option>
                         </select>
+                      ) : col === "created_at" ? (
+                        new Date(app[col]).toLocaleDateString()
                       ) : (
                         String(app[col] ?? "")
                       )}
@@ -204,10 +212,10 @@ function Admin() {
                     <button
                       onClick={() => fetchApplicationDetails(app.id)}
                       className="text-gray-500 hover:text-blue-600 flex items-center space-x-1"
-                      title="Voir les détails"
+                      title="Voir plus de détails"
                     >
                       <Eye className="w-4 h-4" />
-                      <span className="hidden sm:inline">Voir le détail</span>
+                      <span className="hidden sm:inline">Voir plus de détails</span>
                     </button>
                   </td>
                 </tr>

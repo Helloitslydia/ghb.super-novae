@@ -1,5 +1,12 @@
 import React from 'react';
 import { X } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+
+interface DocumentItem {
+  id: string;
+  doc_key: string;
+  file_path: string;
+}
 
 interface ApplicationDetailsModalProps {
   isOpen: boolean;
@@ -9,6 +16,8 @@ interface ApplicationDetailsModalProps {
 
 export function ApplicationDetailsModal({ isOpen, onClose, application }: ApplicationDetailsModalProps) {
   if (!isOpen || !application) return null;
+
+  const { documents = [], ...appData } = application as any;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -20,7 +29,7 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
         <div className="overflow-x-auto text-sm">
           <table className="min-w-full">
             <tbody>
-              {Object.entries(application).map(([key, value]) => (
+              {Object.entries(appData).map(([key, value]) => (
                 <tr key={key} className="border-b last:border-b-0">
                   <td className="py-1 pr-2 font-medium capitalize break-words">
                     {key.replace(/_/g, ' ')}
@@ -31,6 +40,30 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
             </tbody>
           </table>
         </div>
+        {documents.length > 0 && (
+          <div className="mt-4">
+            <h3 className="font-semibold mb-2">Pièces jointes</h3>
+            <ul className="space-y-1 text-sm">
+              {documents.map((doc: DocumentItem) => {
+                const bucket = doc.doc_key === 'signature' ? 'signatures' : 'documents';
+                const { data } = supabase.storage.from(bucket).getPublicUrl(doc.file_path);
+                const url = data.publicUrl;
+                return (
+                  <li key={doc.id}>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline break-all"
+                    >
+                      {doc.doc_key}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
         <button onClick={onClose} className="mt-4 bg-blue-600 text-white px-4 py-2 rounded">
           Fermer
         </button>
