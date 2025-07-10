@@ -442,6 +442,11 @@ function DocumentUpload() {
                 <li>- Formats acceptés : PDF, JPG, PNG (max 10MB)</li>
                 <li>- Vous pouvez sauvegarder votre progression</li>
               </ul>
+              <p className="text-blue-800 text-sm mt-2">
+                En cas de question, vous pouvez contacter Sabri
+                (sabri.benhassine@super-novae.org) ou Hana
+                (hana.benali@super-novae.org).
+              </p>
             </div>
           </div>
         </div>
