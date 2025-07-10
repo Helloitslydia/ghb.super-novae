@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Globe2, Mail, Lock } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { redirectBasedOnApplication } from '../lib/application';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -16,22 +17,7 @@ function Login() {
   React.useEffect(() => {
     const redirect = async () => {
       if (user) {
-        const { data: application, error } = await supabase
-          .from('project_applications')
-          .select('id, status')
-          .eq('user_id', user.id)
-          .maybeSingle();
-
-        if (
-          !error &&
-          application &&
-          application.status &&
-          application.status !== 'Brouillon'
-        ) {
-          navigate('/application');
-        } else {
-          navigate('/documentupload');
-        }
+        await redirectBasedOnApplication(navigate, supabase, user.id);
       }
     };
 
@@ -52,22 +38,7 @@ function Login() {
       if (signInError) throw signInError;
 
       if (data.user) {
-        const { data: application, error } = await supabase
-          .from('project_applications')
-          .select('id, status')
-          .eq('user_id', data.user.id)
-          .maybeSingle();
-
-        if (
-          !error &&
-          application &&
-          application.status &&
-          application.status !== 'Brouillon'
-        ) {
-          navigate('/application');
-        } else {
-          navigate('/documentupload');
-        }
+        await redirectBasedOnApplication(navigate, supabase, data.user.id);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue lors de la connexion');
