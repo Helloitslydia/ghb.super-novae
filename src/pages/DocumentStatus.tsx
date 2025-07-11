@@ -58,17 +58,9 @@ function DocumentStatus() {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center space-x-4">
-            <Link to="/" className="flex items-center text-gray-600 hover:text-gray-900">
-              <ArrowLeft className="w-5 h-5 mr-2" /> Retour
+            <Link to="/documentupload" className="flex items-center text-gray-600 hover:text-gray-900">
+              <ArrowLeft className="w-5 h-5 mr-2" /> Retour au formulaire
             </Link>
-            {data?.status === 'Brouillon' && (
-              <Link
-                to="/documentupload"
-                className="flex items-center text-gray-600 hover:text-gray-900"
-              >
-                <ArrowLeft className="w-5 h-5 mr-2" /> Revenir au formulaire
-              </Link>
-            )}
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Votre dossier</h1>
               <p className="text-gray-600">Voici l'état actuel de votre dossier</p>
