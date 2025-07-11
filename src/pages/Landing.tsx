@@ -39,7 +39,7 @@ function Landing() {
             onClick={() => setIsCriteriaModalOpen(true)}
             className="text-[#E8B647] underline"
           >
-            Consulter les critères, Programme & Équipements Clés, Le Programme en Bref
+            Consultez les critère de sélection
           </button>
         </span>
       )
@@ -146,7 +146,7 @@ function Landing() {
                     to={dashboardLink}
                     className="px-4 py-2 text-white hover:text-gray-200 rounded-lg transition-colors"
                   >
-                    Dashboard
+                    Tableau de bord
                   </Link>
                   <button
                     onClick={handleSignOut}
@@ -205,7 +205,7 @@ function Landing() {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="text-white hover:text-gray-200 py-2 text-center"
                     >
-                      Dashboard
+                      Tableau de bord
                     </Link>
                     <button
                       onClick={() => {
