@@ -507,10 +507,36 @@ function DocumentUpload() {
                 (hana.benali@super-novae.org).
               </p>
             </div>
-          </div>
         </div>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+        <p className="mb-2">
+          Bienvenue sur votre espace. GBH et Super-Novae s'engagent ensemble aux
+          cotés des agriculteurs mahorais, en mettant en place un fonds de
+          soutien pour renforcer leur résilience à la sécheresse. Ce programme
+          vise à financer l’acquisition d’équipements de récupération et de
+          stockage des eaux pluviales à usage agricole.
+        </p>
+        <p className="font-semibold">Il vise à :</p>
+        <ul className="list-disc list-inside mb-2">
+          <li>
+            Renforcer la résilience des exploitations agricoles face au stress
+            hydrique
+          </li>
+          <li>Promouvoir des pratiques agricoles durables</li>
+          <li>
+            Générer un impact environnemental et économique positif à l’échelle
+            locale
+          </li>
+        </ul>
+        <p>
+          Nous vous remercions de remplir les éléments ci dessous pour que
+          votre dossier soit évalué.
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-6 bg-white p-6 rounded-lg border border-gray-200">
             <h2 className="text-xl font-bold mb-4">Partie 1 : Votre exploitation</h2>
             <div className="grid md:grid-cols-2 gap-4">
