@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import {
@@ -213,6 +213,7 @@ const initialFormData: FormDataState = {
 function DocumentUpload() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [files, setFiles] = useState<Record<string, UploadedFile>>({});
   const [formData, setFormData] = useState<FormDataState>(initialFormData);
   const [loading, setLoading] = useState(false);
@@ -251,10 +252,16 @@ function DocumentUpload() {
       'Validé',
       'Refusé',
     ];
-    if (formData.status && allowedStatuses.includes(formData.status)) {
+    const params = new URLSearchParams(location.search);
+    const fromApplication = params.get('from') === 'application';
+    if (
+      formData.status &&
+      allowedStatuses.includes(formData.status) &&
+      !fromApplication
+    ) {
       navigate('/application');
     }
-  }, [formData.status, navigate]);
+  }, [formData.status, navigate, location.search]);
 
   const handleFileSelect = (key: string, selectedFiles: FileList | null) => {
     if (selectedFiles && selectedFiles[0]) {
