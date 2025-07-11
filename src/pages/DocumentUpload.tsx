@@ -556,8 +556,8 @@ function DocumentUpload() {
               <input name="email" value={formData.email} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Email" required />
               <label className="flex items-center space-x-2 md:col-span-2">
                 <input type="checkbox" name="affiliation_msa" checked={formData.affiliation_msa} onChange={handleChange} />
-                <span>Affiliation MSA agriculteur au 31/03/2025</span>
-              </label>
+                  <span>Je certifie que je suis affilé à la MSA en date du 31/03/2025 et accepte que cette information soit vérfiée par Super Novae directement auprès de la caisse</span>
+                </label>
             </div>
           </div>
 
@@ -638,7 +638,7 @@ function DocumentUpload() {
                 value={formData.commentaire_projet}
                 onChange={handleChange}
                 className="border p-2 rounded md:col-span-2"
-                placeholder="Commentaire sur votre projet"
+                placeholder="Décrivez votre projet avec le plus de détails possible, notamment l’impact de la demande d’équipement sur votre exploitation et sur votre production. Soyez le plus précis possible"
               />
             </div>
           </div>
@@ -754,6 +754,7 @@ function DocumentUpload() {
                   Fait le <input type="text" className="border p-2 rounded mx-2" placeholder="JJ/MM/AAAA" required /> Signature(s) (de tous les associés si GAEC) :
                 </div>
                 <SignaturePad value={signature} onChange={setSignature} />
+                <p>Signature</p>
               </div>
             </div>
           </div>
