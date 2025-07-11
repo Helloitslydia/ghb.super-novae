@@ -58,7 +58,7 @@ function DocumentStatus() {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center space-x-4">
-            <Link to="/documentupload" className="flex items-center text-gray-600 hover:text-gray-900">
+            <Link to="/documentupload?from=application" className="flex items-center text-gray-600 hover:text-gray-900">
               <ArrowLeft className="w-5 h-5 mr-2" /> Retour au formulaire
             </Link>
             <div>
