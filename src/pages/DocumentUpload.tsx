@@ -583,28 +583,43 @@ function DocumentUpload() {
                   className="border p-2 rounded w-full"
                 >
                   <option value="">Sélectionnez une option</option>
-                  <option value="j’ai besoin de reconstruction des équipements détériorés">
-                    j’ai besoin de reconstruction des équipements détériorés
+                  <option value="Petite structure agricole légère (abri bois/bambou, cuves 1300 L, kit solaire, goutte à goutte)">
+                    Petite structure agricole légère
+                    <br />(abri bois/bambou, cuves 1300 L, kit solaire, goutte à goutte)
                   </option>
-                  <option value="j’ai besoin d’une petite structure en bambou pour récolter et conserver l’eau de petites et moyennes exploitations">
-                    j’ai besoin d’une petite structure en bambou pour récolter et conserver l’eau de petites et moyennes exploitations
+                  <option value="Collecte et stockage d’eau de pluie (citernes souples 50 m³ + 30 m³, gouttières, irrigation)">
+                    Collecte et stockage d’eau de pluie
+                    <br />(citernes souples 50 m³ + 30 m³, gouttières, irrigation)
                   </option>
-                  <option value="j’ai besoin d’équipements et de gros réservoirs pour récolter et conserver l’eau de pluie (moyennes et grandes exploitations)">
-                    j’ai besoin d’équipements et de gros réservoirs pour récolter et conserver l’eau de pluie (moyennes et grandes exploitations)
+                  <option value="Grande réserve en zone côtière (watertank 98 m³, résistant à l’air salin)">
+                    Grande réserve en zone côtière
+                    <br />(watertank 98 m³, résistant à l’air salin)
                   </option>
-                  <option value="j’ai besoins de gros équipement et de grosses citernes (grandes exploitations)">
-                    j’ai besoins de gros équipement et de grosses citernes (grandes exploitations)
+                  <option value="Réparation après sinistre (Shido) (remise en état sur devis)">
+                    Réparation après sinistre (Shido)
+                    <br />(remise en état sur devis)
                   </option>
-                  <option value="aucune de ces options, nos correspond à mon besoin, je joins un devis personnalisé">
-                    Aucune de ces options ne correspond à mon besoin, je joins un devis personnalisé
+                  <option value="Projet spécifique sur devis (solution adaptée à vos besoins)">
+                    Projet spécifique sur devis
+                    <br />(solution adaptée à vos besoins)
                   </option>
                 </select>
               </div>
               <input name="sau_totale" value={formData.sau_totale} onChange={handleChange} className="border p-2 rounded" placeholder="SAU totale (ha)" />
-              <label className="flex items-center space-x-2">
-                <input type="checkbox" name="production_maraichage" checked={formData.production_maraichage} onChange={handleChange} />
-                <span>Maréchage</span>
-              </label>
+              <div className="flex items-center gap-4 md:col-span-2">
+                <label className="flex items-center space-x-2">
+                  <input type="checkbox" name="production_maraichage" checked={formData.production_maraichage} onChange={handleChange} />
+                  <span>Maréchage</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input type="checkbox" name="production_bovins" checked={formData.production_bovins} onChange={handleChange} />
+                  <span>Bovins</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input type="checkbox" name="production_volailles" checked={formData.production_volailles} onChange={handleChange} />
+                  <span>Volailles</span>
+                </label>
+              </div>
               <input name="surface_maraichage" value={formData.surface_maraichage} onChange={handleChange} className="border p-2 rounded" placeholder="Surface maréchage (ha)" />
               <input
                 name="surface_plantes_parfum_medicinales"
@@ -613,15 +628,7 @@ function DocumentUpload() {
                 className="border p-2 rounded"
                 placeholder="Surface plantes à parfum et médicinales (ha)"
               />
-              <label className="flex items-center space-x-2">
-                <input type="checkbox" name="production_bovins" checked={formData.production_bovins} onChange={handleChange} />
-                <span>Bovins</span>
-              </label>
               <input name="bovins_nombre" value={formData.bovins_nombre} onChange={handleChange} className="border p-2 rounded" placeholder="Nombre bovins" />
-              <label className="flex items-center space-x-2">
-                <input type="checkbox" name="production_volailles" checked={formData.production_volailles} onChange={handleChange} />
-                <span>Volailles</span>
-              </label>
               <input name="volailles_effectif" value={formData.volailles_effectif} onChange={handleChange} className="border p-2 rounded" placeholder="Effectif volailles" />
               <input name="autres_production" value={formData.autres_production} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Autres productions" />
               <input name="besoin_actuel" value={formData.besoin_actuel} onChange={handleChange} className="border p-2 rounded" placeholder="Besoin stockage actuel (m3)" />
@@ -654,6 +661,7 @@ function DocumentUpload() {
                 name="commentaire_projet"
                 value={formData.commentaire_projet}
                 onChange={handleChange}
+                rows={6}
                 className="border p-2 rounded md:col-span-2"
                 placeholder="Décrivez votre projet avec le plus de détails possible, notamment l’impact de la demande d’équipement sur votre exploitation et sur votre production. Soyez le plus précis possible"
               />
