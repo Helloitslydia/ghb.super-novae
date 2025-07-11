@@ -55,6 +55,7 @@ interface FormDataState {
   sau_totale: string;
   production_maraichage: boolean;
   surface_maraichage: string;
+  surface_plantes_parfum_medicinales: string;
   production_bovins: boolean;
   bovins_nombre: string;
   production_volailles: boolean;
@@ -97,6 +98,7 @@ const optionalFields: (keyof FormDataState)[] = [
   'sau_totale',
   'production_maraichage',
   'surface_maraichage',
+  'surface_plantes_parfum_medicinales',
   'production_bovins',
   'bovins_nombre',
   'production_volailles',
@@ -170,6 +172,7 @@ const initialFormData: FormDataState = {
   sau_totale: '',
   production_maraichage: false,
   surface_maraichage: '',
+  surface_plantes_parfum_medicinales: '',
   production_bovins: false,
   bovins_nombre: '',
   production_volailles: false,
@@ -596,6 +599,13 @@ function DocumentUpload() {
                 <span>Maréchage</span>
               </label>
               <input name="surface_maraichage" value={formData.surface_maraichage} onChange={handleChange} className="border p-2 rounded" placeholder="Surface maréchage (ha)" />
+              <input
+                name="surface_plantes_parfum_medicinales"
+                value={formData.surface_plantes_parfum_medicinales}
+                onChange={handleChange}
+                className="border p-2 rounded"
+                placeholder="Surface plantes à parfum et médicinales (ha)"
+              />
               <label className="flex items-center space-x-2">
                 <input type="checkbox" name="production_bovins" checked={formData.production_bovins} onChange={handleChange} />
                 <span>Bovins</span>
