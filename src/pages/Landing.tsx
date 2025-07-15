@@ -39,7 +39,7 @@ function Landing() {
             onClick={() => setIsCriteriaModalOpen(true)}
             className="text-[#E8B647] underline"
           >
-            Consultez les critère de sélection
+            Consultez les critères de selection
           </button>
         </span>
       )
