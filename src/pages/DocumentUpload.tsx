@@ -575,7 +575,7 @@ function DocumentUpload() {
             <h2 className="text-xl font-bold mb-4">Partie 2 : Votre projet</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="md:col-span-2">
-                <p className="font-medium mb-2">Choisissez l&apos;option qui se rapproche le plus de votre situation</p>
+                <p className="font-medium mb-2">Choisissez entre ces 5 options, qui détermine le type de soutien que vous allez recevoir</p>
                 <select
                   name="besoin_equipement"
                   value={formData.besoin_equipement}
@@ -583,25 +583,20 @@ function DocumentUpload() {
                   className="border p-2 rounded w-full"
                 >
                   <option value="">Sélectionnez une option</option>
-                  <option value="Petite structure agricole légère (abri bois/bambou, cuves 1300 L, kit solaire, goutte à goutte)">
-                    Petite structure agricole légère
-                    <br />(abri bois/bambou, cuves 1300 L, kit solaire, goutte à goutte)
+                  <option value="KIT 1 : Petite structure agricole légère : abri en bois ou en bambou, cuve de 1300 L, kit solaire, goutte à goutte">
+                    KIT 1 : Petite structure agricole légère : abri en bois ou en bambou, cuve de 1300 L, kit solaire, goutte à goutte
                   </option>
-                  <option value="Collecte et stockage d’eau de pluie (citernes souples 50 m³ + 30 m³, gouttières, irrigation)">
-                    Collecte et stockage d’eau de pluie
-                    <br />(citernes souples 50 m³ + 30 m³, gouttières, irrigation)
+                  <option value="KIT 2 : Collecte et stockage d’eau de pluie : citernes souples 50 m³ + 30 m³, gouttières, irrigation">
+                    KIT 2 : Collecte et stockage d’eau de pluie : citernes souples 50 m³ + 30 m³, gouttières, irrigation
                   </option>
-                  <option value="Grande réserve en zone côtière (watertank 98 m³, résistant à l’air salin)">
-                    Grande réserve en zone côtière
-                    <br />(watertank 98 m³, résistant à l’air salin)
+                  <option value="Grande réserve en zone côtière : watertank 98 m³, résistant à l’air salin">
+                    Grande réserve en zone côtière : watertank 98 m³, résistant à l’air salin
                   </option>
-                  <option value="Réparation après sinistre (Shido) (remise en état sur devis)">
-                    Réparation après sinistre (Shido)
-                    <br />(remise en état sur devis)
+                  <option value="Réparation après sinistre, sur devis">
+                    Réparation après sinistre, sur devis
                   </option>
-                  <option value="Projet spécifique sur devis (solution adaptée à vos besoins)">
-                    Projet spécifique sur devis
-                    <br />(solution adaptée à vos besoins)
+                  <option value="Solution sur-mesure à vos besoins, sur devis">
+                    Solution sur-mesure à vos besoins, sur devis
                   </option>
                 </select>
               </div>
