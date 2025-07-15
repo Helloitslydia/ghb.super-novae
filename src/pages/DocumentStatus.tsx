@@ -70,7 +70,7 @@ function DocumentStatus() {
       </div>
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="bg-blue-50 border border-blue-200 text-blue-800 rounded-lg p-4 mb-4">
-          Vous serez informé.e.s dans un délais de 15 jours.
+          Vous serez informé.e.s dans un délai de 15 jours.
         </div>
         <table className="min-w-full bg-white rounded-lg border divide-y divide-gray-200">
           <thead className="bg-gray-50">
