@@ -576,34 +576,13 @@ function DocumentUpload() {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="md:col-span-2">
                 <p className="font-medium mb-2">Choisissez l&apos;option qui se rapproche le plus de votre situation</p>
-                <select
+                <input
                   name="besoin_equipement"
                   value={formData.besoin_equipement}
                   onChange={handleChange}
                   className="border p-2 rounded w-full"
-                >
-                  <option value="">Sélectionnez une option</option>
-                  <option value="Petite structure agricole légère (abri bois/bambou, cuves 1300 L, kit solaire, goutte à goutte)">
-                    Petite structure agricole légère
-                    <br />(abri bois/bambou, cuves 1300 L, kit solaire, goutte à goutte)
-                  </option>
-                  <option value="Collecte et stockage d’eau de pluie (citernes souples 50 m³ + 30 m³, gouttières, irrigation)">
-                    Collecte et stockage d’eau de pluie
-                    <br />(citernes souples 50 m³ + 30 m³, gouttières, irrigation)
-                  </option>
-                  <option value="Grande réserve en zone côtière (watertank 98 m³, résistant à l’air salin)">
-                    Grande réserve en zone côtière
-                    <br />(watertank 98 m³, résistant à l’air salin)
-                  </option>
-                  <option value="Réparation après sinistre (Shido) (remise en état sur devis)">
-                    Réparation après sinistre (Shido)
-                    <br />(remise en état sur devis)
-                  </option>
-                  <option value="Projet spécifique sur devis (solution adaptée à vos besoins)">
-                    Projet spécifique sur devis
-                    <br />(solution adaptée à vos besoins)
-                  </option>
-                </select>
+                  placeholder="Votre situation"
+                />
               </div>
               <input name="sau_totale" value={formData.sau_totale} onChange={handleChange} className="border p-2 rounded" placeholder="SAU totale (ha)" />
               <div className="flex items-center gap-4 md:col-span-2">
