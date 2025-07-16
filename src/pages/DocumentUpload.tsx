@@ -27,7 +27,7 @@ const baseDocuments: DocumentItem[] = [
   { key: 'rib', label: "Relev\xE9 d'identit\xE9 bancaire", required: true },
   { key: 'avis_siret', label: 'Avis de situation au r\xE9pertoire SIRET', required: true },
   { key: 'kbis', label: 'K-bis', required: true },
-  { key: 'devis', label: 'Devis des fournisseurs/installateurs, obligatoire si l'option 4 ou 5 est choisie', required: false },
+  { key: 'devis', label: "Devis des fournisseurs/installateurs, obligatoire si l'option 4 ou 5 est choisie", required: false },
 ];
 
 interface UploadedFile {
