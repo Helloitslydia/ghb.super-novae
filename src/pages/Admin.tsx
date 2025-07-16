@@ -19,6 +19,8 @@ function Admin() {
   const [allApplications, setAllApplications] = useState<any[]>([]);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedApplication, setSelectedApplication] = useState<any | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 10;
 
   useEffect(() => {
     if (authenticated) {
@@ -77,6 +79,10 @@ function Admin() {
     }
   };
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter, statusFilter]);
+
   const filteredApplications = applications.filter((app) => {
     const query = filter.toLowerCase();
     const matchesQuery =
@@ -85,6 +91,11 @@ function Admin() {
     const matchesStatus = statusFilter === "" || app.status === statusFilter;
     return matchesQuery && matchesStatus;
   });
+  const totalPages = Math.ceil(filteredApplications.length / ITEMS_PER_PAGE);
+  const paginatedApplications = filteredApplications.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
   const columns = ["nom", "email", "created_at", "status"];
 
   if (!authenticated) {
@@ -185,7 +196,7 @@ function Admin() {
               </tr>
             </thead>
             <tbody>
-              {filteredApplications.map((app) => (
+              {paginatedApplications.map((app) => (
                 <tr key={app.id} className="border-t">
                   {columns.map((col) => (
                     <td key={col} className="px-4 py-2 break-words">
@@ -230,10 +241,37 @@ function Admin() {
                   </td>
                 </tr>
               )}
-            </tbody>
-          </table>
+          </tbody>
+        </table>
+      </div>
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center space-x-2 mt-4">
+          <button
+            className="px-3 py-1 border rounded disabled:opacity-50"
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Précédent
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`px-3 py-1 border rounded ${currentPage === page ? "bg-[#2D6A4F] text-white" : ""}`}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            className="px-3 py-1 border rounded disabled:opacity-50"
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            Suivant
+          </button>
         </div>
-        {showAll && (
+      )}
+      {showAll && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded shadow max-h-[90vh] overflow-auto w-[90vw] max-w-5xl">
               <h2 className="text-xl font-bold mb-4">Toutes les données</h2>
