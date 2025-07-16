@@ -210,6 +210,23 @@ const initialFormData: FormDataState = {
   attestation: false,
 };
 
+// Mapping of equipment options to their corresponding images
+const optionValues = [
+  'KIT 1 : Petite structure agricole légère : abri en bois ou en bambou, cuve de 1300 L, kit solaire, goutte à goutte',
+  'KIT 2 : Collecte et stockage d\u2019eau de pluie : citernes souples 50 m³ + 30 m³, gouttières, irrigation',
+  'Grande réserve en zone côtière : watertank 98 m³, résistant à l\u2019air salin',
+  'Réparation après sinistre, sur devis',
+  'Solution sur-mesure à vos besoins, sur devis',
+];
+
+const optionImages = [
+  '//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1752653583836x934047329531718700/Capture%20d%E2%80%99e%CC%81cran%202025-07-11%20a%CC%80%203.06.53%E2%80%AFPM.png',
+  '//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1752653625630x801815760041798500/Capture%20d%E2%80%99e%CC%81cran%202025-07-11%20a%CC%80%203.07.06%E2%80%AFPM.png',
+  '//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1752653650999x744393386646182300/Capture%20d%E2%80%99e%CC%81cran%202025-07-11%20a%CC%80%203.07.12%E2%80%AFPM.png',
+  '//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1752653693512x780032431822349700/Capture%20d%E2%80%99e%CC%81cran%202025-07-11%20a%CC%80%204.30.22%E2%80%AFPM.png',
+  '//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1752653716020x599785238027283900/Capture%20d%E2%80%99e%CC%81cran%202025-07-11%20a%CC%80%204.30.27%E2%80%AFPM.png',
+];
+
 function DocumentUpload() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -470,6 +487,11 @@ function DocumentUpload() {
       .replace(/^_+|_+$/g, ''); // Remove leading and trailing underscores
   };
 
+  // Determine which image to display for the selected option
+  const selectedOptionIndex = optionValues.indexOf(formData.besoin_equipement);
+  const selectedImage =
+    selectedOptionIndex !== -1 ? optionImages[selectedOptionIndex] : null;
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -608,6 +630,15 @@ function DocumentUpload() {
                     Solution sur-mesure à vos besoins, sur devis
                   </option>
                 </select>
+                {selectedImage && (
+                  <div className="mt-4">
+                    <img
+                      src={selectedImage}
+                      alt="Aperçu équipement"
+                      className="w-full max-w-md mx-auto"
+                    />
+                  </div>
+                )}
               </div>
               <input name="sau_totale" value={formData.sau_totale} onChange={handleChange} className="border p-2 rounded" placeholder="SAU totale (ha)" />
               <div className="flex items-center gap-4 md:col-span-2">
