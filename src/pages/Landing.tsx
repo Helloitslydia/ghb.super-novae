@@ -327,6 +327,15 @@ function Landing() {
                 </div>
               ))}
             </div>
+            <a
+              href="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1752595547555x783891127073297300/Brochure%20Appel%20a%CC%80%20projets%20-%20GBH%20%281%29.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="mt-4 inline-block text-[#E8B647] underline"
+            >
+              En savoir plus
+            </a>
           </div>
         </div>
 
