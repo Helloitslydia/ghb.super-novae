@@ -540,6 +540,15 @@ function DocumentUpload() {
             locale
           </li>
         </ul>
+        <a
+          href="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1752595547555x783891127073297300/Brochure%20Appel%20a%CC%80%20projets%20-%20GBH%20%281%29.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          download
+          className="mt-2 inline-block text-[#2D6A4F] hover:text-[#1B4332] underline"
+        >
+          En savoir plus
+        </a>
         <p>
           Nous vous remercions de remplir les éléments ci dessous pour que
           votre dossier soit évalué.
