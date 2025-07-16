@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent, useMemo } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
@@ -23,11 +23,11 @@ interface DocumentItem {
   required: boolean;
 }
 
-const documents: DocumentItem[] = [
+const baseDocuments: DocumentItem[] = [
   { key: 'rib', label: "Relev\xE9 d'identit\xE9 bancaire", required: true },
   { key: 'avis_siret', label: 'Avis de situation au r\xE9pertoire SIRET', required: true },
   { key: 'kbis', label: 'K-bis', required: true },
-  { key: 'devis', label: 'Devis des fournisseurs/installateurs', required: true }
+  { key: 'devis', label: 'Devis des fournisseurs/installateurs, obligatoire si l'option 4 ou 5 est choisie', required: false },
 ];
 
 interface UploadedFile {
@@ -241,12 +241,24 @@ function DocumentUpload() {
   const [completionRate, setCompletionRate] = useState(0);
   const [signature, setSignature] = useState<string | null>(null);
 
+  const isDevisRequired =
+    formData.besoin_equipement === optionValues[3] ||
+    formData.besoin_equipement === optionValues[4];
+
+  const documents = useMemo(
+    () =>
+      baseDocuments.map(doc =>
+        doc.key === 'devis' ? { ...doc, required: isDevisRequired } : doc
+      ),
+    [isDevisRequired]
+  );
+
   useEffect(() => {
     const requiredDocs = documents.filter(d => d.required);
     const uploadedRequired = requiredDocs.filter(d => files[d.key]);
     const rate = (uploadedRequired.length / requiredDocs.length) * 100;
     setCompletionRate(rate);
-  }, [files]);
+  }, [files, documents]);
 
   useEffect(() => {
     const loadData = async () => {
