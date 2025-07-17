@@ -20,13 +20,18 @@ function Admin() {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedApplication, setSelectedApplication] = useState<any | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeTab, setActiveTab] = useState<'applications' | 'messages'>('applications');
+  const [messages, setMessages] = useState<any[]>([]);
   const ITEMS_PER_PAGE = 10;
 
   useEffect(() => {
-    if (authenticated) {
+    if (!authenticated) return;
+    if (activeTab === 'applications') {
       loadApplications();
+    } else {
+      loadMessages();
     }
-  }, [authenticated]);
+  }, [authenticated, activeTab]);
 
   const loadApplications = async () => {
     const { data, error } = await supabase
@@ -35,6 +40,14 @@ function Admin() {
     if (!error && data) {
       setApplications(data as Application[]);
     }
+  };
+
+  const loadMessages = async () => {
+    const { data } = await supabase
+      .from('contact_messages')
+      .select('id, email, message, created_at')
+      .order('created_at', { ascending: false });
+    setMessages(data || []);
   };
 
   const fetchAllApplications = async () => {
@@ -149,15 +162,32 @@ function Admin() {
       </div>
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold">Dossiers</h2>
-          <button
-            onClick={fetchAllApplications}
-            className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded shadow"
-          >
-            Voir toutes les données
-          </button>
+          <div className="flex space-x-4">
+            <button
+              onClick={() => setActiveTab('applications')}
+              className={`pb-1 ${activeTab === 'applications' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
+            >
+              Dossiers
+            </button>
+            <button
+              onClick={() => setActiveTab('messages')}
+              className={`pb-1 ${activeTab === 'messages' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
+            >
+              Messages
+            </button>
+          </div>
+          {activeTab === 'applications' && (
+            <button
+              onClick={fetchAllApplications}
+              className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded shadow"
+            >
+              Voir toutes les données
+            </button>
+          )}
         </div>
-        <div className="bg-white p-4 rounded shadow mb-4">
+        {activeTab === 'applications' ? (
+          <>
+            <div className="bg-white p-4 rounded shadow mb-4">
           <label htmlFor="filter" className="block text-sm font-medium mb-2">
             Filtrer les dossiers
           </label>
@@ -271,6 +301,36 @@ function Admin() {
           </button>
         </div>
       )}
+          </>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white rounded shadow text-sm">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="px-4 py-2 text-left">Email</th>
+                  <th className="px-4 py-2 text-left">Message</th>
+                  <th className="px-4 py-2 text-left">Reçu le</th>
+                </tr>
+              </thead>
+              <tbody>
+                {messages.map((msg) => (
+                  <tr key={msg.id} className="border-t">
+                    <td className="px-4 py-2 break-words">{msg.email}</td>
+                    <td className="px-4 py-2 break-words whitespace-pre-wrap">{msg.message}</td>
+                    <td className="px-4 py-2">{new Date(msg.created_at).toLocaleString()}</td>
+                  </tr>
+                ))}
+                {messages.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="px-4 py-8 text-center text-gray-500">
+                      Aucun message
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
       {showAll && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded shadow max-h-[90vh] overflow-auto w-[90vw] max-w-5xl">
