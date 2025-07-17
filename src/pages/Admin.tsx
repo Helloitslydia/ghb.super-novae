@@ -36,7 +36,8 @@ function Admin() {
   const loadApplications = async () => {
     const { data, error } = await supabase
       .from("project_applications")
-      .select("id, user_id, nom, email, created_at, status");
+      .select("id, user_id, nom, email, created_at, status")
+      .eq("status", "Etude du dossier en cours");
     if (!error && data) {
       setApplications(data as Application[]);
     }
