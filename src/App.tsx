@@ -11,6 +11,7 @@ import DocumentStatus from './pages/DocumentStatus';
 import Admin from './pages/Admin';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
+import { ContactWidget } from './components/ContactWidget';
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
           />
         </Routes>
       </Router>
+      <ContactWidget />
     </AuthProvider>
   );
 }
