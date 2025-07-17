@@ -74,7 +74,7 @@ export function ContactWidget() {
       )}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-4 right-4 bg-[#2D6A4F] text-white py-2 px-4 rounded-full shadow-lg flex items-center space-x-2"
+        className="fixed bottom-4 right-4 bg-[#2D6A4F] text-white py-2 px-4 rounded-full shadow-lg flex items-center space-x-2 z-40"
       >
         <MessageCircle className="w-4 h-4 text-[#E8B647]" />
         <span>Un problème ? Contactez-nous</span>
