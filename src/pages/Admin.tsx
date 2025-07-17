@@ -1,6 +1,6 @@
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Eye, X } from "lucide-react";
+import { ArrowLeft, Eye } from "lucide-react";
 import { ApplicationDetailsModal } from "../components/ApplicationDetailsModal";
 import { supabase } from "../lib/supabase";
 
@@ -21,11 +21,6 @@ function Admin() {
   const [selectedApplication, setSelectedApplication] = useState<any | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 10;
-  const [showMessages, setShowMessages] = useState(false);
-  const [emails, setEmails] = useState<string[]>([]);
-  const [selectedEmail, setSelectedEmail] = useState('');
-  const [chatMessages, setChatMessages] = useState<any[]>([]);
-  const [reply, setReply] = useState('');
 
   useEffect(() => {
     if (authenticated) {
@@ -64,36 +59,6 @@ function Admin() {
     }
   };
 
-  const fetchEmails = async () => {
-    const { data } = await supabase.from('chat_messages').select('email, created_at').order('created_at', { ascending: false });
-    if (data) {
-      const unique = Array.from(new Set(data.map((d: any) => d.email)));
-      setEmails(unique);
-    }
-  };
-
-  const fetchChat = async (email: string) => {
-    setSelectedEmail(email);
-    const { data } = await supabase
-      .from('chat_messages')
-      .select('*')
-      .eq('email', email)
-      .order('created_at', { ascending: true });
-    setChatMessages(data || []);
-  };
-
-  const sendReply = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!selectedEmail) return;
-    const { error } = await supabase
-      .from('chat_messages')
-      .insert({ email: selectedEmail, message: reply, from_admin: true });
-    if (!error) {
-      setReply('');
-      fetchChat(selectedEmail);
-    }
-  };
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === PASSWORD) {
@@ -117,12 +82,6 @@ function Admin() {
   useEffect(() => {
     setCurrentPage(1);
   }, [filter, statusFilter]);
-
-  useEffect(() => {
-    if (showMessages) {
-      fetchEmails();
-    }
-  }, [showMessages]);
 
   const filteredApplications = applications.filter((app) => {
     const query = filter.toLowerCase();
@@ -191,20 +150,12 @@ function Admin() {
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold">Dossiers</h2>
-          <div className="space-x-2">
-            <button
-              onClick={() => setShowMessages(true)}
-              className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded shadow"
-            >
-              Messagerie
-            </button>
-            <button
-              onClick={fetchAllApplications}
-              className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded shadow"
-            >
-              Voir toutes les données
-            </button>
-          </div>
+          <button
+            onClick={fetchAllApplications}
+            className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded shadow"
+          >
+            Voir toutes les données
+          </button>
         </div>
         <div className="bg-white p-4 rounded shadow mb-4">
           <label htmlFor="filter" className="block text-sm font-medium mb-2">
@@ -333,49 +284,6 @@ function Admin() {
               >
                 Fermer
               </button>
-            </div>
-          </div>
-        )}
-        {showMessages && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded shadow w-full max-w-3xl relative flex">
-              <button onClick={() => setShowMessages(false)} className="absolute top-4 right-4 text-gray-500">
-                <X className="w-5 h-5" />
-              </button>
-              <div className="w-1/3 border-r overflow-y-auto max-h-[70vh] pr-2">
-                {emails.map((e) => (
-                  <div
-                    key={e}
-                    onClick={() => fetchChat(e)}
-                    className={`p-2 cursor-pointer ${selectedEmail === e ? 'bg-gray-200' : ''}`}
-                  >
-                    {e}
-                  </div>
-                ))}
-              </div>
-              <div className="flex-1 pl-2 flex flex-col h-[70vh]">
-                <div className="flex-1 overflow-y-auto mb-2 space-y-2">
-                  {chatMessages.map((m) => (
-                    <div key={m.id} className={`text-sm ${m.from_admin ? 'text-right' : ''}`}>
-                      <span className={`inline-block px-3 py-2 rounded-lg ${m.from_admin ? 'bg-gray-200' : 'bg-blue-100'}`}>{m.message}</span>
-                    </div>
-                  ))}
-                </div>
-                {selectedEmail && (
-                  <form onSubmit={sendReply} className="flex space-x-2">
-                    <input
-                      type="text"
-                      value={reply}
-                      onChange={(e) => setReply(e.target.value)}
-                      className="flex-1 border rounded px-2 py-1"
-                      required
-                    />
-                    <button type="submit" className="bg-[#2D6A4F] text-white px-4 py-2 rounded">
-                      Envoyer
-                    </button>
-                  </form>
-                )}
-              </div>
             </div>
           </div>
         )}
