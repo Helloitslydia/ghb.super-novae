@@ -97,31 +97,31 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
             </ul>
           </div>
         )}
-        <div className="mt-4 flex space-x-2 flex-wrap">
+        <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-2">
           <button
             onClick={saveChanges}
-            className="bg-[#2D6A4F] text-white px-4 py-2 rounded"
+            className="bg-[#2D6A4F] text-white px-4 py-2 rounded w-full sm:w-auto"
           >
             Enregistrer
           </button>
-          <button onClick={onClose} className="bg-blue-600 text-white px-4 py-2 rounded">
+          <button onClick={onClose} className="bg-blue-600 text-white px-4 py-2 rounded w-full sm:w-auto">
             Fermer
           </button>
           <button
             onClick={() => updateStatus('Dossier conforme')}
-            className="bg-green-600 text-white px-4 py-2 rounded"
+            className="bg-green-600 text-white px-4 py-2 rounded w-full sm:w-auto"
           >
             Dossier conforme
           </button>
           <button
             onClick={() => updateStatus('A modifier')}
-            className="bg-yellow-600 text-white px-4 py-2 rounded"
+            className="bg-yellow-600 text-white px-4 py-2 rounded w-full sm:w-auto"
           >
             Dossier à modifier - Elements manquants
           </button>
           <button
             onClick={() => updateStatus('Refusé')}
-            className="bg-red-600 text-white px-4 py-2 rounded"
+            className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto"
           >
             Dossier refusé
           </button>
