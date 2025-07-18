@@ -163,6 +163,10 @@ function SignUp() {
                   placeholder="••••••••"
                 />
               </div>
+              <p className="mt-2 text-sm text-gray-700">
+                Attention, un seul dossier peut être déposé par compte.<br />
+                Chaque compte est lié à une adresse email personnelle.
+              </p>
             </div>
 
             <div>
