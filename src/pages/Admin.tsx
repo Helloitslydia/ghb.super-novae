@@ -57,6 +57,25 @@ function Admin() {
     setShowAll(true);
   };
 
+  const exportToExcel = async () => {
+    const { data } = await supabase.from('project_applications').select('*');
+    if (!data) return;
+    const headers = Object.keys(data[0] || {});
+    const rows = data.map(row =>
+      headers.map(h => JSON.stringify(row[h] ?? '')).join('\t')
+    );
+    const csv = [headers.join('\t'), ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'dossiers.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const fetchApplicationDetails = async (id: string) => {
     const { data } = await supabase
       .from("project_applications")
@@ -83,15 +102,6 @@ function Admin() {
     }
   };
 
-  const updateStatus = async (id: string, status: string) => {
-    const { error } = await supabase
-      .from("project_applications")
-      .update({ status })
-      .eq("id", id);
-    if (!error) {
-      await loadApplications();
-    }
-  };
 
   useEffect(() => {
     setCurrentPage(1);
@@ -178,12 +188,20 @@ function Admin() {
             </button>
           </div>
           {activeTab === 'applications' && (
-            <button
-              onClick={fetchAllApplications}
-              className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded shadow"
-            >
-              Voir toutes les données
-            </button>
+            <div className="space-x-2">
+              <button
+                onClick={fetchAllApplications}
+                className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded shadow"
+              >
+                Voir toutes les données
+              </button>
+              <button
+                onClick={exportToExcel}
+                className="bg-[#2D6A4F] hover:bg-[#1B4332] text-white px-4 py-2 rounded shadow"
+              >
+                Exporter en Excel
+              </button>
+            </div>
           )}
         </div>
         {activeTab === 'applications' ? (
@@ -232,17 +250,7 @@ function Admin() {
                   {columns.map((col) => (
                     <td key={col} className="px-4 py-2 break-words">
                       {col === "status" ? (
-                        <select
-                          className="border rounded p-1"
-                          value={app.status}
-                          onChange={(e) => updateStatus(app.id, e.target.value)}
-                        >
-                          <option value="Etude du dossier en cours">
-                            Etude du dossier en cours
-                          </option>
-                          <option value="Validé">Validé</option>
-                          <option value="Refusé">Refusé</option>
-                        </select>
+                        app.status
                       ) : col === "created_at" ? (
                         new Date(app[col]).toLocaleDateString()
                       ) : (
