@@ -94,6 +94,10 @@ interface FormDataState {
 
 const optionalFields: (keyof FormDataState)[] = [
   'besoin_equipement',
+  'ede',
+  'inuav1',
+  'inuav2',
+  'inuav3',
   'sau_totale',
   'production_maraichage',
   'surface_maraichage',
@@ -225,6 +229,84 @@ const optionImages = [
   '//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1752653693512x780032431822349700/Capture%20d%E2%80%99e%CC%81cran%202025-07-11%20a%CC%80%204.30.22%E2%80%AFPM.png',
   '//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1752653716020x599785238027283900/Capture%20d%E2%80%99e%CC%81cran%202025-07-11%20a%CC%80%204.30.27%E2%80%AFPM.png',
 ];
+
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+  wrapperClassName?: string;
+}
+
+const TextInputField: React.FC<InputProps> = ({
+  label,
+  required,
+  wrapperClassName,
+  className,
+  ...props
+}) => (
+  <div className={wrapperClassName}>
+    <label className="block mb-1">
+      {label}
+      {required && <span className="text-red-500">*</span>}
+    </label>
+    <input
+      {...props}
+      required={required}
+      className={`border p-2 rounded w-full ${className || ''}`.trim()}
+    />
+  </div>
+);
+
+interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label: string;
+  wrapperClassName?: string;
+}
+
+const TextAreaField: React.FC<TextAreaProps> = ({
+  label,
+  required,
+  wrapperClassName,
+  className,
+  ...props
+}) => (
+  <div className={wrapperClassName}>
+    <label className="block mb-1">
+      {label}
+      {required && <span className="text-red-500">*</span>}
+    </label>
+    <textarea
+      {...props}
+      required={required}
+      className={`border p-2 rounded w-full ${className || ''}`.trim()}
+    />
+  </div>
+);
+
+interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  label: string;
+  wrapperClassName?: string;
+}
+
+const SelectField: React.FC<SelectProps> = ({
+  label,
+  required,
+  wrapperClassName,
+  className,
+  children,
+  ...props
+}) => (
+  <div className={wrapperClassName}>
+    <label className="block mb-1">
+      {label}
+      {required && <span className="text-red-500">*</span>}
+    </label>
+    <select
+      {...props}
+      required={required}
+      className={`border p-2 rounded w-full ${className || ''}`.trim()}
+    >
+      {children}
+    </select>
+  </div>
+);
 
 function DocumentUpload() {
   const { user } = useAuth();
@@ -592,20 +674,20 @@ function DocumentUpload() {
           <div className="space-y-6 bg-white p-6 rounded-lg border border-gray-200">
             <h2 className="text-xl font-bold mb-4">Partie 1 : Votre exploitation en détails</h2>
             <div className="grid md:grid-cols-2 gap-4">
-              <input name="siret" value={formData.siret} onChange={handleChange} className="border p-2 rounded" placeholder="N° SIRET" required />
-              <input name="pacage" value={formData.pacage} onChange={handleChange} className="border p-2 rounded" placeholder="N° PACAGE" required />
-              <input name="ede" value={formData.ede} onChange={handleChange} className="border p-2 rounded" placeholder="N° EDE" required />
-              <input name="inuav1" value={formData.inuav1} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 1" required />
-              <input name="inuav2" value={formData.inuav2} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 2" required />
-              <input name="inuav3" value={formData.inuav3} onChange={handleChange} className="border p-2 rounded" placeholder="N° INUAV 3" required />
-              <input name="nom" value={formData.nom} onChange={handleChange} className="border p-2 rounded" placeholder="Nom / raison sociale" required />
-              <input name="statut" value={formData.statut} onChange={handleChange} className="border p-2 rounded" placeholder="Statut juridique" required />
-              <textarea name="adresse" value={formData.adresse} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Adresse" required />
-              <input name="code_postal" value={formData.code_postal} onChange={handleChange} className="border p-2 rounded" placeholder="Code postal" required />
-              <input name="commune" value={formData.commune} onChange={handleChange} className="border p-2 rounded" placeholder="Commune" required />
-              <input name="tel_fixe" value={formData.tel_fixe} onChange={handleChange} className="border p-2 rounded" placeholder="Téléphone fixe" required />
-              <input name="tel_mobile" value={formData.tel_mobile} onChange={handleChange} className="border p-2 rounded" placeholder="Téléphone mobile" required />
-              <input name="email" value={formData.email} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Email" required />
+              <TextInputField label="N° SIRET" name="siret" value={formData.siret} onChange={handleChange} required />
+              <TextInputField label="N° PACAGE" name="pacage" value={formData.pacage} onChange={handleChange} required />
+              <TextInputField label="N° EDE" name="ede" value={formData.ede} onChange={handleChange} />
+              <TextInputField label="N° INUAV 1" name="inuav1" value={formData.inuav1} onChange={handleChange} />
+              <TextInputField label="N° INUAV 2" name="inuav2" value={formData.inuav2} onChange={handleChange} />
+              <TextInputField label="N° INUAV 3" name="inuav3" value={formData.inuav3} onChange={handleChange} />
+              <TextInputField label="Nom / raison sociale" name="nom" value={formData.nom} onChange={handleChange} required />
+              <TextInputField label="Statut juridique" name="statut" value={formData.statut} onChange={handleChange} required />
+              <TextAreaField label="Adresse" name="adresse" value={formData.adresse} onChange={handleChange} wrapperClassName="md:col-span-2" required />
+              <TextInputField label="Code postal" name="code_postal" value={formData.code_postal} onChange={handleChange} required />
+              <TextInputField label="Commune" name="commune" value={formData.commune} onChange={handleChange} required />
+              <TextInputField label="Téléphone fixe" name="tel_fixe" value={formData.tel_fixe} onChange={handleChange} required />
+              <TextInputField label="Téléphone mobile" name="tel_mobile" value={formData.tel_mobile} onChange={handleChange} required />
+              <TextInputField label="Email" name="email" value={formData.email} onChange={handleChange} wrapperClassName="md:col-span-2" required />
               <label className="flex items-center space-x-2 md:col-span-2">
                 <input type="checkbox" name="affiliation_msa" checked={formData.affiliation_msa} onChange={handleChange} />
                   <span>Je certifie que je suis affilé à la MSA en date du 31/03/2025 et accepte que cette information soit vérfiée par Super Novae directement auprès de la caisse</span>
@@ -617,12 +699,12 @@ function DocumentUpload() {
             <h2 className="text-xl font-bold mb-4">Partie 2 :  Votre projet: Eau et résilience</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="md:col-span-2">
-                <p className="font-medium mb-2">Choisissez entre ces 5 options, qui détermine le type de soutien que vous allez recevoir</p>
-                <select
+                <SelectField
+                  label="Choisissez entre ces 5 options, qui détermine le type de soutien que vous allez recevoir"
                   name="besoin_equipement"
                   value={formData.besoin_equipement}
                   onChange={handleChange}
-                  className="border p-2 rounded w-full"
+                  required
                 >
                   <option value="">Sélectionnez une option</option>
                   <option value="KIT 1 : Petite structure agricole légère : abri en bois ou en bambou, cuve de 1300 L, kit solaire, goutte à goutte">
@@ -640,7 +722,7 @@ function DocumentUpload() {
                   <option value="Solution sur-mesure à vos besoins, sur devis">
                     Solution sur-mesure à vos besoins, sur devis
                   </option>
-                </select>
+                </SelectField>
                 {selectedImage && (
                   <div className="mt-4">
                     <img
@@ -651,7 +733,7 @@ function DocumentUpload() {
                   </div>
                 )}
               </div>
-              <input name="sau_totale" value={formData.sau_totale} onChange={handleChange} className="border p-2 rounded" placeholder="SAU totale (ha)" />
+              <TextInputField label="SAU totale (ha)" name="sau_totale" value={formData.sau_totale} onChange={handleChange} />
               <div className="flex items-center gap-4 md:col-span-2">
                 <label className="flex items-center space-x-2">
                   <input type="checkbox" name="production_maraichage" checked={formData.production_maraichage} onChange={handleChange} />
@@ -666,50 +748,49 @@ function DocumentUpload() {
                   <span>Volailles</span>
                 </label>
               </div>
-              <input name="surface_maraichage" value={formData.surface_maraichage} onChange={handleChange} className="border p-2 rounded" placeholder="Surface maréchage (ha)" />
-              <input
+              <TextInputField label="Surface maréchage (ha)" name="surface_maraichage" value={formData.surface_maraichage} onChange={handleChange} />
+              <TextInputField
+                label="Surface plantes à parfum et médicinales (ha)"
                 name="surface_plantes_parfum_medicinales"
                 value={formData.surface_plantes_parfum_medicinales}
                 onChange={handleChange}
-                className="border p-2 rounded"
-                placeholder="Surface plantes à parfum et médicinales (ha)"
               />
-              <input name="bovins_nombre" value={formData.bovins_nombre} onChange={handleChange} className="border p-2 rounded" placeholder="Nombre bovins" />
-              <input name="volailles_effectif" value={formData.volailles_effectif} onChange={handleChange} className="border p-2 rounded" placeholder="Effectif volailles" />
-              <input name="autres_production" value={formData.autres_production} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Autres productions" />
-              <input name="besoin_actuel" value={formData.besoin_actuel} onChange={handleChange} className="border p-2 rounded" placeholder="Besoin stockage actuel (m3)" />
-              <input name="besoin_prospectif" value={formData.besoin_prospectif} onChange={handleChange} className="border p-2 rounded" placeholder="Besoin stockage prospectif (m3)" />
-              <input name="capacite_actuelle" value={formData.capacite_actuelle} onChange={handleChange} className="border p-2 rounded" placeholder="Capacité actuelle (m3)" />
-              <textarea name="detail_stockage" value={formData.detail_stockage} onChange={handleChange} className="border p-2 rounded md:col-span-2" placeholder="Détail du stockage actuel" />
-              <input name="capacite_besoins_actuels" value={formData.capacite_besoins_actuels} onChange={handleChange} className="border p-2 rounded" placeholder="Capacité nécessaire (actuels)" />
-              <input name="capacite_besoins_prospectifs" value={formData.capacite_besoins_prospectifs} onChange={handleChange} className="border p-2 rounded" placeholder="Capacité nécessaire (moyen terme)" />
-              <input name="volume_total_investissement" value={formData.volume_total_investissement} onChange={handleChange} className="border p-2 rounded" placeholder="Volume stockage total invest. (m3)" />
-              <input name="micro_surface" value={formData.micro_surface} onChange={handleChange} className="border p-2 rounded" placeholder="Micro-bassine surface (m2)" />
-              <input name="micro_volume" value={formData.micro_volume} onChange={handleChange} className="border p-2 rounded" placeholder="Micro-bassine volume (m3)" />
-              <input name="cuve_nombre" value={formData.cuve_nombre} onChange={handleChange} className="border p-2 rounded" placeholder="Cuve nombre" />
-              <input name="cuve_vol_unitaire" value={formData.cuve_vol_unitaire} onChange={handleChange} className="border p-2 rounded" placeholder="Cuve volume unitaire (m3)" />
-              <input name="cuve_vol_total" value={formData.cuve_vol_total} onChange={handleChange} className="border p-2 rounded" placeholder="Cuve volume total (m3)" />
-              <input name="citerne_nombre" value={formData.citerne_nombre} onChange={handleChange} className="border p-2 rounded" placeholder="Citerne souple nombre" />
-              <input name="citerne_vol_unitaire" value={formData.citerne_vol_unitaire} onChange={handleChange} className="border p-2 rounded" placeholder="Citerne vol. unitaire (m3)" />
-              <input name="citerne_vol_total" value={formData.citerne_vol_total} onChange={handleChange} className="border p-2 rounded" placeholder="Citerne vol. total (m3)" />
-              <input name="water_tank_volume" value={formData.water_tank_volume} onChange={handleChange} className="border p-2 rounded" placeholder="Water-tank volume (m3)" />
-              <input name="volume_stockage_actuel" value={formData.volume_stockage_actuel} onChange={handleChange} className="border p-2 rounded" placeholder="Volume stockage actuel" />
-              <input name="volume_stockage_total_post" value={formData.volume_stockage_total_post} onChange={handleChange} className="border p-2 rounded" placeholder="Volume stockage total après" />
-              <input name="surface_impluvium" value={formData.surface_impluvium} onChange={handleChange} className="border p-2 rounded" placeholder="Surface d'impluvium (m2)" />
-              <input name="cout_total_projet" value={formData.cout_total_projet} onChange={handleChange} className="border p-2 rounded" placeholder="Coût total du projet" />
-              <input name="depense_nature" value={formData.depense_nature} onChange={handleChange} className="border p-2 rounded" placeholder="Nature dépense" />
-              <input name="depense_cout" value={formData.depense_cout} onChange={handleChange} className="border p-2 rounded" placeholder="Coût dépense" />
-              <input name="depense_terrassement" value={formData.depense_terrassement} onChange={handleChange} className="border p-2 rounded" placeholder="Terrassement coût" />
-              <input name="depense_pose" value={formData.depense_pose} onChange={handleChange} className="border p-2 rounded" placeholder="Pose coût" />
-              <input name="depense_raccordement" value={formData.depense_raccordement} onChange={handleChange} className="border p-2 rounded" placeholder="Raccordement coût" />
-              <input name="depense_pompage" value={formData.depense_pompage} onChange={handleChange} className="border p-2 rounded" placeholder="Pompage coût" />
-              <textarea
+              <TextInputField label="Nombre bovins" name="bovins_nombre" value={formData.bovins_nombre} onChange={handleChange} />
+              <TextInputField label="Effectif volailles" name="volailles_effectif" value={formData.volailles_effectif} onChange={handleChange} />
+              <TextInputField label="Autres productions" name="autres_production" value={formData.autres_production} onChange={handleChange} wrapperClassName="md:col-span-2" />
+              <TextInputField label="Besoin stockage actuel (m3)" name="besoin_actuel" value={formData.besoin_actuel} onChange={handleChange} />
+              <TextInputField label="Besoin stockage prospectif (m3)" name="besoin_prospectif" value={formData.besoin_prospectif} onChange={handleChange} />
+              <TextInputField label="Capacité actuelle (m3)" name="capacite_actuelle" value={formData.capacite_actuelle} onChange={handleChange} />
+              <TextAreaField label="Détail du stockage actuel" name="detail_stockage" value={formData.detail_stockage} onChange={handleChange} wrapperClassName="md:col-span-2" />
+              <TextInputField label="Capacité nécessaire (actuels)" name="capacite_besoins_actuels" value={formData.capacite_besoins_actuels} onChange={handleChange} />
+              <TextInputField label="Capacité nécessaire (moyen terme)" name="capacite_besoins_prospectifs" value={formData.capacite_besoins_prospectifs} onChange={handleChange} />
+              <TextInputField label="Volume stockage total invest. (m3)" name="volume_total_investissement" value={formData.volume_total_investissement} onChange={handleChange} />
+              <TextInputField label="Micro-bassine surface (m2)" name="micro_surface" value={formData.micro_surface} onChange={handleChange} />
+              <TextInputField label="Micro-bassine volume (m3)" name="micro_volume" value={formData.micro_volume} onChange={handleChange} />
+              <TextInputField label="Cuve nombre" name="cuve_nombre" value={formData.cuve_nombre} onChange={handleChange} />
+              <TextInputField label="Cuve volume unitaire (m3)" name="cuve_vol_unitaire" value={formData.cuve_vol_unitaire} onChange={handleChange} />
+              <TextInputField label="Cuve volume total (m3)" name="cuve_vol_total" value={formData.cuve_vol_total} onChange={handleChange} />
+              <TextInputField label="Citerne souple nombre" name="citerne_nombre" value={formData.citerne_nombre} onChange={handleChange} />
+              <TextInputField label="Citerne vol. unitaire (m3)" name="citerne_vol_unitaire" value={formData.citerne_vol_unitaire} onChange={handleChange} />
+              <TextInputField label="Citerne vol. total (m3)" name="citerne_vol_total" value={formData.citerne_vol_total} onChange={handleChange} />
+              <TextInputField label="Water-tank volume (m3)" name="water_tank_volume" value={formData.water_tank_volume} onChange={handleChange} />
+              <TextInputField label="Volume stockage actuel" name="volume_stockage_actuel" value={formData.volume_stockage_actuel} onChange={handleChange} />
+              <TextInputField label="Volume stockage total après" name="volume_stockage_total_post" value={formData.volume_stockage_total_post} onChange={handleChange} />
+              <TextInputField label="Surface d'impluvium (m2)" name="surface_impluvium" value={formData.surface_impluvium} onChange={handleChange} />
+              <TextInputField label="Coût total du projet" name="cout_total_projet" value={formData.cout_total_projet} onChange={handleChange} />
+              <TextInputField label="Nature dépense" name="depense_nature" value={formData.depense_nature} onChange={handleChange} />
+              <TextInputField label="Coût dépense" name="depense_cout" value={formData.depense_cout} onChange={handleChange} />
+              <TextInputField label="Terrassement coût" name="depense_terrassement" value={formData.depense_terrassement} onChange={handleChange} />
+              <TextInputField label="Pose coût" name="depense_pose" value={formData.depense_pose} onChange={handleChange} />
+              <TextInputField label="Raccordement coût" name="depense_raccordement" value={formData.depense_raccordement} onChange={handleChange} />
+              <TextInputField label="Pompage coût" name="depense_pompage" value={formData.depense_pompage} onChange={handleChange} />
+              <TextAreaField
+                label="Décrivez votre projet avec le plus de détails possible, notamment l’impact de la demande d’équipement sur votre exploitation et sur votre production. Soyez le plus précis possible"
                 name="commentaire_projet"
                 value={formData.commentaire_projet}
                 onChange={handleChange}
                 rows={6}
-                className="border p-2 rounded md:col-span-2"
-                placeholder="Décrivez votre projet avec le plus de détails possible, notamment l’impact de la demande d’équipement sur votre exploitation et sur votre production. Soyez le plus précis possible"
+                wrapperClassName="md:col-span-2"
               />
             </div>
           </div>
@@ -778,51 +859,53 @@ function DocumentUpload() {
             <h2 className="text-xl font-bold mb-4">Partie 4 : Engagement et déclaration</h2>
             <div className="space-y-2">
               <div>
-                <label className="block mb-1">Je soussigné(e) (nom et prénom) :</label>
-                <input className="border p-2 rounded w-full" type="text" required />
+              <label className="block mb-1">
+                Je soussigné(e) (nom et prénom) :<span className="text-red-500">*</span>
+              </label>
+              <input className="border p-2 rounded w-full" type="text" required />
               </div>
               <label className="flex items-start space-x-2">
                 <input type="checkbox" required />
-                <span className="flex-1">Certifie avoir pouvoir pour représenter le demandeur dans le cadre de la présente formalité ;</span>
+                <span className="flex-1">Certifie avoir pouvoir pour représenter le demandeur dans le cadre de la présente formalité ;<span className="text-red-500">*</span></span>
               </label>
               <label className="flex items-start space-x-2">
                 <input type="checkbox" required />
-                <span className="flex-1">Certifie l'ensemble des informations fournies dans le présent formulaire et les pièces jointes.</span>
+                <span className="flex-1">Certifie l'ensemble des informations fournies dans le présent formulaire et les pièces jointes.<span className="text-red-500">*</span></span>
               </label>
               <label className="flex items-start space-x-2">
                 <input type="checkbox" required />
-                <span className="flex-1">Je suis informé qu'en cas d'irrégularité ou de non-respect de mes engagements, le remboursement des sommes perçues sera exigé, majoré d'intérêts de retard et éventuellement de pénalités financières, sans exclure d'autres poursuites et sanctions prévues par les textes en vigueur.</span>
+                <span className="flex-1">Je suis informé qu'en cas d'irrégularité ou de non-respect de mes engagements, le remboursement des sommes perçues sera exigé, majoré d'intérêts de retard et éventuellement de pénalités financières, sans exclure d'autres poursuites et sanctions prévues par les textes en vigueur.<span className="text-red-500">*</span></span>
               </label>
               <p className="font-semibold mt-2">Je déclare :</p>
               <label className="flex items-start space-x-2">
                 <input type="checkbox" required />
-                <span className="flex-1">ne pas disposer de forage sur mon exploitation et ne pas avoir engagé de démarche pour en disposer.</span>
+                <span className="flex-1">ne pas disposer de forage sur mon exploitation et ne pas avoir engagé de démarche pour en disposer.<span className="text-red-500">*</span></span>
               </label>
               <label className="flex items-start space-x-2">
                 <input type="checkbox" required />
-                <span className="flex-1">que mon projet ne nécessite ni permis de construire ni autorisation environnementale « Loi sur l’eau ».</span>
+                <span className="flex-1">que mon projet ne nécessite ni permis de construire ni autorisation environnementale « Loi sur l’eau ».<span className="text-red-500">*</span></span>
               </label>
               <label className="flex items-start space-x-2">
                 <input type="checkbox" required />
-                <span className="flex-1">Je demande à bénéficier de l’aide aux investissements visant à renforcer la résistance à la sécheresse des exploitations agricoles mahoraises via l’acquisition d’équipements de récupération et de stockage des eaux pluviales à usage agricole.</span>
+                <span className="flex-1">Je demande à bénéficier de l’aide aux investissements visant à renforcer la résistance à la sécheresse des exploitations agricoles mahoraises via l’acquisition d’équipements de récupération et de stockage des eaux pluviales à usage agricole.<span className="text-red-500">*</span></span>
               </label>
               <label className="flex items-start space-x-2">
                 <input type="checkbox" required />
-                <span className="flex-1">Je m’engage à ce que mon projet soit réalisé au plus tard le 15 septembre 2025 (mise en œuvre opérationnelle avec raccordement aux impluviums)</span>
+                <span className="flex-1">Je m’engage à ce que mon projet soit réalisé au plus tard le 15 septembre 2025 (mise en œuvre opérationnelle avec raccordement aux impluviums)<span className="text-red-500">*</span></span>
               </label>
               <p className="font-semibold mt-2">Je m'engage, sous réserve d'attribution de l'aide :</p>
               <label className="flex items-start space-x-2">
                 <input type="checkbox" required />
-                <span className="flex-1">À délivrer tout document ou justificatif demandé par le bailleur pendant 3 années ;</span>
+                <span className="flex-1">À délivrer tout document ou justificatif demandé par le bailleur pendant 3 années ;<span className="text-red-500">*</span></span>
               </label>
               <p className="font-semibold mt-2">Protection des données personnelles :</p>
               <label className="flex items-start space-x-2">
                 <input type="checkbox" name="attestation" checked={formData.attestation} onChange={handleChange} required />
-                <span className="flex-1">J’autorise les organismes tiers (Direction des finances publiques, MSA, DAAF, fournisseurs des équipements financés par l’appel à projet.) à transmettre à GBH ou son partenaire de mise en œuvre Super Novae les données utiles à l’instruction et au paiement de la présente demande d’aide.</span>
+                <span className="flex-1">J’autorise les organismes tiers (Direction des finances publiques, MSA, DAAF, fournisseurs des équipements financés par l’appel à projet.) à transmettre à GBH ou son partenaire de mise en œuvre Super Novae les données utiles à l’instruction et au paiement de la présente demande d’aide.<span className="text-red-500">*</span></span>
               </label>
               <div className="mt-2 space-y-2">
                 <div>
-                  Fait le <input type="text" className="border p-2 rounded mx-2" placeholder="JJ/MM/AAAA" required /> Signature(s) (de tous les associés si GAEC) :
+                  Fait le <input type="text" className="border p-2 rounded mx-2" placeholder="JJ/MM/AAAA" required /> <span className="text-red-500">*</span> Signature(s) (de tous les associés si GAEC) :
                 </div>
                 <SignaturePad value={signature} onChange={setSignature} />
                 <p>Signature</p>
