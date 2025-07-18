@@ -37,6 +37,15 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
     toast.success('Données mises à jour');
   };
 
+  const updateStatus = async (status: string) => {
+    await supabase
+      .from('project_applications')
+      .update({ status })
+      .eq('id', application.id);
+    setEditableData(prev => ({ ...prev, status }));
+    toast.success(`Statut mis à jour: ${status}`);
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded shadow max-h-[90vh] overflow-auto w-[90vw] max-w-3xl relative">
@@ -88,7 +97,7 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
             </ul>
           </div>
         )}
-        <div className="mt-4 flex space-x-2">
+        <div className="mt-4 flex space-x-2 flex-wrap">
           <button
             onClick={saveChanges}
             className="bg-[#2D6A4F] text-white px-4 py-2 rounded"
@@ -97,6 +106,24 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
           </button>
           <button onClick={onClose} className="bg-blue-600 text-white px-4 py-2 rounded">
             Fermer
+          </button>
+          <button
+            onClick={() => updateStatus('Dossier conforme')}
+            className="bg-green-600 text-white px-4 py-2 rounded"
+          >
+            Dossier conforme
+          </button>
+          <button
+            onClick={() => updateStatus('A modifier')}
+            className="bg-yellow-600 text-white px-4 py-2 rounded"
+          >
+            Dossier à modifier - Elements manquants
+          </button>
+          <button
+            onClick={() => updateStatus('Refusé')}
+            className="bg-red-600 text-white px-4 py-2 rounded"
+          >
+            Dossier refusé
           </button>
         </div>
       </div>
