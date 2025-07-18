@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Globe2, Mail, Lock } from 'lucide-react';
+import { Mail, Lock } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { redirectBasedOnApplication } from '../lib/application';
@@ -48,13 +48,17 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="min-h-screen bg-gradient-to-b from-[#2D6A4F] to-[#1B4332] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link to="/" className="flex justify-center items-center space-x-2">
-          <Globe2 className="w-8 h-8 text-blue-600" />
-          <span className="text-2xl font-bold">OkMeeting</span>
+          <img
+            src="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746787922004x941654894198586100/Capture%20d%E2%80%99e%CC%81cran%202025-05-09%20a%CC%80%2012.51.44.png"
+            alt="Logo GBH"
+            className="h-8 w-auto"
+          />
+          <span className="text-2xl font-bold text-white">By GBH x Super-Novae</span>
         </Link>
-        <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl font-bold text-white">
           Connectez-vous à votre compte
         </h2>
       </div>
@@ -112,7 +116,7 @@ function Login() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-[#2D6A4F] focus:ring-[#2D6A4F] border-gray-300 rounded"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                   Se souvenir de moi
@@ -120,7 +124,7 @@ function Login() {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                <a href="#" className="font-medium text-[#2D6A4F] hover:text-[#1B4332]">
                   Mot de passe oublié ?
                 </a>
               </div>
@@ -134,7 +138,7 @@ function Login() {
               )}
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#2D6A4F] hover:bg-[#1B4332] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2D6A4F] disabled:opacity-50"
                 disabled={loading}
               >
                 {loading ? 'Connexion...' : 'Se connecter'}
@@ -152,7 +156,7 @@ function Login() {
             <div className="mt-6">
               <Link
                 to="/signup"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[#2D6A4F] bg-white hover:bg-gray-50"
               >
                 Créer un compte
               </Link>
