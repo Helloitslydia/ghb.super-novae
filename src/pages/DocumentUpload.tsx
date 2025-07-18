@@ -308,6 +308,48 @@ const SelectField: React.FC<SelectProps> = ({
   </div>
 );
 
+interface RadioGroupProps {
+  label: string;
+  name: string;
+  value: string;
+  options: string[];
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
+  wrapperClassName?: string;
+}
+
+const RadioGroup: React.FC<RadioGroupProps> = ({
+  label,
+  name,
+  value,
+  options,
+  onChange,
+  required,
+  wrapperClassName,
+}) => (
+  <div className={wrapperClassName}>
+    <label className="block mb-1">
+      {label}
+      {required && <span className="text-red-500">*</span>}
+    </label>
+    <div className="space-y-2">
+      {options.map(option => (
+        <label key={option} className="flex items-center space-x-2">
+          <input
+            type="radio"
+            name={name}
+            value={option}
+            checked={value === option}
+            onChange={onChange}
+            required={required}
+          />
+          <span>{option}</span>
+        </label>
+      ))}
+    </div>
+  </div>
+);
+
 function DocumentUpload() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -699,30 +741,14 @@ function DocumentUpload() {
             <h2 className="text-xl font-bold mb-4">Partie 2 :  Votre projet: Eau et résilience</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="md:col-span-2">
-                <SelectField
-                  label="Choisissez entre ces 5 options, qui détermine le type de soutien que vous allez recevoir"
+                <RadioGroup
+                  label="Pour plus de simplicité, vous pouvez choisir parmi 5 types de soutien. Les 3 premières sont standardisées et ne nécessitent pas de devis. Les 2 autres sont personnalisées, et doivent faire l’objet d’un devis."
                   name="besoin_equipement"
                   value={formData.besoin_equipement}
                   onChange={handleChange}
+                  options={optionValues}
                   required
-                >
-                  <option value="">Sélectionnez une option</option>
-                  <option value="KIT 1 : Petite structure agricole légère : abri en bois ou en bambou, cuve de 1300 L, kit solaire, goutte à goutte">
-                    KIT 1 : Petite structure agricole légère : abri en bois ou en bambou, cuve de 1300 L, kit solaire, goutte à goutte
-                  </option>
-                  <option value="KIT 2 : Collecte et stockage d’eau de pluie : citernes souples 50 m³ + 30 m³, gouttières, irrigation">
-                    KIT 2 : Collecte et stockage d’eau de pluie : citernes souples 50 m³ + 30 m³, gouttières, irrigation
-                  </option>
-                  <option value="Grande réserve en zone côtière : watertank 98 m³, résistant à l’air salin">
-                    Grande réserve en zone côtière : watertank 98 m³, résistant à l’air salin
-                  </option>
-                  <option value="Réparation après sinistre, sur devis">
-                    Réparation après sinistre, sur devis
-                  </option>
-                  <option value="Solution sur-mesure à vos besoins, sur devis">
-                    Solution sur-mesure à vos besoins, sur devis
-                  </option>
-                </SelectField>
+                />
                 {selectedImage && (
                   <div className="mt-4">
                     <img
