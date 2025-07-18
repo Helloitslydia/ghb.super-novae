@@ -24,7 +24,6 @@ interface DocumentItem {
 }
 
 const baseDocuments: DocumentItem[] = [
-  { key: 'rib', label: "Relev\xE9 d'identit\xE9 bancaire", required: true },
   { key: 'avis_siret', label: 'Avis de situation au r\xE9pertoire SIRET', required: true },
   { key: 'kbis', label: 'K-bis', required: true },
   { key: 'devis', label: "Devis des fournisseurs/installateurs, obligatoire si l'option 4 ou 5 est choisie", required: false },
@@ -809,7 +808,7 @@ function DocumentUpload() {
               </label>
               <label className="flex items-start space-x-2">
                 <input type="checkbox" required />
-                <span className="flex-1">Je m’engage à ce que mon projet soit réalisé au plus tard le 30 juillet 2025 (mise en œuvre opérationnelle avec raccordement aux impluviums).</span>
+                <span className="flex-1">Je m’engage à ce que mon projet soit réalisé au plus tard le 15 septembre 2025 (mise en œuvre opérationnelle avec raccordement aux impluviums)</span>
               </label>
               <p className="font-semibold mt-2">Je m'engage, sous réserve d'attribution de l'aide :</p>
               <label className="flex items-start space-x-2">
