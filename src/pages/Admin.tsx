@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Eye } from "lucide-react";
 import { ApplicationDetailsModal } from "../components/ApplicationDetailsModal";
 import { supabase } from "../lib/supabase";
+import * as XLSX from "xlsx";
 
 type Application = Record<string, any>;
 
@@ -60,12 +61,17 @@ function Admin() {
   const exportToExcel = async () => {
     const { data } = await supabase.from('project_applications').select('*');
     if (!data) return;
-    const headers = Object.keys(data[0] || {});
-    const rows = data.map(row =>
-      headers.map(h => JSON.stringify(row[h] ?? '')).join('\t')
-    );
-    const csv = [headers.join('\t'), ...rows].join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'dossiers');
+    const wbout = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+    const blob = new Blob([wbout], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
