@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { toast } from 'sonner';
 
 interface DocumentItem {
   id: string;
@@ -18,6 +19,23 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
   if (!isOpen || !application) return null;
 
   const { documents = [], ...appData } = application as any;
+  const [editableData, setEditableData] = useState<Record<string, any>>({});
+
+  useEffect(() => {
+    setEditableData(appData);
+  }, [appData]);
+
+  const handleChange = (key: string, value: string) => {
+    setEditableData(prev => ({ ...prev, [key]: value }));
+  };
+
+  const saveChanges = async () => {
+    await supabase
+      .from('project_applications')
+      .update(editableData)
+      .eq('id', application.id);
+    toast.success('Données mises à jour');
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -29,12 +47,18 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
         <div className="overflow-x-auto text-sm">
           <table className="min-w-full">
             <tbody>
-              {Object.entries(appData).map(([key, value]) => (
+              {Object.entries(editableData).map(([key, value]) => (
                 <tr key={key} className="border-b last:border-b-0">
                   <td className="py-1 pr-2 font-medium capitalize break-words">
                     {key.replace(/_/g, ' ')}
                   </td>
-                  <td className="py-1 break-words">{String(value)}</td>
+                  <td className="py-1 break-words">
+                    <input
+                      className="border p-1 rounded w-full"
+                      value={value as string}
+                      onChange={(e) => handleChange(key, e.target.value)}
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -64,9 +88,17 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
             </ul>
           </div>
         )}
-        <button onClick={onClose} className="mt-4 bg-blue-600 text-white px-4 py-2 rounded">
-          Fermer
-        </button>
+        <div className="mt-4 flex space-x-2">
+          <button
+            onClick={saveChanges}
+            className="bg-[#2D6A4F] text-white px-4 py-2 rounded"
+          >
+            Enregistrer
+          </button>
+          <button onClick={onClose} className="bg-blue-600 text-white px-4 py-2 rounded">
+            Fermer
+          </button>
+        </div>
       </div>
     </div>
   );
