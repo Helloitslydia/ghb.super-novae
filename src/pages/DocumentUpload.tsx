@@ -215,9 +215,9 @@ const initialFormData: FormDataState = {
 
 // Mapping of equipment options to their corresponding images
 const optionValues = [
-  'KIT 1 : Petite structure agricole légère : abri en bois ou en bambou, cuve de 1300 L, kit solaire, goutte à goutte',
-  'KIT 2 : Collecte et stockage d\u2019eau de pluie : citernes souples 50 m³ + 30 m³, gouttières, irrigation',
-  'Grande réserve en zone côtière : watertank 98 m³, résistant à l\u2019air salin',
+  "type 1 : pour les exploitations peu accessibles, sans abri ni bâti, ou un besoin en eau plutôt saisonnier ou complémentaire. La prestation comprend l'installation d'un abri en bambou (entre 10et20m2), des installations de récupération d'eau de pluie, et matériel pour irrigation adapté. Fourni par Agrikania.",
+  "type 2 : pour les exploitations accessibles pour terrassement, besoin en eau régulier. La prestation comprend l'installation de récupération d'eau de pluie (avec ou sans abri bambou), réseau d'irrigation avec citerne adaptés, matériel…. Fourni par Agrikania.",
+  "type 3 : pour exploitations accessibles et besoin en eau important, cette prestation comprend l'installation de watertank pour la récupération de gros volumes d'eau de pluie, adapté au besoin et possibilité terrain. Fourni par Agrikania",
   'Réparation après sinistre, sur devis',
   'Solution sur-mesure à vos besoins, sur devis',
 ];
