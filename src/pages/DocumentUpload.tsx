@@ -590,7 +590,7 @@ function DocumentUpload() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-6 bg-white p-6 rounded-lg border border-gray-200">
-            <h2 className="text-xl font-bold mb-4">Partie 1 : Votre exploitation</h2>
+            <h2 className="text-xl font-bold mb-4">Partie 1 : Votre exploitation en détails</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <input name="siret" value={formData.siret} onChange={handleChange} className="border p-2 rounded" placeholder="N° SIRET" required />
               <input name="pacage" value={formData.pacage} onChange={handleChange} className="border p-2 rounded" placeholder="N° PACAGE" required />
@@ -614,7 +614,7 @@ function DocumentUpload() {
           </div>
 
           <div className="space-y-6 bg-white p-6 rounded-lg border border-gray-200">
-            <h2 className="text-xl font-bold mb-4">Partie 2 : Votre projet</h2>
+            <h2 className="text-xl font-bold mb-4">Partie 2 :  Votre projet: Eau et résilience</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="md:col-span-2">
                 <p className="font-medium mb-2">Choisissez entre ces 5 options, qui détermine le type de soutien que vous allez recevoir</p>
@@ -715,7 +715,7 @@ function DocumentUpload() {
           </div>
 
           <div className="space-y-6 bg-white p-6 rounded-lg border border-gray-200">
-            <h2 className="text-xl font-bold mb-4">Partie 3 : Télécharger</h2>
+            <h2 className="text-xl font-bold mb-4">Dossier complet : Pièces à joindre</h2>
             <div className="grid gap-6 md:grid-cols-2">
               {documents.map(doc => {
                 const uploadedFile = files[doc.key];
@@ -775,7 +775,7 @@ function DocumentUpload() {
           </div>
 
           <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h2 className="text-xl font-bold mb-4">Partie 4 : Attestation</h2>
+            <h2 className="text-xl font-bold mb-4">Partie 4 : Engagement et déclaration</h2>
             <div className="space-y-2">
               <div>
                 <label className="block mb-1">Je soussigné(e) (nom et prénom) :</label>
