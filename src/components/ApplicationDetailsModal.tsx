@@ -21,6 +21,9 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
   const { documents = [], ...appData } = application as any;
   const [editableData, setEditableData] = useState<Record<string, any>>({});
   const [editingFields, setEditingFields] = useState<Record<string, boolean>>({});
+  const [reasonModalOpen, setReasonModalOpen] = useState(false);
+  const [reasonText, setReasonText] = useState('');
+  const [pendingStatus, setPendingStatus] = useState<string>('');
 
   useEffect(() => {
     setEditableData(appData);
@@ -32,6 +35,12 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
 
   const toggleField = (key: string) => {
     setEditingFields(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const openReasonModal = (status: string) => {
+    setPendingStatus(status);
+    setReasonText('');
+    setReasonModalOpen(true);
   };
 
   const saveChanges = async () => {
@@ -49,6 +58,24 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
       .eq('id', application.id);
     setEditableData(prev => ({ ...prev, status }));
     toast.success(`Statut mis à jour: ${status}`);
+  };
+
+  const confirmReason = async () => {
+    if (!pendingStatus) return;
+    const updateData: Record<string, any> = { status: pendingStatus };
+    if (pendingStatus === 'Elements manquants') {
+      updateData.missing_elements_reason = reasonText;
+    }
+    if (pendingStatus === 'Refusé') {
+      updateData.refusal_reason = reasonText;
+    }
+    await supabase
+      .from('project_applications')
+      .update(updateData)
+      .eq('id', application.id);
+    setEditableData(prev => ({ ...prev, ...updateData }));
+    toast.success(`Statut mis à jour: ${pendingStatus}`);
+    setReasonModalOpen(false);
   };
 
   return (
@@ -131,18 +158,44 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
             Dossier conforme
           </button>
           <button
-            onClick={() => updateStatus('A modifier')}
+            onClick={() => openReasonModal('Elements manquants')}
             className="bg-yellow-600 text-white px-4 py-2 rounded w-full sm:w-auto"
           >
             Dossier à modifier - Elements manquants
           </button>
           <button
-            onClick={() => updateStatus('Refusé')}
+            onClick={() => openReasonModal('Refusé')}
             className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto"
           >
             Dossier refusé
           </button>
         </div>
+        {reasonModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded shadow w-96">
+              <h3 className="text-lg font-semibold mb-2">Motif</h3>
+              <textarea
+                className="border p-2 rounded w-full mb-4"
+                value={reasonText}
+                onChange={(e) => setReasonText(e.target.value)}
+              />
+              <div className="flex justify-end space-x-2">
+                <button
+                  onClick={() => setReasonModalOpen(false)}
+                  className="px-4 py-2 border rounded"
+                >
+                  Annuler
+                </button>
+                <button
+                  onClick={confirmReason}
+                  className="px-4 py-2 bg-[#2D6A4F] text-white rounded"
+                >
+                  Confirmer
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
