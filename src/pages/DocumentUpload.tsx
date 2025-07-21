@@ -403,6 +403,7 @@ function DocumentUpload() {
       'Etude du dossier en cours',
       'Validé',
       'Refusé',
+      'Dossier conforme',
     ];
     const params = new URLSearchParams(location.search);
     const fromApplication = params.get('from') === 'application';

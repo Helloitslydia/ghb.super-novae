@@ -7,6 +7,8 @@ import { useAuth } from '../contexts/AuthContext';
 interface ApplicationData {
   status?: string | null;
   created_at?: string | null;
+  refusal_reason?: string | null;
+  missing_elements_reason?: string | null;
 }
 
 function DocumentStatus() {
@@ -20,7 +22,7 @@ function DocumentStatus() {
       if (!user) return;
       const { data, error } = await supabase
         .from('project_applications')
-        .select('created_at,status')
+        .select('created_at,status,refusal_reason,missing_elements_reason')
         .eq('user_id', user.id)
         .single();
       if (!error && data) {
@@ -29,6 +31,8 @@ function DocumentStatus() {
           'Etude du dossier en cours',
           'Validé',
           'Refusé',
+          'Elements manquants',
+          'Dossier conforme',
         ];
         if (data.status && allowedStatuses.includes(data.status)) {
           setData(data as ApplicationData);
@@ -94,6 +98,16 @@ function DocumentStatus() {
             )}
           </tbody>
         </table>
+        {data?.status === 'Refusé' && data.refusal_reason && (
+          <div className="mt-4 bg-red-50 border border-red-200 text-red-800 rounded-lg p-4">
+            Motif du refus : {data.refusal_reason}
+          </div>
+        )}
+        {data?.status === 'Elements manquants' && data.missing_elements_reason && (
+          <div className="mt-4 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg p-4">
+            Éléments manquants : {data.missing_elements_reason}
+          </div>
+        )}
       </div>
     </div>
   );
