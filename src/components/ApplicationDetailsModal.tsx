@@ -83,7 +83,7 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
                           <Pencil className="w-4 h-4" />
                         </button>
                       </div>
-                    )
+                    )}
                   </td>
                 </tr>
               ))}
