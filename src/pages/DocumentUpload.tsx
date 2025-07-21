@@ -215,11 +215,11 @@ const initialFormData: FormDataState = {
 
 // Mapping of equipment options to their corresponding images
 const optionValues = [
-  "type 1 : pour les exploitations peu accessibles, sans abri ni bâti, ou un besoin en eau plutôt saisonnier ou complémentaire. La prestation comprend l'installation d'un abri en bambou (entre 10et20m2), des installations de récupération d'eau de pluie, et matériel pour irrigation adapté. Fourni par Agrikania.",
-  "type 2 : pour les exploitations accessibles pour terrassement, besoin en eau régulier. La prestation comprend l'installation de récupération d'eau de pluie (avec ou sans abri bambou), réseau d'irrigation avec citerne adaptés, matériel…. Fourni par Agrikania.",
-  "type 3 : pour exploitations accessibles et besoin en eau important, cette prestation comprend l'installation de watertank pour la récupération de gros volumes d'eau de pluie, adapté au besoin et possibilité terrain. Fourni par Agrikania",
-  'Réparation après sinistre, sur devis',
-  'Solution sur-mesure à vos besoins, sur devis',
+  "Type 1 : pour les exploitations peu accessibles, sans abri ni bâti, ou un besoin en eau plutôt saisonnier ou complémentaire. La prestation comprend l'installation d'un abri en bambou (entre 10et20m2), des installations de récupération d'eau de pluie, et matériel pour irrigation adapté. Fourni par Agrikania.",
+  "Type 2 : pour les exploitations accessibles pour terrassement, besoin en eau régulier. La prestation comprend l'installation de récupération d'eau de pluie (avec ou sans abri bambou), réseau d'irrigation avec citerne adaptés, matériel…. Fourni par Agrikania.",
+  "Type 3 : pour exploitations accessibles et besoin en eau important, cette prestation comprend l'installation de watertank pour la récupération de gros volumes d'eau de pluie, adapté au besoin et possibilité terrain. Fourni par Agrikania.",
+  'Type 4 : Réparation après sinistre, sur devis',
+  'Type 5 : Solution sur-mesure à vos besoins, sur devis',
 ];
 
 const optionImages = [
