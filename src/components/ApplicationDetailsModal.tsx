@@ -78,6 +78,13 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
     setReasonModalOpen(false);
   };
 
+  const handleMissingElementsClick = () => {
+    fetch('https://hooks.ksaar.co/1d9f1415-1c7c-4734-8e62-66a45e7cb900', { method: 'POST' }).catch(
+      (err) => console.error('Webhook error', err)
+    );
+    openReasonModal('Elements manquants');
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded shadow max-h-[90vh] overflow-auto w-[90vw] max-w-3xl relative">
@@ -158,7 +165,7 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
             Dossier conforme
           </button>
           <button
-            onClick={() => openReasonModal('Elements manquants')}
+            onClick={handleMissingElementsClick}
             className="bg-yellow-600 text-white px-4 py-2 rounded w-full sm:w-auto"
           >
             Dossier à modifier - Elements manquants
