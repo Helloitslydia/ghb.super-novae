@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Eye } from "lucide-react";
+import { ArrowLeft, Eye, Trash2 } from "lucide-react";
 import { ApplicationDetailsModal } from "../components/ApplicationDetailsModal";
+import { DeleteConfirmationModal } from "../components/DeleteConfirmationModal";
 import { supabase } from "../lib/supabase";
 import * as XLSX from "xlsx";
 
@@ -23,6 +24,8 @@ function Admin() {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState<'applications' | 'messages'>('applications');
   const [messages, setMessages] = useState<any[]>([]);
+  const [deleteMessageModalOpen, setDeleteMessageModalOpen] = useState(false);
+  const [messageToDelete, setMessageToDelete] = useState<any | null>(null);
   const ITEMS_PER_PAGE = 10;
 
   useEffect(() => {
@@ -50,6 +53,24 @@ function Admin() {
       .select('id, email, message, created_at')
       .order('created_at', { ascending: false });
     setMessages(data || []);
+  };
+
+  const handleDeleteMessage = (msg: any) => {
+    setMessageToDelete(msg);
+    setDeleteMessageModalOpen(true);
+  };
+
+  const confirmDeleteMessage = async () => {
+    if (!messageToDelete) return;
+    const { error } = await supabase
+      .from('contact_messages')
+      .delete()
+      .eq('id', messageToDelete.id);
+    if (!error) {
+      loadMessages();
+    } else {
+      console.error('Error deleting message:', error);
+    }
   };
 
   const fetchAllApplications = async () => {
@@ -325,6 +346,7 @@ function Admin() {
                   <th className="px-4 py-2 text-left">Email</th>
                   <th className="px-4 py-2 text-left">Message</th>
                   <th className="px-4 py-2 text-left">Reçu le</th>
+                  <th className="px-4 py-2" />
                 </tr>
               </thead>
               <tbody>
@@ -333,11 +355,19 @@ function Admin() {
                     <td className="px-4 py-2 break-words">{msg.email}</td>
                     <td className="px-4 py-2 break-words whitespace-pre-wrap">{msg.message}</td>
                     <td className="px-4 py-2">{new Date(msg.created_at).toLocaleString()}</td>
+                    <td className="px-4 py-2 text-right">
+                      <button
+                        onClick={() => handleDeleteMessage(msg)}
+                        className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </td>
                   </tr>
                 ))}
                 {messages.length === 0 && (
                   <tr>
-                    <td colSpan={3} className="px-4 py-8 text-center text-gray-500">
+                    <td colSpan={4} className="px-4 py-8 text-center text-gray-500">
                       Aucun message
                     </td>
                   </tr>
@@ -346,6 +376,15 @@ function Admin() {
             </table>
           </div>
         )}
+        <DeleteConfirmationModal
+          isOpen={deleteMessageModalOpen}
+          onClose={() => {
+            setDeleteMessageModalOpen(false);
+            setMessageToDelete(null);
+          }}
+          onConfirm={confirmDeleteMessage}
+          title={messageToDelete?.email || ''}
+        />
       {showAll && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded shadow max-h-[90vh] overflow-auto w-[90vw] max-w-5xl">
