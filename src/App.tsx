@@ -9,6 +9,7 @@ import NewRecording from './pages/NewRecording.tsx';
 import DocumentUpload from './pages/DocumentUpload';
 import DocumentStatus from './pages/DocumentStatus';
 import Admin from './pages/Admin';
+import AdminGBH from './pages/AdminGBH';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './contexts/AuthContext';
 import { ContactWidget } from './components/ContactWidget';
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/admin-gbh" element={<AdminGBH />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route
