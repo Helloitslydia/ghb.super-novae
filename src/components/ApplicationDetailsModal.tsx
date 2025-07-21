@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X, Pencil } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
 
@@ -20,6 +20,7 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
 
   const { documents = [], ...appData } = application as any;
   const [editableData, setEditableData] = useState<Record<string, any>>({});
+  const [editingFields, setEditingFields] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     setEditableData(appData);
@@ -27,6 +28,10 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
 
   const handleChange = (key: string, value: string) => {
     setEditableData(prev => ({ ...prev, [key]: value }));
+  };
+
+  const toggleField = (key: string) => {
+    setEditingFields(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
   const saveChanges = async () => {
@@ -62,11 +67,23 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
                     {key.replace(/_/g, ' ')}
                   </td>
                   <td className="py-1 break-words">
-                    <input
-                      className="border p-1 rounded w-full"
-                      value={value as string}
-                      onChange={(e) => handleChange(key, e.target.value)}
-                    />
+                    {editingFields[key] ? (
+                      <input
+                        className="border p-1 rounded w-full"
+                        value={value as string}
+                        onChange={(e) => handleChange(key, e.target.value)}
+                      />
+                    ) : (
+                      <div className="flex items-center">
+                        <span className="flex-1 break-words">{String(value ?? '')}</span>
+                        <button
+                          onClick={() => toggleField(key)}
+                          className="ml-2 text-gray-500 hover:text-blue-600"
+                        >
+                          <Pencil className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )
                   </td>
                 </tr>
               ))}
