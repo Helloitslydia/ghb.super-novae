@@ -20,14 +20,14 @@ function DocumentStatus() {
   useEffect(() => {
     const fetchData = async () => {
       if (!user) return;
-      const { data, error } = await supabase
+      const { data: application, error } = await supabase
         .from('project_applications')
         .select('created_at,status,refusal_reason,missing_elements_reason')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(1)
         .maybeSingle();
-      if (!error && data) {
+      if (!error && application) {
         const allowedStatuses = [
           'Brouillon',
           'Etude du dossier en cours',
@@ -37,8 +37,8 @@ function DocumentStatus() {
           'Dossier conforme',
           'Dossier refusé',
         ];
-        if (data.status && allowedStatuses.includes(data.status)) {
-          setData(data as ApplicationData);
+        if (application.status && allowedStatuses.includes(application.status)) {
+          setData(application as ApplicationData);
         } else {
           navigate('/documentupload');
           return;
