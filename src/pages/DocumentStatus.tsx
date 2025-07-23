@@ -35,6 +35,7 @@ function DocumentStatus() {
           'Refusé',
           'Elements manquants',
           'Dossier conforme',
+          'Dossier refusé',
         ];
         if (data.status && allowedStatuses.includes(data.status)) {
           setData(data as ApplicationData);
@@ -100,7 +101,7 @@ function DocumentStatus() {
             )}
           </tbody>
         </table>
-        {data?.status === 'Refusé' && data.refusal_reason && (
+        {(data?.status === 'Refusé' || data?.status === 'Dossier refusé') && data.refusal_reason && (
           <div className="mt-4 bg-red-50 border border-red-200 text-red-800 rounded-lg p-4">
             Motif du refus : {data.refusal_reason}
           </div>

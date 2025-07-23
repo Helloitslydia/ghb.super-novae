@@ -6,21 +6,24 @@ export async function redirectBasedOnApplication(navigate: (path: string) => voi
     .limit(1)
     .maybeSingle();
 
-  const allowedStatuses = [
+  const statusPageStatuses = [
     'Etude du dossier en cours',
     'Validé',
     'Refusé',
     'Dossier conforme',
+    'Elements manquants',
+    'Dossier refusé',
   ];
 
-  if (
-    !error &&
-    application &&
-    application.status &&
-    allowedStatuses.includes(application.status)
-  ) {
-    navigate('/application');
-  } else {
-    navigate('/documentupload');
+  if (!error && application && application.status) {
+    if (application.status === 'Brouillon') {
+      navigate('/documentupload');
+      return;
+    }
+    if (statusPageStatuses.includes(application.status)) {
+      navigate('/application');
+      return;
+    }
   }
+  navigate('/documentupload');
 }
