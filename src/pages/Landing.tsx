@@ -69,23 +69,26 @@ function Landing() {
         .eq('user_id', user.id)
         .single();
 
-      const allowedStatuses = [
-        'Etude du dossier en cours',
-        'Validé',
-        'Refusé',
-        'Dossier conforme',
-      ];
+    const statusPageStatuses = [
+      'Etude du dossier en cours',
+      'Validé',
+      'Refusé',
+      'Dossier conforme',
+      'Elements manquants',
+      'Dossier refusé',
+    ];
 
-      if (
-        !error &&
-        data &&
-        data.status &&
-        allowedStatuses.includes(data.status)
-      ) {
-        setDashboardLink('/application');
-      } else {
+    if (!error && data && data.status) {
+      if (data.status === 'Brouillon') {
         setDashboardLink('/documentupload');
+        return;
       }
+      if (statusPageStatuses.includes(data.status)) {
+        setDashboardLink('/application');
+        return;
+      }
+    }
+    setDashboardLink('/documentupload');
     };
 
     fetchLink();

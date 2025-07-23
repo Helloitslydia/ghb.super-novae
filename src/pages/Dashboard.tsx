@@ -42,20 +42,23 @@ function Dashboard() {
         .eq('user_id', user.id)
         .single();
 
-      const allowedStatuses = [
+      const statusPageStatuses = [
         'Etude du dossier en cours',
         'Validé',
         'Refusé',
         'Dossier conforme',
+        'Elements manquants',
+        'Dossier refusé',
       ];
 
-      if (
-        !error &&
-        data &&
-        data.status &&
-        allowedStatuses.includes(data.status)
-      ) {
-        navigate('/application');
+      if (!error && data && data.status) {
+        if (data.status === 'Brouillon') {
+          navigate('/documentupload');
+          return;
+        }
+        if (statusPageStatuses.includes(data.status)) {
+          navigate('/application');
+        }
       }
     };
 

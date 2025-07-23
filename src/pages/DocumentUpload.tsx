@@ -404,6 +404,8 @@ function DocumentUpload() {
       'Validé',
       'Refusé',
       'Dossier conforme',
+      'Elements manquants',
+      'Dossier refusé',
     ];
     const params = new URLSearchParams(location.search);
     const fromApplication = params.get('from') === 'application';
