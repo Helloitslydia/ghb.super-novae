@@ -10,6 +10,7 @@ export async function redirectBasedOnApplication(navigate: (path: string) => voi
     'Etude du dossier en cours',
     'Validé',
     'Refusé',
+    'Dossier conforme',
   ];
 
   if (
