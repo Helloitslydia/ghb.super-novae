@@ -73,6 +73,7 @@ function Landing() {
         'Etude du dossier en cours',
         'Validé',
         'Refusé',
+        'Dossier conforme',
       ];
 
       if (

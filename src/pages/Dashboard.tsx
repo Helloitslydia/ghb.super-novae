@@ -46,6 +46,7 @@ function Dashboard() {
         'Etude du dossier en cours',
         'Validé',
         'Refusé',
+        'Dossier conforme',
       ];
 
       if (
