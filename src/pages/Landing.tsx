@@ -6,7 +6,6 @@ import { EligibilityModal } from '../components/EligibilityModal';
 import { CriteriaModal } from '../components/CriteriaModal';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
 
 
 const programInfo = {
@@ -26,7 +25,6 @@ function Landing() {
   const [isCriteriaModalOpen, setIsCriteriaModalOpen] = React.useState(false);
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
-  const [dashboardLink, setDashboardLink] = React.useState('/documentupload');
   const videoUrl = "//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746742604286x870259835249476100/20250509_0009_Modern%20Farmland%20Harmony_remix_01jtrz3hf8e9krdsy57armr27d.mp4";
 
   const features = [
@@ -60,39 +58,6 @@ function Landing() {
     }
   ];
 
-  React.useEffect(() => {
-    const fetchLink = async () => {
-      if (!user) return;
-      const { data, error } = await supabase
-        .from('project_applications')
-        .select('status')
-        .eq('user_id', user.id)
-        .single();
-
-    const statusPageStatuses = [
-      'Etude du dossier en cours',
-      'Validé',
-      'Refusé',
-      'Dossier conforme',
-      'Elements manquants',
-      'Dossier refusé',
-    ];
-
-    if (!error && data && data.status) {
-      if (data.status === 'Brouillon') {
-        setDashboardLink('/documentupload');
-        return;
-      }
-      if (statusPageStatuses.includes(data.status)) {
-        setDashboardLink('/application');
-        return;
-      }
-    }
-    setDashboardLink('/documentupload');
-    };
-
-    fetchLink();
-  }, [user]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -147,7 +112,7 @@ function Landing() {
               {user ? (
                 <>
                   <Link
-                    to={dashboardLink}
+                    to="/dashboard"
                     className="px-4 py-2 text-white hover:text-gray-200 rounded-lg transition-colors"
                   >
                     Tableau de bord
@@ -205,7 +170,7 @@ function Landing() {
                 {user ? (
                   <>
                     <Link
-                      to={dashboardLink}
+                      to="/dashboard"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="text-white hover:text-gray-200 py-2 text-center"
                     >
