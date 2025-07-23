@@ -24,7 +24,9 @@ function DocumentStatus() {
         .from('project_applications')
         .select('created_at,status,refusal_reason,missing_elements_reason')
         .eq('user_id', user.id)
-        .single();
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
       if (!error && data) {
         const allowedStatuses = [
           'Brouillon',
