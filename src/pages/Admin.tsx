@@ -158,7 +158,7 @@ function Admin() {
         >
           <div className="flex flex-col items-center space-y-2">
             <img
-              src="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1746787922004x941654894198586100/Capture%20d%E2%80%99e%CC%81cran%202025-05-09%20a%CC%80%2012.51.44.png"
+              src="//c5ceaa4e16cfaa43c4e175e2d8739333.cdn.bubble.io/f1748260793529x933715376486754600/Linkedin%20Company%20Logo%20%281%29.png"
               alt="Logo GBH"
               className="h-8 w-auto"
             />
