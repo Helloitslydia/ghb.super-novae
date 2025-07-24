@@ -13,9 +13,15 @@ interface ApplicationDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   application: any | null;
+  /**
+   * When true, the modal is rendered in a simplified mode used on the
+   * `/admin-gbh` page. Fields are read only and only the "Validé" and
+   * "Refusé" buttons are displayed.
+   */
+  simple?: boolean;
 }
 
-export function ApplicationDetailsModal({ isOpen, onClose, application }: ApplicationDetailsModalProps) {
+export function ApplicationDetailsModal({ isOpen, onClose, application, simple = false }: ApplicationDetailsModalProps) {
   if (!isOpen || !application) return null;
 
   const { documents = [], ...appData } = application as any;
@@ -101,7 +107,9 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
                     {key.replace(/_/g, ' ')}
                   </td>
                   <td className="py-1 break-words">
-                    {editingFields[key] ? (
+                    {simple ? (
+                      <span className="break-words">{String(value ?? '')}</span>
+                    ) : editingFields[key] ? (
                       <input
                         className="border p-1 rounded w-full"
                         value={value as string}
@@ -149,33 +157,54 @@ export function ApplicationDetailsModal({ isOpen, onClose, application }: Applic
           </div>
         )}
         <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-2">
-          <button
-            onClick={saveChanges}
-            className="bg-[#2D6A4F] text-white px-4 py-2 rounded w-full sm:w-auto"
-          >
-            Enregistrer
-          </button>
+          {!simple && (
+            <button
+              onClick={saveChanges}
+              className="bg-[#2D6A4F] text-white px-4 py-2 rounded w-full sm:w-auto"
+            >
+              Enregistrer
+            </button>
+          )}
           <button onClick={onClose} className="bg-blue-600 text-white px-4 py-2 rounded w-full sm:w-auto">
             Fermer
           </button>
-          <button
-            onClick={() => updateStatus('Dossier conforme')}
-            className="bg-green-600 text-white px-4 py-2 rounded w-full sm:w-auto"
-          >
-            Dossier conforme
-          </button>
-          <button
-            onClick={handleMissingElementsClick}
-            className="bg-yellow-600 text-white px-4 py-2 rounded w-full sm:w-auto"
-          >
-            Dossier à modifier - Elements manquants
-          </button>
-          <button
-            onClick={() => openReasonModal('Refusé')}
-            className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto"
-          >
-            Dossier refusé
-          </button>
+          {simple ? (
+            <>
+              <button
+                onClick={() => updateStatus('Validé')}
+                className="bg-green-600 text-white px-4 py-2 rounded w-full sm:w-auto"
+              >
+                Validé
+              </button>
+              <button
+                onClick={() => openReasonModal('Refusé')}
+                className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto"
+              >
+                Refusé
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => updateStatus('Dossier conforme')}
+                className="bg-green-600 text-white px-4 py-2 rounded w-full sm:w-auto"
+              >
+                Dossier conforme
+              </button>
+              <button
+                onClick={handleMissingElementsClick}
+                className="bg-yellow-600 text-white px-4 py-2 rounded w-full sm:w-auto"
+              >
+                Dossier à modifier - Elements manquants
+              </button>
+              <button
+                onClick={() => openReasonModal('Refusé')}
+                className="bg-red-600 text-white px-4 py-2 rounded w-full sm:w-auto"
+              >
+                Dossier refusé
+              </button>
+            </>
+          )}
         </div>
         {reasonModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
