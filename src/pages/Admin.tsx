@@ -239,28 +239,8 @@ function Admin() {
             </div>
           )}
         </div>
-        {activeTab === 'applications' ? (
+          {activeTab === 'applications' ? (
           <>
-            <div className="flex space-x-4 mb-4">
-              <button
-                onClick={() => setApplicationTab('enCours')}
-                className={`pb-1 ${applicationTab === 'enCours' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
-              >
-                En cours
-              </button>
-              <button
-                onClick={() => setApplicationTab('valide')}
-                className={`pb-1 ${applicationTab === 'valide' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
-              >
-                Validé
-              </button>
-              <button
-                onClick={() => setApplicationTab('tous')}
-                className={`pb-1 ${applicationTab === 'tous' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
-              >
-                Tous
-              </button>
-            </div>
             <div className="bg-white p-4 rounded shadow mb-4">
               <label htmlFor="filter" className="block text-sm font-medium mb-2">
                 Filtrer les dossiers
@@ -284,6 +264,26 @@ function Admin() {
             <option value="Validé">Validé</option>
             <option value="Refusé">Refusé</option>
           </select>
+        </div>
+        <div className="flex space-x-4 mb-4">
+          <button
+            onClick={() => setApplicationTab('enCours')}
+            className={`pb-1 ${applicationTab === 'enCours' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
+          >
+            En cours
+          </button>
+          <button
+            onClick={() => setApplicationTab('valide')}
+            className={`pb-1 ${applicationTab === 'valide' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
+          >
+            Validé
+          </button>
+          <button
+            onClick={() => setApplicationTab('tous')}
+            className={`pb-1 ${applicationTab === 'tous' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
+          >
+            Tous
+          </button>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white rounded shadow text-sm">
