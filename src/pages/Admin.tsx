@@ -23,6 +23,7 @@ function Admin() {
   const [selectedApplication, setSelectedApplication] = useState<any | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState<'applications' | 'messages'>('applications');
+  const [applicationTab, setApplicationTab] = useState<'enCours' | 'valide' | 'tous'>('enCours');
   const [messages, setMessages] = useState<any[]>([]);
   const [deleteMessageModalOpen, setDeleteMessageModalOpen] = useState(false);
   const [messageToDelete, setMessageToDelete] = useState<any | null>(null);
@@ -35,13 +36,20 @@ function Admin() {
     } else {
       loadMessages();
     }
-  }, [authenticated, activeTab]);
+  }, [authenticated, activeTab, applicationTab]);
 
   const loadApplications = async () => {
-    const { data, error } = await supabase
-      .from("project_applications")
-      .select("id, user_id, nom, email, created_at, status")
-      .eq("status", "Etude du dossier en cours");
+    let query = supabase
+      .from('project_applications')
+      .select('id, user_id, nom, email, created_at, status');
+
+    if (applicationTab === 'enCours') {
+      query = query.eq('status', 'Etude du dossier en cours');
+    } else if (applicationTab === 'valide') {
+      query = query.eq('status', 'Validé');
+    }
+
+    const { data, error } = await query;
     if (!error && data) {
       setApplications(data as Application[]);
     }
@@ -132,7 +140,7 @@ function Admin() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [filter, statusFilter]);
+  }, [filter, statusFilter, applicationTab]);
 
   const filteredApplications = applications.filter((app) => {
     const query = filter.toLowerCase();
@@ -233,10 +241,30 @@ function Admin() {
         </div>
         {activeTab === 'applications' ? (
           <>
+            <div className="flex space-x-4 mb-4">
+              <button
+                onClick={() => setApplicationTab('enCours')}
+                className={`pb-1 ${applicationTab === 'enCours' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
+              >
+                En cours
+              </button>
+              <button
+                onClick={() => setApplicationTab('valide')}
+                className={`pb-1 ${applicationTab === 'valide' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
+              >
+                Validé
+              </button>
+              <button
+                onClick={() => setApplicationTab('tous')}
+                className={`pb-1 ${applicationTab === 'tous' ? 'border-b-2 border-[#2D6A4F] text-[#2D6A4F]' : 'text-gray-600'}`}
+              >
+                Tous
+              </button>
+            </div>
             <div className="bg-white p-4 rounded shadow mb-4">
-          <label htmlFor="filter" className="block text-sm font-medium mb-2">
-            Filtrer les dossiers
-          </label>
+              <label htmlFor="filter" className="block text-sm font-medium mb-2">
+                Filtrer les dossiers
+              </label>
           <input
             id="filter"
             type="text"
