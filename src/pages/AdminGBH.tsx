@@ -278,6 +278,7 @@ function AdminGBH() {
             isOpen={showDetails}
             onClose={() => setShowDetails(false)}
             application={selectedApplication}
+            simple
           />
         )}
       </div>
