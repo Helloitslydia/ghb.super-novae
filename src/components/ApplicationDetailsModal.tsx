@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { X, Pencil } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 interface DocumentItem {
   id: string;
@@ -91,13 +93,39 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, simple =
     openReasonModal('Elements manquants');
   };
 
+  const downloadApplicationZip = async () => {
+    const zip = new JSZip();
+    zip.file('data.json', JSON.stringify(editableData, null, 2));
+
+    for (const doc of documents as DocumentItem[]) {
+      const bucket = doc.doc_key === 'signature' ? 'signatures' : 'documents';
+      const { data } = await supabase.storage.from(bucket).download(doc.file_path);
+      if (data) {
+        const arrayBuffer = await data.arrayBuffer();
+        const fileName = doc.file_path.split('/').pop() || doc.doc_key;
+        zip.file(fileName, arrayBuffer);
+      }
+    }
+
+    const blob = await zip.generateAsync({ type: 'blob' });
+    saveAs(blob, `candidature_${application.id}.zip`);
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded shadow max-h-[90vh] overflow-auto w-[90vw] max-w-3xl relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
           <X className="w-5 h-5" />
         </button>
-        <h2 className="text-xl font-bold mb-4">Détails de la candidature</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold">Détails de la candidature</h2>
+          <button
+            onClick={downloadApplicationZip}
+            className="bg-[#2D6A4F] text-white px-3 py-1 rounded shadow"
+          >
+            Télécharger le dossier
+          </button>
+        </div>
         <div className="overflow-x-auto text-sm">
           <table className="min-w-full">
             <tbody>
