@@ -156,6 +156,15 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, simple =
             </ul>
           </div>
         )}
+        <div className="mt-4">
+          <label className="font-semibold mb-1 block">Commentaire</label>
+          <textarea
+            className="border p-2 rounded w-full"
+            value={editableData.commentaire ?? ''}
+            onChange={(e) => handleChange('commentaire', e.target.value)}
+            rows={4}
+          />
+        </div>
         <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-2">
           {!simple && (
             <button
