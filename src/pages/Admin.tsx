@@ -289,6 +289,7 @@ function Admin() {
           <table className="min-w-full bg-white rounded shadow text-sm">
             <thead>
               <tr className="bg-gray-100">
+                <th className="px-4 py-2 text-left">N°</th>
                 {columns.map((col) => (
                   <th key={col} className="px-4 py-2 text-left capitalize">
                     {col === "created_at"
@@ -300,8 +301,11 @@ function Admin() {
               </tr>
             </thead>
             <tbody>
-              {paginatedApplications.map((app) => (
+              {paginatedApplications.map((app, index) => (
                 <tr key={app.id} className="border-t">
+                  <td className="px-4 py-2">
+                    {(currentPage - 1) * ITEMS_PER_PAGE + index + 1}
+                  </td>
                   {columns.map((col) => (
                     <td key={col} className="px-4 py-2 break-words">
                       {col === "status" ? (
@@ -328,7 +332,7 @@ function Admin() {
               {filteredApplications.length === 0 && (
                 <tr>
                   <td
-                    colSpan={columns.length + 1}
+                    colSpan={columns.length + 2}
                     className="px-4 py-8 text-center text-gray-500"
                   >
                     Aucun dossier
