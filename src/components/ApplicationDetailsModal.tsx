@@ -26,7 +26,7 @@ interface ApplicationDetailsModalProps {
 export function ApplicationDetailsModal({ isOpen, onClose, application, simple = false }: ApplicationDetailsModalProps) {
   if (!isOpen || !application) return null;
 
-  const { documents = [], ...appData } = application as any;
+  const { documents = [] } = application as any;
   const [editableData, setEditableData] = useState<Record<string, any>>({});
   const [editingFields, setEditingFields] = useState<Record<string, boolean>>({});
   const [reasonModalOpen, setReasonModalOpen] = useState(false);
@@ -34,8 +34,9 @@ export function ApplicationDetailsModal({ isOpen, onClose, application, simple =
   const [pendingStatus, setPendingStatus] = useState<string>('');
 
   useEffect(() => {
-    setEditableData(appData);
-  }, [appData]);
+    const { documents: _docs = [], ...rest } = application as any;
+    setEditableData(rest);
+  }, [application]);
 
   const handleChange = (key: string, value: string) => {
     setEditableData(prev => ({ ...prev, [key]: value }));
