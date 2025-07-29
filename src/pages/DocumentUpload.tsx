@@ -392,7 +392,16 @@ function DocumentUpload() {
         .eq('user_id', user.id)
         .limit(1);
       if (data && data.length > 0) {
-        setFormData({ ...(data[0] as any) });
+        const record = data[0] as Record<string, any>;
+        const sanitized = Object.keys(initialFormData).reduce(
+          (acc, key) => {
+            acc[key as keyof FormDataState] =
+              record[key] ?? initialFormData[key as keyof FormDataState];
+            return acc;
+          },
+          {} as FormDataState
+        );
+        setFormData(sanitized);
       }
     };
     loadData();
