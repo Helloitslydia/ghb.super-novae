@@ -83,6 +83,14 @@ function Landing() {
       </video>
       
       <div className="relative z-10 min-h-screen bg-black bg-opacity-50 flex flex-col">
+      {/* Bandeau de fermeture */}
+      <div className="bg-red-600 text-white py-3 px-4 text-center relative z-20">
+        <p className="text-sm md:text-base font-medium">
+          L'appel à projets a rencontré un fort engouement et la subvention allouée est désormais entièrement engagée. 
+          Les candidatures sont donc closes et les résultats seront communiqués aux porteurs de projets d'ici le 15 septembre.
+        </p>
+      </div>
+      
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
       <EligibilityModal
         isOpen={isEligibilityModalOpen}
