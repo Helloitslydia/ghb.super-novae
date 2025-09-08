@@ -209,15 +209,6 @@ function Landing() {
                   <>
                     <button
                       onClick={() => {
-                        setIsEligibilityModalOpen(true);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="bg-[#2D6A4F] text-white py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg text-center"
-                    >
-                      Déposer votre dossier
-                    </button>
-                    <button
-                      onClick={() => {
                         setIsCriteriaModalOpen(true);
                         setIsMobileMenuOpen(false);
                       }}
@@ -243,33 +234,12 @@ function Landing() {
     <span className="block">Souhaitez-vous renforcer la résilience de votre exploitation face à la sécheresse grâce à des équipements de récupération et de stockage des eaux pluviales ?</span>
   </p>
   <div className="flex justify-start space-x-4 mt-16">
-            {!user && (
-              <>
-                <button
-                  onClick={() => setIsEligibilityModalOpen(true)}
-                  className="flex items-center bg-[#2D6A4F] text-white px-8 py-4 rounded-lg hover:bg-[#1B4332] transition-colors shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
-                >
-                  Déposer votre dossier maintenant
-                  <ArrowRight className="ml-2 w-5 h-5 text-[#E8B647]" />
-                </button>
-                <button
-                  onClick={() => setIsCriteriaModalOpen(true)}
-                  className="flex items-center px-8 py-4 text-white hover:text-gray-200 transition-colors"
-                >
-                  Consulter les critères
-                </button>
-              </>
-            )}
-         </div>
-        </div>
-
-        <div className="mt-20">
-          <h2 className="text-3xl font-bold text-white mb-6">Les étapes</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-white border-opacity-20"
+            <button
+              onClick={() => setIsCriteriaModalOpen(true)}
+              className="flex items-center px-8 py-4 text-white hover:text-gray-200 transition-colors"
+            >
+              Consulter les critères
+            </button>
               >
                 <div className="text-[#E8B647] mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
@@ -277,12 +247,16 @@ function Landing() {
                   <div className="text-gray-300">{feature.description}</div>
                 )}
                 {feature.buttonLabel && !user && (
-                  <button
-                    onClick={feature.onClick}
-                    className="mt-4 bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
-                  >
-                    {feature.buttonLabel}
-                  </button>
+                  <>
+                    {feature.buttonLabel !== "Déposer votre dossier" && (
+                      <button
+                        onClick={feature.onClick}
+                        className="mt-4 bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
+                      >
+                        {feature.buttonLabel}
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
             ))}
