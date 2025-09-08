@@ -46,8 +46,7 @@ function Landing() {
       icon: <Download className="w-6 h-6 text-[#E8B647]" />,
       title: "2) Téléversez vos documents en toute simplicité",
       description: "Déposez vos pièces en ligne, la plateforme vous guide à chaque étape.",
-      buttonLabel: "Déposer votre dossier",
-      onClick: () => setIsEligibilityModalOpen(true)
+      buttonLabel: "Déposer votre dossier"
     },
     {
       icon: <MessageSquareText className="w-6 h-6 text-[#E8B647]" />,
@@ -143,8 +142,8 @@ function Landing() {
               {!user && (
                 <>
                   <button
-                    onClick={() => setIsEligibilityModalOpen(true)}
-                    className="bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
+                    disabled
+                    className="bg-[#2D6A4F] text-white px-4 py-2 rounded-lg transition-colors shadow-lg opacity-50 cursor-not-allowed"
                   >
                     Déposer votre dossier
                   </button>
@@ -208,11 +207,8 @@ function Landing() {
                 {!user && (
                   <>
                     <button
-                      onClick={() => {
-                        setIsEligibilityModalOpen(true);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="bg-[#2D6A4F] text-white py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg text-center"
+                      disabled
+                      className="bg-[#2D6A4F] text-white py-2 rounded-lg transition-colors shadow-lg text-center opacity-50 cursor-not-allowed"
                     >
                       Déposer votre dossier
                     </button>
@@ -246,8 +242,8 @@ function Landing() {
             {!user && (
               <>
                 <button
-                  onClick={() => setIsEligibilityModalOpen(true)}
-                  className="flex items-center bg-[#2D6A4F] text-white px-8 py-4 rounded-lg hover:bg-[#1B4332] transition-colors shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+                  disabled
+                  className="flex items-center bg-[#2D6A4F] text-white px-8 py-4 rounded-lg transition-colors shadow-xl opacity-50 cursor-not-allowed"
                 >
                   Déposer votre dossier maintenant
                   <ArrowRight className="ml-2 w-5 h-5 text-[#E8B647]" />
@@ -279,7 +275,8 @@ function Landing() {
                 {feature.buttonLabel && !user && (
                   <button
                     onClick={feature.onClick}
-                    className="mt-4 bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
+                    disabled={!feature.onClick}
+                    className={`mt-4 bg-[#2D6A4F] text-white px-4 py-2 rounded-lg transition-colors shadow-lg ${feature.onClick ? 'hover:bg-[#1B4332]' : 'opacity-50 cursor-not-allowed'}`}
                   >
                     {feature.buttonLabel}
                   </button>
