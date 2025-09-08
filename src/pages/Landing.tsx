@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ClipboardCheck, Download, MessageSquareText, ArrowRight, Menu, X } from 'lucide-react';
+import { ClipboardCheck, Download, MessageSquareText, Menu, X } from 'lucide-react';
 import { LoginModal } from '../components/LoginModal';
 import { EligibilityModal } from '../components/EligibilityModal';
 import { CriteriaModal } from '../components/CriteriaModal';
@@ -234,34 +234,44 @@ function Landing() {
     <span className="block">Souhaitez-vous renforcer la résilience de votre exploitation face à la sécheresse grâce à des équipements de récupération et de stockage des eaux pluviales ?</span>
   </p>
   <div className="flex justify-start space-x-4 mt-16">
-            <button
-              onClick={() => setIsCriteriaModalOpen(true)}
-              className="flex items-center px-8 py-4 text-white hover:text-gray-200 transition-colors"
-            >
-              Consulter les critères
-            </button>
+    <button
+      onClick={() => setIsCriteriaModalOpen(true)}
+      className="flex items-center px-8 py-4 text-white hover:text-gray-200 transition-colors"
+    >
+      Consulter les critères
+    </button>
+  </div>
+</div>
+
+<div className="mt-20">
+  <h2 className="text-3xl font-bold text-white mb-6">Les étapes</h2>
+  <div className="grid md:grid-cols-3 gap-8">
+    {features.map((feature, index) => (
+      <div
+        key={index}
+        className="bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-white border-opacity-20"
+      >
+        <div className="text-[#E8B647] mb-4">{feature.icon}</div>
+        <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
+        {feature.description && (
+          <div className="text-gray-300">{feature.description}</div>
+        )}
+        {feature.buttonLabel && !user && (
+          <>
+            {feature.buttonLabel !== "Déposer votre dossier" && (
+              <button
+                onClick={feature.onClick}
+                className="mt-4 bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
               >
-                <div className="text-[#E8B647] mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
-                {feature.description && (
-                  <div className="text-gray-300">{feature.description}</div>
-                )}
-                {feature.buttonLabel && !user && (
-                  <>
-                    {feature.buttonLabel !== "Déposer votre dossier" && (
-                      <button
-                        onClick={feature.onClick}
-                        className="mt-4 bg-[#2D6A4F] text-white px-4 py-2 rounded-lg hover:bg-[#1B4332] transition-colors shadow-lg"
-                      >
-                        {feature.buttonLabel}
-                      </button>
-                    )}
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+                {feature.buttonLabel}
+              </button>
+            )}
+          </>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
 
         <div className="mt-24">
           <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-8 border border-white border-opacity-20">
