@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronRight, GitBranch } from 'lucide-react';
+import { ChevronRight, ChevronUp, ChevronDown, GitBranch, GripVertical } from 'lucide-react';
 import type { WorkflowSection as WorkflowSectionType, FlowStep } from './workflowData';
 
 const accentBorderMap: Record<string, string> = {
@@ -62,19 +62,82 @@ function FlowArrow() {
 
 interface WorkflowSectionProps {
   section: WorkflowSectionType;
+  index: number;
+  total: number;
+  isDragging: boolean;
+  isDropTarget: boolean;
+  onDragStart: () => void;
+  onDragOver: (e: React.DragEvent) => void;
+  onDrop: () => void;
+  onDragEnd: () => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
 }
 
-export function WorkflowSection({ section }: WorkflowSectionProps) {
+export function WorkflowSection({
+  section,
+  index,
+  total,
+  isDragging,
+  isDropTarget,
+  onDragStart,
+  onDragOver,
+  onDrop,
+  onDragEnd,
+  onMoveUp,
+  onMoveDown,
+}: WorkflowSectionProps) {
   return (
-    <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 border-l-4 ${accentBorderMap[section.accentColor]} overflow-hidden`}>
+    <div
+      draggable
+      onDragStart={onDragStart}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+      onDragEnd={onDragEnd}
+      className={`bg-white rounded-2xl shadow-sm border border-l-4 overflow-hidden transition-all duration-200
+        ${accentBorderMap[section.accentColor]}
+        ${isDragging ? 'opacity-40 scale-[0.98] border-gray-200' : 'border-gray-100'}
+        ${isDropTarget ? 'ring-2 ring-blue-400 ring-offset-2' : ''}`}
+    >
       <div className="p-6 sm:p-8">
-        <div className="flex items-center gap-2.5 mb-1.5">
-          <div className={`w-2.5 h-2.5 rounded-full ${accentDotMap[section.accentColor]}`} />
-          <h3 className="text-lg font-semibold text-gray-900">{section.title}</h3>
-        </div>
-        <p className="text-sm text-gray-500 mb-6 ml-5">{section.subtitle}</p>
+        <div className="flex items-start gap-3 mb-1.5">
+          <div className="flex flex-col items-center gap-0.5 -ml-1 mt-0.5 flex-shrink-0">
+            <div className="cursor-grab active:cursor-grabbing text-gray-300 hover:text-gray-500 transition-colors">
+              <GripVertical className="w-5 h-5" />
+            </div>
+            <div className="flex flex-col">
+              <button
+                onClick={onMoveUp}
+                disabled={index === 0}
+                className="text-gray-300 hover:text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed
+                           transition-colors p-0.5 rounded hover:bg-gray-100"
+              >
+                <ChevronUp className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={onMoveDown}
+                disabled={index === total - 1}
+                className="text-gray-300 hover:text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed
+                           transition-colors p-0.5 rounded hover:bg-gray-100"
+              >
+                <ChevronDown className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
 
-        <div className="overflow-x-auto -mx-6 sm:-mx-8 px-6 sm:px-8 pb-2">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2.5">
+              <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${accentDotMap[section.accentColor]}`} />
+              <h3 className="text-lg font-semibold text-gray-900">{section.title}</h3>
+              <span className="text-[10px] font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full flex-shrink-0">
+                {index + 1}/{total}
+              </span>
+            </div>
+            <p className="text-sm text-gray-500 mt-1 ml-5">{section.subtitle}</p>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto -mx-6 sm:-mx-8 px-6 sm:px-8 pb-2 mt-5">
           <div className="flex items-start gap-0 min-w-max">
             {section.steps.map((step, i) => (
               <React.Fragment key={step.id}>
