@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { ArrowLeft, Workflow, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Workflow, RotateCcw, Copy, Check, Code2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { workflows } from './bubble/workflowData';
 import { WorkflowSection } from './bubble/WorkflowSection';
@@ -27,6 +27,8 @@ export default function Bubble() {
   const [orderedWorkflows, setOrderedWorkflows] = useState(loadOrder);
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [dropIndex, setDropIndex] = useState<number | null>(null);
+  const [showCodePanel, setShowCodePanel] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const saveOrder = useCallback((items: typeof workflows) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items.map(w => w.id)));
@@ -77,9 +79,22 @@ export default function Bubble() {
   const resetOrder = () => {
     setOrderedWorkflows([...workflows]);
     localStorage.removeItem(STORAGE_KEY);
+    setShowCodePanel(false);
   };
 
   const isDefaultOrder = orderedWorkflows.every((w, i) => w.id === workflows[i]?.id);
+
+  const generateCodeSnippet = () => {
+    const orderIds = orderedWorkflows.map(w => `  '${w.id}'`).join(',\n');
+    return `Applique cet ordre dans workflowData.ts :\n\nexport const workflowOrder = [\n${orderIds},\n];`;
+  };
+
+  const copyToClipboard = async () => {
+    const snippet = generateCodeSnippet();
+    await navigator.clipboard.writeText(snippet);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50/50">
@@ -97,18 +112,68 @@ export default function Bubble() {
             <Workflow className="w-5 h-5 text-gray-700" />
             <h1 className="text-lg font-semibold text-gray-900">Workflows</h1>
           </div>
-          {!isDefaultOrder && (
-            <button
-              onClick={resetOrder}
-              className="ml-auto flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-900
-                         transition-colors px-3 py-1.5 rounded-lg border border-gray-200 hover:border-gray-300"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Réinitialiser l'ordre</span>
-            </button>
-          )}
+          <div className="ml-auto flex items-center gap-2">
+            {!isDefaultOrder && (
+              <>
+                <button
+                  onClick={() => setShowCodePanel(!showCodePanel)}
+                  className="flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-800
+                             transition-colors px-3 py-1.5 rounded-lg border border-blue-200 hover:border-blue-300
+                             bg-blue-50 hover:bg-blue-100"
+                >
+                  <Code2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Appliquer au code</span>
+                </button>
+                <button
+                  onClick={resetOrder}
+                  className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-900
+                             transition-colors px-3 py-1.5 rounded-lg border border-gray-200 hover:border-gray-300"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Reset</span>
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </header>
+
+      {showCodePanel && !isDefaultOrder && (
+        <div className="bg-gray-900 border-b border-gray-700">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <div>
+                <p className="text-sm font-medium text-gray-200">Nouvel ordre des workflows</p>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  Copiez ce snippet et collez-le dans le chat pour l'appliquer au code source.
+                </p>
+              </div>
+              <button
+                onClick={copyToClipboard}
+                className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg transition-all flex-shrink-0
+                  ${copied
+                    ? 'bg-green-600 text-white'
+                    : 'bg-gray-700 text-gray-200 hover:bg-gray-600'}`}
+              >
+                {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? 'Copié' : 'Copier'}
+              </button>
+            </div>
+            <pre className="text-sm text-green-400 bg-gray-950 rounded-lg p-4 overflow-x-auto font-mono leading-relaxed">
+              <span className="text-gray-500">// workflowData.ts - nouvel ordre</span>{'\n'}
+              <span className="text-blue-400">export const</span> workflowOrder = [{'\n'}
+              {orderedWorkflows.map((w, i) => (
+                <React.Fragment key={w.id}>
+                  {'  '}<span className="text-amber-300">'{w.id}'</span>
+                  {i < orderedWorkflows.length - 1 ? ',' : ''}{' '}
+                  <span className="text-gray-500">// {w.title}</span>{'\n'}
+                </React.Fragment>
+              ))}
+              ];
+            </pre>
+          </div>
+        </div>
+      )}
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="mb-10">
@@ -116,8 +181,8 @@ export default function Bubble() {
             Cartographie des workflows
           </h2>
           <p className="text-gray-500 text-sm sm:text-base max-w-2xl">
-            Vue d'ensemble de tous les processus et parcours utilisateur de l'application.
-            Glissez-déposez les sections ou utilisez les flèches pour réorganiser l'ordre.
+            Vue d'ensemble de tous les processus et parcours utilisateur.
+            Réorganisez les sections puis cliquez sur "Appliquer au code" pour générer le snippet.
           </p>
         </div>
 
